@@ -1,0 +1,2 @@
+bin/Linux-x86_64/* filter=lfs diff=lfs merge=lfs -text
+bin/Darwin-x86_64/* filter=lfs diff=lfs merge=lfs -text
