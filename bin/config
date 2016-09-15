@@ -1,0 +1,2 @@
+# files/directories to symlink
+dotfiles="vim vimrc gitconfig bash_profile bash_rc screenrc ssh/config"

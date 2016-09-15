@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 function usage {
 	echo "Usage: $0 [-f] [ -h]"
 	echo "  -f : Move existing files out of the way, then symlink"
@@ -18,23 +19,26 @@ fi
 
 BASE=$(readlink -f $(dirname $0)/..)
 
+dotfiles=""
+test -f $BASE/bin/config && . $BASE/bin/config
+echo "dotfiles=$dotfiles"
 echo BASE=$BASE
 
-for f in $BASE/* ; do
-	ff=$(basename $f)
-
-	# skip these files
-	if [ "$ff" == "bin" ] || [ "$ff" == "README.md" ] ; then continue ; fi
-
-	echo -n "[$ff] "
-	if [ -L "$HOME/.$ff" ] || [ ! -f "$HOME/.$ff" ] ; then
+for f in $dotfiles ; do
+	echo -n "[$f] "
+	if [ ! -f $BASE/$f ] ; then
+		# file specified in config but does not exist in repo
+		echo "Not in repo. Skipping."
+		continue
+	fi
+	if [ -L "$HOME/.$f" ] || [ ! -f "$HOME/.$f" ] ; then
 		# already a symlink or does not exist
-		echo "$HOME/.$ff -> $f"
-		ln -sf $f $HOME/.$ff
-	elif [ -f "$HOME/.$ff" ] && [ "$force" -eq 1 ] ; then
+		echo "$HOME/.$f -> $BASE/$f"
+		ln -sf $BASE/$f $HOME/.$f
+	elif [ -f "$HOME/.$f" ] && [ "$force" -eq 1 ] ; then
 		# file exists, and we were told to symlink anyway
-		echo "Moving ~/.$ff -> ~/.$ff.dot ; Symlinking ~/.$ff -> $f"
-		mv $HOME/.$ff $HOME/.$ff.dot && ln -sf $f $HOME/.$ff
+		echo "Moving ~/.$f -> ~/.$f.dot ; Symlinking ~/.$f -> $BASE/$f"
+		mv $HOME/.$f $HOME/.$f.dot && ln -sf $BASE/$f $HOME/.$f
 	else
 		echo "Already exists and is not a symlink. Skipping."
 	fi
