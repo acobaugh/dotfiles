@@ -1,0 +1,27 @@
+defscrollback 4096
+nethack on
+msgwait 15
+vbell off
+nonblock on
+startup_message off
+#caption always "%w"
+shelltitle "@|"
+#hardstatus always                                                                                                                          
+#caption always '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
+#caption always "%{= dR} %-Lw%50>%{= dG}%n%f* %{= dW}%t%{= dR}%+Lw%<"
+caption always "%{= km}[%{M} %H %{m}] %-Lw%50>%{= mk} %n %t %{= km}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}"
+bind ) select 10
+bind ! select 11
+bind @ select 12
+bind \# select 13
+bind \$ select 14
+bind % select 15
+bind \^ select 16
+bind & select 17
+bind * select 18
+bind ( select 19
+
+bind f eval "caption splitonly" 
+bind F eval "caption always"
+
+escape "^Aa"
