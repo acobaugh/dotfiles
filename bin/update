@@ -26,7 +26,7 @@ echo BASE=$BASE
 
 for f in $dotfiles ; do
 	echo -n "[$f] "
-	if [ ! -f $BASE/$f ] ; then
+	if [ ! -e $BASE/$f ] ; then
 		# file specified in config but does not exist in repo
 		echo "Not in repo. Skipping."
 		continue
