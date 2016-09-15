@@ -165,4 +165,9 @@ fi
 
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 export NNTPSERVER='news.psu.edu'
+
 alias syslog_cluster="ssh root@tr26g20 -p 22"
+alias tunnel-dc-rdp2='ssh -L 33890:dc-rdp2.ais.psu.edu:3389 atc135@stirling.ais.psu.edu -p1022'
+alias xfree-dc-rdp2='xfreerdp -u atc135@dce.psu.edu --plugin cliprdr localhost:33890'
+alias tunnel-socks='ssh -D 2001 atc135@stirling.ais.psu.edu -p1022'
+
