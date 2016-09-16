@@ -20,8 +20,8 @@ fi
 BASE=$(readlink -f $(dirname $0)/..)
 
 dotfiles=""
+plainfiles=""
 test -f $BASE/bin/config && . $BASE/bin/config
-echo "dotfiles=$dotfiles"
 echo BASE=$BASE
 
 for f in $dotfiles ; do
@@ -37,8 +37,28 @@ for f in $dotfiles ; do
 		ln -sf $BASE/$f $HOME/.$f
 	elif [ -f "$HOME/.$f" ] && [ "$force" -eq 1 ] ; then
 		# file exists, and we were told to symlink anyway
-		echo "Moving ~/.$f -> ~/.$f.dot ; Symlinking ~/.$f -> $BASE/$f"
-		mv $HOME/.$f $HOME/.$f.dot && ln -sf $BASE/$f $HOME/.$f
+		echo "Moving ~/.$f -> ~/.$f.backup ; Symlinking ~/.$f -> $BASE/$f"
+		mv $HOME/.$f $HOME/.$f.backup && ln -sf $BASE/$f $HOME/.$f
+	else
+		echo "Already exists and is not a symlink. Skipping."
+	fi
+done
+
+for f in $plainfiles ; do
+	echo -n "[$f] "
+	if [ ! -e $BASE/$files ] ; then
+		# file specified in config but does not exist in repo
+		echo "Not in repo. Skipping."
+		continue
+	fi
+	if [ -L "$HOME/$files" ] || [ ! -f "$HOME/$files" ] ; then
+		# already a symlink or does not exist
+		echo "$HOME/$files -> $BASE/$files"
+		ln -sf $BASE/$files $HOME/$files
+	elif [ -f "$HOME/$files" ] && [ "force" -eq 1 ] ; then
+		# file exists, and we were told to symlink anyway
+		echo "Moving ~/$files -> ~/$files.backup ; Symlinking ~/$files -> $BASE/$files"
+		mv $HOME/$files $HOME/$files.backup && ln -sf $BASE/$files $HOME/$files
 	else
 		echo "Already exists and is not a symlink. Skipping."
 	fi

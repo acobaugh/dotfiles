@@ -1,0 +1,1 @@
+for g in `groups` ; do echo $g ; done | sort -n

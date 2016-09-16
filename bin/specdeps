@@ -1,0 +1,7 @@
+#!/bin/sh
+
+spec=$1
+
+for foo in `rpmbuild -bb $spec  2>&1 | grep needed | awk '{ print $1 }'` ; do 
+	echo -n "$foo  " 
+done

@@ -1,0 +1,11 @@
+#!/bin/sh
+for i in {1..3} ; do
+	xset led 3
+	sleep 0.5
+	xset -led 3
+	sleep 0.5
+done
+
+date >> $HOME/.xlock.log
+xscreensaver-command --lock
+gnome-screensaver-command --lock
