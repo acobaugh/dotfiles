@@ -1,0 +1,8 @@
+.DS_Store
+*Cache*
+*cache*
+.cache
+.Cache
+*.o
+.thumbnails
+.config
