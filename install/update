@@ -21,7 +21,7 @@ BASE=$(readlink -f $(dirname $0)/..)
 
 dotfiles=""
 plainfiles=""
-test -f $BASE/bin/config && . $BASE/bin/config
+test -f $BASE/install/config && . $BASE/install/config
 echo BASE=$BASE
 
 for f in $dotfiles ; do
