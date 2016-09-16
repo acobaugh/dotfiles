@@ -1,11 +1,10 @@
+IgnoreUnknown GSSAPI*
+
 Host *.ait.psu.edu, *.iam.psu.edu
 	GSSAPIDelegateCredentials yes
 	GSSAPIAuthentication yes
 	GSSAPIKeyExchange yes
 	PreferredAuthentications gssapi-keyex,gssapi-with-mic,publickey,password
-
-Host *.lionpath.psu.edu
-	Port 1022
 
 Host *
 	ServerAliveInterval 300
