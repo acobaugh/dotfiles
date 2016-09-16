@@ -7,6 +7,17 @@ function usage {
 	echo "  -h : This help message"
 }
 
+function link {
+	target=$1
+	linkname=$2
+	if [ "$(readlink -f $linkname)" == "$(readlink -f $target)" ] ; then
+		echo "  Already up to date"
+	else
+		out=$(ln -sf $target $linkname 2>&1)
+		echo "  $out"
+	fi
+}
+
 if [ "$1" == "-h" ] ; then
 	usage
 	exit
@@ -31,35 +42,35 @@ for f in $dotfiles ; do
 		echo "Not in repo. Skipping."
 		continue
 	fi
-	if [ -L "$HOME/.$f" ] || [ ! -f "$HOME/.$f" ] ; then
+	if [ -L "$HOME/.$f" ] || [ ! -e "$HOME/.$f" ] ; then
 		# already a symlink or does not exist
 		echo "$HOME/.$f -> $BASE/$f"
-		ln -sf $BASE/$f $HOME/.$f
-	elif [ -f "$HOME/.$f" ] && [ "$force" -eq 1 ] ; then
+		link $BASE/$f $HOME/.$f
+	elif [ -e "$HOME/.$f" ] && [ "$force" -eq 1 ] ; then
 		# file exists, and we were told to symlink anyway
-		echo "Moving ~/.$f -> ~/.$f.backup ; Symlinking ~/.$f -> $BASE/$f"
-		mv $HOME/.$f $HOME/.$f.backup && ln -sf $BASE/$f $HOME/.$f
+		echo "  Moving ~/.$f -> ~/.$f.backup ; Symlinking ~/.$f -> $BASE/$f"
+		mv $HOME/.$f $HOME/.$f.backup && link $BASE/$f $HOME/.$f
 	else
-		echo "Already exists and is not a symlink. Skipping."
+		echo "  Already exists and is not a symlink. Skipping."
 	fi
 done
 
 for f in $plainfiles ; do
 	echo -n "[$f] "
-	if [ ! -e $BASE/$files ] ; then
+	if [ ! -e $BASE/$f ] ; then
 		# file specified in config but does not exist in repo
 		echo "Not in repo. Skipping."
 		continue
 	fi
-	if [ -L "$HOME/$files" ] || [ ! -f "$HOME/$files" ] ; then
+	if [ -L "$HOME/$f" ] || [ ! -e "$HOME/$f" ] ; then
 		# already a symlink or does not exist
-		echo "$HOME/$files -> $BASE/$files"
-		ln -sf $BASE/$files $HOME/$files
-	elif [ -f "$HOME/$files" ] && [ "force" -eq 1 ] ; then
+		echo "$HOME/$f -> $BASE/$f"
+		link $BASE/$f $HOME/$f
+	elif [ -e "$HOME/$f" ] && [ "$force" -eq 1 ] ; then
 		# file exists, and we were told to symlink anyway
-		echo "Moving ~/$files -> ~/$files.backup ; Symlinking ~/$files -> $BASE/$files"
-		mv $HOME/$files $HOME/$files.backup && ln -sf $BASE/$files $HOME/$files
+		echo "  Moving ~/$f -> ~/$f.backup ; Symlinking ~/$f -> $BASE/$f"
+		mv $HOME/$f $HOME/$f.backup && link -sf $BASE/$f $HOME/$f
 	else
-		echo "Already exists and is not a symlink. Skipping."
+		echo "  Already exists and is not a symlink. Skipping."
 	fi
 done
