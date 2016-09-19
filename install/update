@@ -65,11 +65,11 @@ for f in $plainfiles ; do
 	if [ -L "$HOME/$f" ] || [ ! -e "$HOME/$f" ] ; then
 		# already a symlink or does not exist
 		echo "$HOME/$f -> $BASE/$f"
-		link $BASE/$f $HOME/$f
+		link "$BASE/$f" "$HOME/$f"
 	elif [ -e "$HOME/$f" ] && [ "$force" -eq 1 ] ; then
 		# file exists, and we were told to symlink anyway
 		echo "  Moving ~/$f -> ~/$f.backup ; Symlinking ~/$f -> $BASE/$f"
-		mv $HOME/$f $HOME/$f.backup && link -sf $BASE/$f $HOME/$f
+		mv $HOME/$f $HOME/$f.backup && link "$BASE/$f" "$HOME/$f"
 	else
 		echo "  Already exists and is not a symlink. Skipping."
 	fi
