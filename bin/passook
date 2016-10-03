@@ -4,6 +4,7 @@ srand;
 $p = 3; #default pronouce level
 $n = 1; #default number of passwords
 $delimiter = ' '; #default delimiter
+$words = $ENV{'HOME'} . '/bin/' . 'words';
 
 while ($_=shift) {
 	$p = shift if ($_ eq "-p");
@@ -38,7 +39,7 @@ for ($j=0;$j<$n;$j++) {
 }
 
 sub fourletterword {
-	my $grepstring = 'egrep "^....$" /usr/share/dict/words';
+	my $grepstring = "egrep \"^....\$\" $words";
 	my @fourletters = split(/\n/,`$grepstring`); 
 	my $word = $fourletters[rand(@fourletters)];
         $word = &tangle($word) if ($p<5);
@@ -46,7 +47,7 @@ sub fourletterword {
 }
 
 sub threeletterword {
-	my $grepstring = 'egrep "^...$" /usr/share/dict/words';
+	my $grepstring = "egrep \"^...\$\" $words";
 	my @threeletters = split(/\n/,`$grepstring`);
 	my $word = $threeletters[rand(@threeletters)];
 	$word = &tangle($word) if ($p<5);
