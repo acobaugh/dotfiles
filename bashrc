@@ -152,6 +152,7 @@ alias dotpath='cd $(echo `pwd` | sed -e "s/\/bx/\/.bx/")'
 alias undotpath='cd $(echo `pwd` | sed -e "s/\/.bx/\/bx/")'
 alias qwatch="watch \"qstat -f -u '*'\""
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
+alias alpine="alpine -disable-these-authenticators=GSSAPI"
 
 #export LANG=UTF-8
 if [ "$TERM" = "rxvt-unicode" ] ; then
@@ -164,4 +165,7 @@ fi
 
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 export NNTPSERVER='news.psu.edu'
+
+# no sockets in AFS
+alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket"
 
