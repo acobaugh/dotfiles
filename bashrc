@@ -63,7 +63,7 @@ then
 fi
 
 
-
+alias screen="screen -U"
 alias ldapvi="ldapvi -Y GSSAPI -h ldap-1"
 alias ldapvim="EDITOR=vim ldapvi"
 alias ldapvim_admin="KRB5CCNAME=/tmp/krb5cc_phalenor_admin kinit --no-afslog phalenor/admin && KRB5CCNAME=/tmp/krb5cc_phalenor_admin ldapvim"
