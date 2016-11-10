@@ -2,7 +2,7 @@
 
 # Google Chrome Installer/Uninstaller for 64-bit RHEL/CentOS 6 or 7
 # (C) Richard K. Lloyd 2016 <rklloyd@gmail.com>
-# See http://chrome.richardlloyd.org.uk/ for further details.
+# See https://chrome.richardlloyd.org.uk/ for further details.
 
 # This script is in the public domain and has no warranty.
 # It needs to be run as root because it installs/uninstalls RPMs.
@@ -21,7 +21,7 @@ show_syntax()
 # Show syntax of script
 {
    cat <<@EOF
-Syntax: ./install_chrome.sh [-b] [-d] [-f [-f [-f]]] [-h] [-n] [-q] [-s]
+Syntax: ./install_chrome.sh [-b] [-d] [-f [-f [-f]]] [-h] [-n] [-q] [-r] [-s]
         [-t tmpdir] [-u] [-U]
 
 -b (or --beta) will switch to beta versions (google-chrome-beta).
@@ -36,6 +36,8 @@ Syntax: ./install_chrome.sh [-b] [-d] [-f [-f [-f]]] [-h] [-n] [-q] [-s]
    but it won't actually perform those actions.
 -q (or --quiet) will switch to "quiet mode" where minimal info is displayed.
    Specify -q twice to go completely silent except for errors.
+-r (or --re-run) indicates the script is being re-run after an upgrade
+   (internal use only - do not use -r during an initial run of the script).
 -s (or --stable) will switch to stable versions (google-chrome-stable),
    which is the default if -b or -U haven't previously been specified.
 -t tmpdir (or --tmpdir tmpdir) will use tmpdir as the temporary directory
@@ -47,21 +49,21 @@ Syntax: ./install_chrome.sh [-b] [-d] [-f [-f [-f]]] [-h] [-n] [-q] [-s]
 }
 
 # Current version of this script
-version="7.40"
+version="7.50"
 
 # This script will download/install the following for an installation:
 
 # These RHEL/CentOS 6 RPMs and their (many!) deps that aren't already installed
 # or are out-of-date:
 # redhat-lsb, wget, xdg-utils, GConf2, libXScrnSaver, libX11, gnome-keyring,
-# gcc, glibc-devel, nss, rpm-build, libexif, dbus, selinux-policy
+# gcc, glibc-devel, nss, rpm-build, libexif, dbus, selinux-policy, xz
 # and rpmdevtools.
 # These RHEL/CentOS 7 RPMs and their (many!) deps that aren't already installed
 # or are out-of-date:
 # redhat-lsb, wget, xdg-utils, GConf2, libXscrnSaver. libX11, gnome-keyring,
-# libexif, dbus, nss and selinux-policy.
+# libexif, dbus, nss, selinux-policy and xz.
 # The latest Google Chrome RPM if not already downloaded (or out-of-date).
-# RHEL/CentOS 6 only: libstdc++ library from a gcc 6.1.0 source build.
+# RHEL/CentOS 6 only: libstdc++ library from a gcc 6.2.0 source build.
 
 # For RHEL/CentOS 6 only:
 # It then copies the downloaded libstdc++ library into /opt/google/chrome*/lib.
@@ -82,20 +84,34 @@ version="7.40"
 
 # Revision history:
 
+# 7.50 - 26th August 2016
+# - If the script is upgraded and re-run, pass a new -r option to avoid a
+#   second upgrade, which might have otherwise happened (yes, in a
+#   never-ending loop) if the downloaded version.dat file was a cached copy.
+# - xz is now installed/updated early on (prior to any wget-based downloads).
+# - Upgrades now download/decompress install_chrome.sh.xz, only falling
+#   back to the uncompressed download if that fails.
+# - Use gcc 6.2.0 as the basis for libstdc++.so.
+# - Web site is now 100% SSL (http requests redirect to the equivalent https),
+#   thanks to a new auto-renewing Let's Encrypt secure cert.
+
 # 7.40 - 15th May 2016
 # - If wget isn't installed (e.g. it's a minimal CentOS 6 install) or it's
-#   out-of-date, download and install it. dbus and selinux-policy (if SELinux
-#   is enabled) dependencies have been added, which may help minimal installs.
-#   Note that if dbus isn't running on CentOS 6, it's now started and also
-#   enabled via chkconfig for future reboots. If any of the main dependencies
-#   are out-of-date, they will now be updated (this is particularly critical
-#   for nss and selinux-policy, which won't work on an unpatched 6.7 install).
+#   out-of-date, download and install it.
+# - dbus and selinux-policy (if SELinux is enabled) dependencies have been
+#   added, which may help minimal installs.
+# - If dbus isn't running on CentOS 6, it's now started and also enabled via
+#   chkconfig for future reboots.
+# - If any of the main dependencies are out-of-date, they will now be updated
+#   (this is particularly critical for nss and selinux-policy, which won't work
+#   on an unpatched 6.7 install).
 
 # 7.31 - 29th April 2016
 # - The Google Chrome binary seems to dynamically load libexif.so.12 at
 #   runtime which caused me to miss libexif off the dependencies list, so
-#   it's finally been added in. gcc 6.1.0 is now used as the basis for
-#   the libstdc++ download, so that meant a new size and checksum as usual.
+#   it's finally been added in.
+# - gcc 6.1.0 is now used as the basis for the libstdc++ download, so that
+#   meant a new size and checksum as usual.
 
 # 7.30 - 5th March 2016
 # - Google have completely pulled the 32-bit Linux Google Chrome repository,
@@ -843,7 +859,7 @@ init_vars()
    chrome_repo="/etc/yum.repos.d/google-chrome.repo"
    app_tree="/usr/share/applications"
    chrome_desktop="$app_tree/google-chrome.desktop"
-   deps_version="3.13"
+   deps_version="3.14"
    download_lib="libstdc++.so.6"
    download_lib_xz="$download_lib.xz"
 
@@ -880,7 +896,7 @@ init_vars()
    rpmbuild_options="-bb"
 
    # Update checker URL
-   checksite="http://chrome.richardlloyd.org.uk/"
+   checksite="https://chrome.richardlloyd.org.uk/"
    checkfile="version.dat"
    checkurl="$checksite$checkfile"
    scriptname="install_chrome.sh"
@@ -900,7 +916,9 @@ download_file()
 #      Also allow download to silently fail without exit if $2 is set
 # $3 = Optional cksum value to compare download against
 # $4 = Optional 0 if failures are warnings, = 1 if errors
+# Returns bad_download=0 for success, = 1 for failure
 {
+   bad_download=0
    if [ "$2" = "" ]
    then
       dlbase="`basename \"$1\"`"
@@ -944,6 +962,7 @@ download_file()
 
    if [ ! -s "$dlbase" ]
    then
+      bad_download=1
       if [ -f "$old_dlbase" ]
       then
          mv -f "$old_dlbase" "$dlbase"
@@ -1101,6 +1120,13 @@ check_version()
 # Make sure that we are running the latest version
 # $* = Params passed to script
 {
+   # If we're running an upgraded script, -r will have been passed
+   # and we don't need a second upgrade
+   if [ $re_run -eq 1 ]
+   then
+      return
+   fi
+
    message "Checking for an update to $scriptname" "n"
    download_file "$checkurl"
 
@@ -1122,7 +1148,20 @@ check_version()
       message "$scriptname is already the latest version ($version) - continuing" "n"
    else
       message "New version ($newversion) of $scriptname detected - downloading it now"
-      download_file "$upgradeurl"
+
+      download_file "$upgradeurl.xz" "" "" 0
+      if [ $bad_download -eq 0 ]
+      then
+         xzcat -f "$dlbase" >$scriptname 2>/dev/null
+         if [ $? -ne 0 -o ! -s $scriptname ]
+         then
+            # Corrupted compressed download, try uncompressed one
+            download_file "$upgradeurl"
+         fi
+      else 
+         # If compressed version didn't download, try uncompressed one
+         download_file "$upgradeurl"
+      fi
 
       if [ "$scriptname" -ef "$script" ]
       then
@@ -1136,9 +1175,9 @@ check_version()
       yesno "run $scriptname $newversion now"
       if [ $ans -eq 1 ]
       then
-         message "OK, executing $script $*"
-         exec "$script" $*
-         error "Failed to run $script $*"
+         message "OK, executing $script $* -r"
+         exec "$script" $* -r
+         error "Failed to run $script $* -r"
       else
          if [ $quiet -lt 2 ]
          then
@@ -1702,7 +1741,7 @@ install_prebuilt_library()
       fi
    fi
 
-   download_file "$checksite$download_lib_xz" "$download_lib_xz" "505768803 347116 $download_lib_xz" 1
+   download_file "$checksite$download_lib_xz" "$download_lib_xz" "1068373812 347324 $download_lib_xz" 1
 
    destlib="$libdir/$download_lib"
    xzcat -f "$download_lib_xz" >$destlib
@@ -1765,7 +1804,7 @@ final_messages()
 parse_options()
 # Parse script options passed as $*
 {
-   delete_tmp=0 ; dry_run=0 ; do_install=1
+   delete_tmp=0 ; dry_run=0 ; re_run=0 ; do_install=1
    inst_str="Installer"
    risky_type="$old_rpm_type"
 
@@ -1781,6 +1820,7 @@ parse_options()
                       then
                         let quiet=$quiet+1
                       fi ;;
+      -r|--re-run)    re_run=1 ;;
       -s|--stable)    risky_type="stable" ;;
       -t|--tmpdir)    shift ; set_tmp_tree "$1" ;;
       -u|--uninstall) do_install=0 ; inst_str="Uninstaller" ;;
@@ -1871,6 +1911,10 @@ rm -rf %{buildroot}
 
 # Changelog, with annoyingly "wrong" US date format
 %changelog
+* Fri Aug 26 2016 Richard K. Lloyd <rklloyd@gmail.com> - 3.14-1
+- New libstdc++ library release.
+* Fri Apr 29 2016 Richard K. Lloyd <rklloyd@gmail.com> - 3.13-1
+- New libstdc++ library release.
 * Tue Dec 15 2015 Richard K. Lloyd <rklloyd@gmail.com> - 3.12-1
 - New libstdc++ library release.
 * Tue Feb 23 2015 Richard K. Lloyd <rklloyd@gmail.com> - 3.11-1
@@ -2195,7 +2239,7 @@ main_code()
       # and we're using RHEL/CentOS 6.X
       if [ "$deps_latest" = "" -a $centos -eq 6 ]
       then
-         rpm_extra_packages="gcc glibc-devel rpm-build rpmdevtools xz"
+         rpm_extra_packages="gcc glibc-devel rpm-build rpmdevtools"
       else
          rpm_extra_packages=""
       fi
@@ -2279,12 +2323,12 @@ check_selinux()
 
 init_packages()
 # Get a list of packages that are pending an update and
-# also make sure an up-to-date wget is installed early on
-# (for the version.dat download that immediately follows).
+# also make sure up-to-date wget and xz are installed early on
+# (for the version.dat download and possible script upgrade).
 {
    message "Generating a list of out-of-date packages (please wait)"
    yum list updates | egrep "($arch|noarch)" | awk '{ print $1 }' | cut -d. -f1 | sort -u >$tmp_updates
-   yum_install "" wget
+   yum_install "" wget xz
 }
 
 # Initialisation functions
