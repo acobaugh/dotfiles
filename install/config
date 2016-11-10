@@ -1,4 +1,4 @@
 # files/directories to symlink
 
-dotfiles="vim vimrc gitconfig bash_profile bashrc screenrc ssh/config.example fluxbox/backgrounds fluxbox/keys fluxbox/menuconfig fluxbox/startup fluxbox/styles"
+dotfiles="vim vimrc gitconfig bash_profile bashrc screenrc ssh/config.example fluxbox/backgrounds fluxbox/keys fluxbox/menuconfig fluxbox/startup fluxbox/styles Xdefaults"
 plainfiles="bin"
