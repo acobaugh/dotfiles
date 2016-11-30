@@ -1,20 +1,26 @@
 #!/bin/sh
 
+umask 0007
 
-function usage {
+usage() {
 	echo "Usage: $0 [-f] [ -h]"
 	echo "  -f : Move existing files out of the way, then symlink"
 	echo "  -h : This help message"
 }
 
-function link {
+link() {
 	target=$1
 	linkname=$2
+
+	if [ ! -d "$(dirname $linkname)" ] ; then
+		echo "   mkdir $(dirname $linkname)"
+		mkdir -p "$(dirname $linkname)"
+	fi
 	if [ "$(readlink -f $linkname)" == "$(readlink -f $target)" ] ; then
 		echo "  Already up to date"
 	else
 		out=$(ln -sf $target $linkname 2>&1)
-		echo "  $out"
+		test -n "$out" && echo "  $out"
 	fi
 }
 
