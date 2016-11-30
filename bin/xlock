@@ -7,5 +7,6 @@ for i in {1..3} ; do
 done
 
 date >> $HOME/.xlock.log
-xscreensaver-command --lock
-gnome-screensaver-command --lock
+#xscreensaver-command --lock 2>/dev/null
+#gnome-screensaver-command --lock 2>/dev/null
+slock 2>/dev/null
