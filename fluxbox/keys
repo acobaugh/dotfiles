@@ -34,10 +34,10 @@ Mod1 F10 :Workspace 10
 Mod1 F11 :Workspace 11
 Mod1 F12 :Workspace 12
 
-Mod1 Return :ExecCommand /usr/bin/uxterm 
+Mod1 Return :ExecCommand uxterm 
 Mod1 q :Close
 Mod1 m :Maximize
-Mod1 d :ExecCommand /usr/bin/dmenu_run
+Mod1 d :ExecCommand dmenu_run
 
 OnLeftGrip Move1 :StartResizing bottomleft
 OnRightGrip Move1 :StartResizing bottomright
