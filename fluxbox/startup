@@ -5,7 +5,9 @@
 # Lines starting with a '#' are ignored.
 
 # Change your keymap:
-xmodmap "/home/phalenor/.Xmodmap"
+if [ -f "$HOME/.Xmodmap" ] ; then
+	xmodmap "$HOME/.Xmodmap"
+fi
 
 # Applications you want to run with fluxbox.
 # MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN ''&'' AT THE END.
@@ -18,17 +20,18 @@ xmodmap "/home/phalenor/.Xmodmap"
 # And last but not least we start fluxbox.
 # Because it is the last app you have to run it with ''exec'' before it.
 
-xrdb .Xdefaults
-/usr/bin/synclient TouchpadOff=1
+xrdb $HOME/.Xdefaults
+test -n "`which synclient`" && synclient TouchpadOff=1
 #/usr/libexec/gnome-settings-daemon &
-/usr/bin/nm-applet &
-/usr/bin/xscreensaver &
-/home/phalenor/bin/brightd -w 120 -b 1 -f -f -d
-feh --bg-scale /home/phalenor/.fluxbox/backgrounds/darklight.jpg
-/usr/bin/gkrellm &
-/usr/bin/volumeicon &
-/usr/libexec/notify-osd &
-/home/phalenor/bin/flux/xflux -z 16823
+test -n "`which nm-applet`" && nm-applet &
+test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
+test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
+test -n "`which gkrellm`" && gkrellm &
+test -n "`which volumeicon`" && volumeicon &
+test -n "`which notify-osd`" && notify-osd &
+test -x "$HOME/bin/flux/xflux" && $HOME/bin/flux/xflux -z 16823
+
+test -x "`which xautolock`" && test -x "`which slock`" && xautolock -time 10 -locker slock &
 exec fluxbox
 # or if you want to keep a log:
 # exec fluxbox -log "/home/phalenor/.fluxbox/log"
