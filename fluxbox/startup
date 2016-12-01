@@ -38,6 +38,9 @@ fi
 # make capslock another control
 setxkbmap -option "ctrl:nocaps"
 
+# turn off terminal bell
+xset -b
+
 exec fluxbox
 # or if you want to keep a log:
 # exec fluxbox -log "/home/phalenor/.fluxbox/log"
