@@ -12,37 +12,37 @@ link() {
 	target=$1
 	linkname=$2
 
-	if [ ! -d "$(dirname $linkname)" ] ; then
-		echo "   mkdir $(dirname $linkname)"
+	if [ ! -d "$(dirname "$linkname")" ] ; then
+		echo "   mkdir $(dirname "$linkname")"
 		mkdir -p "$(dirname $linkname)"
 	fi
-	if [ "$(readlink -f $linkname)" == "$(readlink -f $target)" ] ; then
+	if [ "$(readlink -f "$linkname")" = "$(readlink -f "$target")" ] ; then
 		echo "  Already up to date"
 	else
-		out=$(ln -sf $target $linkname 2>&1)
+		out=$(ln -sf "$target" "$linkname" 2>&1)
 		test -n "$out" && echo "  $out"
 	fi
 }
 
-if [ "$1" == "-h" ] ; then
+if [ "$1" = "-h" ] ; then
 	usage
 	exit
 fi
 
 force=0
-if [ "$1" == "-f" ] ; then
+if [ "$1" = "-f" ] ; then
 	force=1
 fi
 
-BASE=$(readlink -f $(dirname $0)/..)
+BASE=$(readlink -f "$(dirname "$0")"/..)
 
 dotfiles=""
 plainfiles=""
-test -f $BASE/install/config && . $BASE/install/config
-echo BASE=$BASE
+test -f "$BASE/install/config" && . "$BASE/install/config"
+echo BASE="$BASE"
 
 for f in $dotfiles ; do
-	echo -n "[$f] "
+	printf "[%s] " $f
 	if [ ! -e $BASE/$f ] ; then
 		# file specified in config but does not exist in repo
 		echo "Not in repo. Skipping."
@@ -51,7 +51,7 @@ for f in $dotfiles ; do
 	if [ -L "$HOME/.$f" ] || [ ! -e "$HOME/.$f" ] ; then
 		# already a symlink or does not exist
 		echo "$HOME/.$f -> $BASE/$f"
-		link $BASE/$f $HOME/.$f
+		link "$BASE/$f" "$HOME/.$f"
 	elif [ -e "$HOME/.$f" ] && [ "$force" -eq 1 ] ; then
 		# file exists, and we were told to symlink anyway
 		echo "  Moving ~/.$f -> ~/.$f.backup ; Symlinking ~/.$f -> $BASE/$f"
