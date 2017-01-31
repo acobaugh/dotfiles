@@ -1,0 +1,3 @@
+[submodule "vim/vim_cf3"]
+	path = vim/vim_cf3
+	url = https://github.com/neilhwatson/vim_cf3
