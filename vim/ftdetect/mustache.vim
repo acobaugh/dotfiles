@@ -1,0 +1,1 @@
+../mustache/ftdetect/mustache.vim
