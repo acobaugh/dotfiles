@@ -1,4 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/atc135/work/aitcfe/files/iptables/tsm_server'
-let g:netrw_dirhist_2='/home/atc135_admin/code.d/nagios-plugins/check_pynfs'

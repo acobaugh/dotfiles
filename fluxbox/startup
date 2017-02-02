@@ -31,9 +31,10 @@ if [ "$(hostname)" == "zirzla" ] ; then
 	test -n "`which nm-applet`" && nm-applet &
 	test -n "`which volumeicon`" && volumeicon &
 	test -n "`which notify-osd`" && notify-osd &
-	test -x "$HOME/bin/flux/xflux" && $HOME/bin/flux/xflux -z 16823
 	test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
 fi
+
+test -x "`which redshift`" && redshift -l 40.8:-77.8 &
 
 # make capslock another control
 setxkbmap -option "ctrl:nocaps"
