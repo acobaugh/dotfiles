@@ -1,0 +1,1 @@
+../plugins/vim-json/syntax/json.vim

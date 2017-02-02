@@ -4,3 +4,6 @@
 [submodule "vim/mustache"]
 	path = vim/mustache
 	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule "vim/plugins/vim-json"]
+	path = vim/plugins/vim-json
+	url = https://github.com/elzr/vim-json.git

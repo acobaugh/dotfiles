@@ -29,3 +29,5 @@ au BufRead,BufNewFile *.cf set ft=cf3
 let g:DisableCF3Ftplugin=1
 
 au BufRead,BufNewFile *.mustache set syntax=mustache
+
+let g:vim_json_syntax_conceal = 0
