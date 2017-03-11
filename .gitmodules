@@ -1,0 +1,12 @@
+[submodule "vim/vim_cf3"]
+	path = vim/vim_cf3
+	url = https://github.com/neilhwatson/vim_cf3
+[submodule "vim/mustache"]
+	path = vim/mustache
+	url = https://github.com/mustache/vim-mustache-handlebars.git
+[submodule "vim/plugins/vim-json"]
+	path = vim/plugins/vim-json
+	url = https://github.com/elzr/vim-json.git
+[submodule "vim/plugins/logstash.vim"]
+	path = vim/plugins/logstash.vim
+	url = https://github.com/robbles/logstash.vim.git
