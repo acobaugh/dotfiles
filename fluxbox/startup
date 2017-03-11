@@ -36,6 +36,10 @@ fi
 
 test -x "`which redshift`" && redshift -l 40.8:-77.8 &
 
+if [ -d /usr/share/fonts/artwiz-fonts ] ; then
+        xset fp+ "/usr/share/fonts/artwiz-fonts/"
+fi
+
 # make capslock another control
 setxkbmap -option "ctrl:nocaps"
 
