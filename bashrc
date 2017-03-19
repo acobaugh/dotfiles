@@ -169,3 +169,6 @@ export NNTPSERVER='news.psu.edu'
 # no sockets in AFS
 alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket"
 
+if [ -f "$HOME/.bash_local" ] ; then
+	. "$HOME/.bash_local" 
+fi
