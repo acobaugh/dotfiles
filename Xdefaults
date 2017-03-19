@@ -36,3 +36,7 @@ urxvt*color13: magenta
 urxvt*color14: cyan
 urxvt*color15: white
 
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintfull
