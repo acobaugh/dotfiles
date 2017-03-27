@@ -10,3 +10,6 @@
 [submodule "vim/plugins/vim_cf3"]
 	path = vim/plugins/vim_cf3
 	url = https://github.com/neilhwatson/vim_cf3
+[submodule "vim/plugins/ansible-vim"]
+	path = vim/plugins/ansible-vim
+	url = https://github.com/pearofducks/ansible-vim.git

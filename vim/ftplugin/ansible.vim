@@ -1,0 +1,1 @@
+../plugins/ansible-vim/ftplugin/ansible.vim

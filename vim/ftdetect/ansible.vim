@@ -1,0 +1,1 @@
+../plugins/ansible-vim/ftdetect/ansible.vim
