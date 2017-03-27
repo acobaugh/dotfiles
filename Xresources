@@ -4,6 +4,7 @@ xterm*saveLines:	1000
 xterm*cursorColor:	#ff0000
 !xterm*faceName:         Inconsolata:size=12
 xterm*faceName:		Terminus:size=10.5
+xterm*scaleHeight:	1.1
 xterm*visualBell:	true
 
 ! Alt-Key = Esc Key; to change windows in irssi instead of putting in garbage 
