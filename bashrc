@@ -167,15 +167,22 @@ export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 export NNTPSERVER='news.psu.edu'
 
 ## GPG stuff
-export PINENTRY=$(which pinentry-curses)
-gpgenvfile="$HOME/.gnupg/gpg-agent.env"
-if [[ -e "$gpgenvfile" ]] && kill -0 $(grep GPG_AGENT_INFO "$gpgenvfile" | cut -d: -f 2) 2>/dev/null; then
-	eval "$(cat "$gpgenvfile")"
-else
-	eval "$(gpg-agent --daemon --enable-ssh-support --write-env-file "$gpgenvfile" --pinentry-program $PINENTRY)"
+if [ -x "$(which gpg-agent)" ] ; then
+	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
+	if [ "${gav:0:3}" != "2.1" ] ; then
+		echo "gav = $gav"
+		# We only need all this cruft if we are running something older than 2.1
+		export PINENTRY=$(which pinentry-curses)
+		gpgenvfile="$HOME/.gnupg/gpg-agent.env"
+		if [[ -e "$gpgenvfile" ]] && kill -0 $(grep GPG_AGENT_INFO "$gpgenvfile" | cut -d: -f 2) 2>/dev/null; then
+			eval "$(cat "$gpgenvfile")"
+		else
+			eval "$(gpg-agent --daemon --enable-ssh-support --write-env-file "$gpgenvfile" --pinentry-program $PINENTRY)"
+		fi
+		export GPG_AGENT_INFO  # the env file does not contain the export statement
+		export SSH_AUTH_SOCK   # enable gpg-agent for ssh
+	fi
 fi
-export GPG_AGENT_INFO  # the env file does not contain the export statement
-export SSH_AUTH_SOCK   # enable gpg-agent for ssh
 
 # no sockets in AFS
 alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket"
