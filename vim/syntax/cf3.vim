@@ -1,1 +1,1 @@
-../vim_cf3/syntax/cf3.vim
+../plugins/vim_cf3/syntax/cf3.vim
