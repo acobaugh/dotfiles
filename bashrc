@@ -166,6 +166,17 @@ fi
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 export NNTPSERVER='news.psu.edu'
 
+## GPG stuff
+export PINENTRY=$(which pinentry-curses)
+gpgenvfile="$HOME/.gnupg/gpg-agent.env"
+if [[ -e "$gpgenvfile" ]] && kill -0 $(grep GPG_AGENT_INFO "$gpgenvfile" | cut -d: -f 2) 2>/dev/null; then
+	eval "$(cat "$gpgenvfile")"
+else
+	eval "$(gpg-agent --daemon --enable-ssh-support --write-env-file "$gpgenvfile" --pinentry-program $PINENTRY)"
+fi
+export GPG_AGENT_INFO  # the env file does not contain the export statement
+export SSH_AUTH_SOCK   # enable gpg-agent for ssh
+
 # no sockets in AFS
 alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket"
 
