@@ -38,7 +38,7 @@ BASE=$(readlink -f "$(dirname "$0")"/..)
 
 dotfiles=""
 plainfiles=""
-test -f "$BASE/install/config" && . "$BASE/install/config"
+test -f "$BASE/dotfiles/config" && . "$BASE/dotfiles/config"
 echo BASE="$BASE"
 
 for f in $dotfiles ; do

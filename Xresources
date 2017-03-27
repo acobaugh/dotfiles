@@ -1,8 +1,9 @@
 xterm*foreground:	#ffffff
 xterm*background:	#000000
 xterm*saveLines:	1000
-xterm*cursorColor: #ff0000
-xterm*faceName:         Inconsolata:size=11
+xterm*cursorColor:	#ff0000
+!xterm*faceName:         Inconsolata:size=12
+xterm*faceName:		Terminus:size=10.5
 xterm*visualBell:	true
 
 ! Alt-Key = Esc Key; to change windows in irssi instead of putting in garbage 

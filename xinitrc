@@ -23,6 +23,12 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 
+if [ -d "$HOME/.Xresources.d" ] ; then
+	for f in "$HOME/.Xresources.d/*" ; do
+		xrdb -merge "$f"
+	done
+fi
+
 # start some nice programs
 
 if [ -d /usr/local/etc/X11/xinit/xinitrc.d ] ; then
