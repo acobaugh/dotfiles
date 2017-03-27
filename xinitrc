@@ -32,4 +32,7 @@ if [ -d /usr/local/etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
+if [ -d /usr/share/fonts/artwiz-fonts ] ; then
+	xset fp+ "/usr/share/fonts/artwiz-fonts/"
+fi
 exec startfluxbox

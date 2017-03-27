@@ -180,3 +180,6 @@ export SSH_AUTH_SOCK   # enable gpg-agent for ssh
 # no sockets in AFS
 alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket"
 
+if [ -f "$HOME/.bash_local" ] ; then
+	. "$HOME/.bash_local" 
+fi

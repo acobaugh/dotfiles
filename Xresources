@@ -1,0 +1,16 @@
+xterm*foreground:	#ffffff
+xterm*background:	#000000
+xterm*saveLines:	1000
+xterm*cursorColor: #ff0000
+xterm*faceName:         Inconsolata:size=11
+xterm*visualBell:	true
+
+! Alt-Key = Esc Key; to change windows in irssi instead of putting in garbage 
+UXTerm*eightBitInput: false
+UXTerm*metaSendsEscape: true
+
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.lcdfilteR: lcddefault

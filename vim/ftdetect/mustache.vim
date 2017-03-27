@@ -1,1 +1,1 @@
-../mustache/ftdetect/mustache.vim
+../plugins/mustache/ftdetect/mustache.vim

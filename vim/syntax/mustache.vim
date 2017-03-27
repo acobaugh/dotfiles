@@ -1,1 +1,1 @@
-../mustache/syntax/mustache.vim
+../plugins/mustache/syntax/mustache.vim

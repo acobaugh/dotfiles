@@ -1,1 +1,1 @@
-../vim_cf3/ftplugin/cf3.vim
+../plugins/vim_cf3/ftplugin/cf3.vim

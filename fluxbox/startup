@@ -20,7 +20,6 @@ fi
 # And last but not least we start fluxbox.
 # Because it is the last app you have to run it with ''exec'' before it.
 
-xrdb $HOME/.Xdefaults
 test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
 test -n "`which gkrellm`" && gkrellm &
 
@@ -35,6 +34,10 @@ if [ "$(hostname)" == "zirzla" ] ; then
 fi
 
 test -x "`which redshift`" && redshift -l 40.8:-77.8 &
+
+if [ -d /usr/share/fonts/artwiz-fonts ] ; then
+        xset fp+ "/usr/share/fonts/artwiz-fonts/"
+fi
 
 # make capslock another control
 setxkbmap -option "ctrl:nocaps"
