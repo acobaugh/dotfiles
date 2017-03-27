@@ -1,1 +1,0 @@
-../plugins/mustache/ftplugin/mustache.vim

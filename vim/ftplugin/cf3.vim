@@ -1,1 +1,0 @@
-../plugins/vim_cf3/ftplugin/cf3.vim

@@ -14,9 +14,13 @@ set smartcase
 set scrolloff=2
 set wildmode=longest,list
 set showmatch matchtime=3
-set background=dark
 set modelines=2
 set foldlevelstart=99 
+
+execute pathogen#infect('plugins/{}')
+
+set background=dark
+colorscheme solarized
 
 syntax on
 set hlsearch

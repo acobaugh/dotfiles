@@ -1,1 +1,0 @@
-../plugins/mustache/indent/handlebars.vim

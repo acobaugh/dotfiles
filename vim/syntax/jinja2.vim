@@ -1,1 +1,0 @@
-../plugins/ansible-vim/syntax/jinja2.vim

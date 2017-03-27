@@ -1,1 +1,0 @@
-../plugins/ansible-vim/indent/ansible.vim

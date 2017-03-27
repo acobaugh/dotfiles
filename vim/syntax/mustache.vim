@@ -1,1 +1,0 @@
-../plugins/mustache/syntax/mustache.vim
