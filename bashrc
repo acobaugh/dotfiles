@@ -12,7 +12,7 @@ function prompt_command() {
 	# How many characters of the $PWD should be kept
 	local pwdmaxlen=25
 	# Indicate that there has been dir truncation
-	local trunc_symbol=".."
+	local trunc_symbol="..."
 	local dir=${PWD##*/}
 	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
 	NEW_PWD=${PWD/#$HOME/\~}
@@ -29,8 +29,9 @@ function prompt() {
 	local GREEN="\[\033[1;92m\]"
 	local BLUE="\[\033[1;94m\]"
 	local NONE="\[\033[0m\]"
+	local PURPLE="\e[0;35;40m"
 
-	PS1="${CYAN}[\$(date +%H:%M:%S)] ${GREEN}${USER}@${HOSTNAME%%.*} ${BLUE}\${NEW_PWD}\${GITPS1} \n\\$ ${NONE}"
+	PS1="${CYAN}[\$(date +%H:%M:%S)] ${GREEN}${USER}@${HOSTNAME%%.*} ${BLUE}\${NEW_PWD}${PURPLE}\${GITPS1} \n${BLUE}\\$ ${NONE}"
 }
 
 export HISTTIMEFORMAT='[%F %T] '
