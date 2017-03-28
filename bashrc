@@ -1,6 +1,4 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+## .bashrc
 
 # If running interactively, then:
 if [ "$PS1" ]; then
@@ -53,10 +51,16 @@ case $TERM in
         *)
 		if [[ ${EUID} == 0 ]] ; then
 			export PS1='\[\033[01;31m\]\u@\h \[\033[01;34m\]\W \$ \[\033[00m\]'
-		else
-			export PS1='\[\033[01;32m\]\u@\h \[\033[01;34m\]\w \$ \[\033[00m\]'
 		fi
                 ;;
+esac
+
+# per-OS settings
+case "$(uname -s)" in
+	Linux)
+		LS_OPTIONS="--color=auto"
+		eval "$(dircolors)"
+		;;
 esac
 
 if [ -n "$DISPLAY" ]  && [ "`uname -s`" != "Darwin" ]
@@ -64,99 +68,15 @@ then
 	xset b 100 3000 30
 fi
 
-
-alias screen="screen -U"
-alias ldapvi="ldapvi -Y GSSAPI -h ldap-1"
-alias ldapvim="EDITOR=vim ldapvi"
-alias ldapvim_admin="KRB5CCNAME=/tmp/krb5cc_phalenor_admin kinit --no-afslog phalenor/admin && KRB5CCNAME=/tmp/krb5cc_phalenor_admin ldapvim"
-alias dhcpedit='ldapvim -b ou=dhcp,dc=bx,dc=psu,dc=edu'
-alias groupedit='ldapvim -b ou=group,dc=bx,dc=psu,dc=edu'
-alias peopleedit='ldapvim_admin -b ou=people,dc=bx,dc=psu,dc=edu'
-alias sudoersedit="ldapvim_admin -b ou=sudoers,dc=bx,dc=psu,dc=edu"
-alias automountedit="ldapvim_admin -b ou=automount,dc=bx,dc=psu,dc=edu"
-alias mailedit="ldapvim_admin -b ou=mail,dc=bx,dc=psu,dc=edu"
-alias lbe="cd ~/bin/lbe/ldapbrowser && ./lbe.sh"
-alias afs-phg=" KRB5CCNAME=/tmp/krb5cc_phalenor_phg kinit phalenor@PHALENGARD.COM ; KRB5CCNAME=/tmp/krb5cc_phalenor_phg aklog -d -c phalengard.com"
-alias ldapgroupids="ldapsearch -LLL -x -h ldap -b dc=bx,dc=psu,dc=edu \"(|(objectclass=posixgroup)(objectclass=bxafsgroup))\" gidnumber bxafsgroupid | egrep \"(gidNumber|bxAFSGroupId)\" | awk '{ print \$2 }' | sort -n  | uniq"
-
-alias ldapuserids="ldapsearch -LLL -x -h ldap -b dc=bx,dc=psu,dc=edu \"(objectclass=posixaccount)\" uidnumber | egrep \"(uidNumber)\" | awk '{ print \$2 }' | sort -n  | uniq"
-
-function lwebsites {
-	dir=/afs/bx.psu.edu/service/web/config/servers.d
-	if [ "$1" = "p" ]; then
-		dir=/afs/.bx.psu.edu/service/web/config/servers.d
-		pending="(PENDING) "
-	fi
-
-	for foo in `ls $dir/ | grep bx.psu.edu` 
-	do 
-		echo "=== $foo $pending==="
-		cat $dir/$foo/httpd.conf | \
-			grep Include | \
-			grep vhosts | \
-			sed -e 's/.*\/vhosts\/\(.*\)$/\1/' | \
-			sort 
-		echo
-	done
-}
-
-function checkwebdns {
-	vhostdir=/afs/bx.psu.edu/service/web/config/vhosts-available
-	serverdir=/afs/bx.psu.edu/service/web/config/servers.d
-	if [ "$1" = "p" ]; then
-		vhostdir=/afs/.bx.psu.edu/service/web/config/vhosts-available
-		serverdir=/afs/.bx.psu.edu/service/web/config/servers.d
-		pending="(PENDING) "
-	fi
-
-	for foo in `ls -1 $vhostdir/ 2>/dev/null| grep -v "\-ssl" | grep -v RCS | grep -v old`
-	do
-		echo "VirtualHost $foo $pending"
-		addresses=`host $foo | grep address | sed -e 's/IPv6//' | awk '{ print $4 }' | sort -n | tr '\n' ' '`
-		if [ -z "$addresses" ]; then
-			echo -e "\tNo DNS entry for $foo !"
-			echo
-			continue
-		fi
-
-		for addr in $addresses
-		do
-			server=`host $addr | awk '{ print $5 }' | sed -e 's/\.$//'`
-			if [ -z "`grep \"/$foo\" $serverdir/$server/httpd.conf`" ]; then
-				echo -e "\tNOT included in httpd.conf on $server!"
-			fi
-			if [ -z "`grep $addr $serverdir/$server/vhosts/$foo`" ]; then
-				echo -e "\t$addr ($server) NOT found in $server/vhosts.d/$foo !"
-			else
-				echo -e "\tInstance on server $server ($addr) OK"
-			fi
-		done
-		echo
-	done
-}
-
-function imapwho {
-	for foo in wash zoe
-		do echo "=== $foo ===" 
-		ssh root@$foo \
-			"ps -ef | grep 'imap \[' | grep -v rawlog | awk '{ print \$8,\$9,\$10 }' | sort -n | uniq" 
-		echo
-	done
-}
-
-
+# aliases
 alias ..="cd ../"
 alias c="clear"
 alias e="exit"
-alias back='cd $OLDPWD'
-
-alias dotpath='cd $(echo `pwd` | sed -e "s/\/bx/\/.bx/")'
-alias undotpath='cd $(echo `pwd` | sed -e "s/\/.bx/\/bx/")'
-alias qwatch="watch \"qstat -f -u '*'\""
+alias b='cd $OLDPWD'
+alias ls="ls $LS_OPTIONS"
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias alpine="alpine -disable-these-authenticators=GSSAPI"
 
-#export LANG=UTF-8
 if [ "$TERM" = "rxvt-unicode" ] ; then
 	export TERM=xterm
 	#export LC_ALL=en_US.utf8
