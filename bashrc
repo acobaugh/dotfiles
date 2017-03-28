@@ -144,6 +144,7 @@ alias ..="cd ../"
 alias c="clear"
 alias e="exit"
 alias back='cd $OLDPWD'
+alias tmux='tmux -2' # enable 256-color support
 
 alias dotpath='cd $(echo `pwd` | sed -e "s/\/bx/\/.bx/")'
 alias undotpath='cd $(echo `pwd` | sed -e "s/\/.bx/\/bx/")'
