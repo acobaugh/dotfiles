@@ -4,11 +4,12 @@
 
 # If running interactively, then:
 if [ "$PS1" ]; then
-    export HISTCONTROL=ignoredups:erasedups
     shopt -s checkwinsize
-    shopt -s histappend
-    shopt -s cmdhist
 fi
+    
+export HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+shopt -s cmdhist
 
 function prompt_command() {
 	# How many characters of the $PWD should be kept
