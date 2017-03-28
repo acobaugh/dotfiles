@@ -172,7 +172,6 @@ export NNTPSERVER='news.psu.edu'
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
 	if [ "${gav:0:3}" != "2.1" ] ; then
-		echo "gav = $gav"
 		# We only need all this cruft if we are running something older than 2.1
 		export PINENTRY=$(which pinentry-curses)
 		gpgenvfile="$HOME/.gnupg/gpg-agent.env"
