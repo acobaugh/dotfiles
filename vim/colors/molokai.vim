@@ -1,0 +1,1 @@
+../plugins/molokai/colors/molokai.vim

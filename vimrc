@@ -17,21 +17,34 @@ set showmatch matchtime=3
 set modelines=2
 set foldlevelstart=99 
 
-execute pathogen#infect('plugins/{}')
+execute pathogen#infect()
 
 set background=dark
-colorscheme solarized
-
+set t_Co=256
+colorscheme molokai
 syntax on
-set hlsearch
 filetype plugin indent on
+let g:rehash256 = 1
+" set background black
+hi Normal ctermbg=black
+
+set hlsearch
 autocmd FileType text setlocal textwidth=78
 set cmdheight=2
 
+" CFEngine syntax
 au BufRead,BufNewFile *.cf.in set ft=cf3
 au BufRead,BufNewFile *.cf set ft=cf3
 let g:DisableCF3Ftplugin=1
 
+" Mustache syntax
 au BufRead,BufNewFile *.mustache set syntax=mustache
 
+" JSON syntax
 let g:vim_json_syntax_conceal = 0
+
+" Jump to last losition when opening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
