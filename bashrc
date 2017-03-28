@@ -60,12 +60,6 @@ case $TERM in
                 ;;
 esac
 
-if [ -n "$DISPLAY" ]  && [ "`uname -s`" != "Darwin" ]
-then
-	xset b 100 3000 30
-fi
-
-
 alias screen="screen -U"
 alias ldapvi="ldapvi -Y GSSAPI -h ldap-1"
 alias ldapvim="EDITOR=vim ldapvi"
