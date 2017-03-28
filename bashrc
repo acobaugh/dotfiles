@@ -4,8 +4,10 @@
 
 # If running interactively, then:
 if [ "$PS1" ]; then
-    export HISTCONTROL=ignoredups
+    export HISTCONTROL=ignoredups:erasedups
     shopt -s checkwinsize
+    shopt -s histappend
+    shopt -s cmdhist
 fi
 
 function prompt_command() {
@@ -30,7 +32,7 @@ function prompt() {
 	local BLUE="\[\033[1;94m\]"
 	local NONE="\[\033[0m\]"
 
-	PS1="${CYAN}[\$(date +%H:%M:%S)] ${GREEN}${USER}@${HOSTNAME%%.*} ${BLUE}\${NEW_PWD}\${GITPS1} \\$ ${NONE}"
+	PS1="${CYAN}[\$(date +%H:%M:%S)] ${GREEN}${USER}@${HOSTNAME%%.*} ${BLUE}\${NEW_PWD}\${GITPS1} \n\\$ ${NONE}"
 }
 
 export HISTTIMEFORMAT='[%F %T] '
