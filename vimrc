@@ -16,7 +16,7 @@ set wildmode=longest,list
 set showmatch matchtime=3
 set modelines=2
 set foldlevelstart=99 
-
+set number
 execute pathogen#infect()
 
 set background=dark
