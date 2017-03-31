@@ -164,6 +164,11 @@ fi
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 export NNTPSERVER='news.psu.edu'
 
+if [ -d "$HOME/go" ] ; then
+	export GOROOT=$HOME/go
+	export PATH=$GOROOT/bin:$PATH
+fi
+
 ## GPG stuff
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
