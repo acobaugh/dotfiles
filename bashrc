@@ -2,11 +2,12 @@
 
 # If running interactively, then:
 if [ "$PS1" ]; then
-    export HISTCONTROL=ignoredups:erasedups
     shopt -s checkwinsize
-    shopt -s histappend
-    shopt -s cmdhist
 fi
+    
+export HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+shopt -s cmdhist
 
 function prompt_command() {
 	# How many characters of the $PWD should be kept
@@ -64,17 +65,11 @@ case "$(uname -s)" in
 		;;
 esac
 
-if [ -n "$DISPLAY" ]  && [ "`uname -s`" != "Darwin" ]
-then
-	xset b 100 3000 30
-fi
-
 # aliases
 alias ..="cd ../"
 alias c="clear"
 alias e="exit"
-alias b='cd $OLDPWD'
-alias ls="ls $LS_OPTIONS"
+alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias alpine="alpine -disable-these-authenticators=GSSAPI"
 
@@ -89,11 +84,15 @@ fi
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 export NNTPSERVER='news.psu.edu'
 
+if [ -d "$HOME/go" ] ; then
+	export GOROOT=$HOME/go
+	export PATH=$GOROOT/bin:$PATH
+fi
+
 ## GPG stuff
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
 	if [ "${gav:0:3}" != "2.1" ] ; then
-		echo "gav = $gav"
 		# We only need all this cruft if we are running something older than 2.1
 		export PINENTRY=$(which pinentry-curses)
 		gpgenvfile="$HOME/.gnupg/gpg-agent.env"
