@@ -1,14 +1,18 @@
 ## .bashrc
 
-# If running interactively, then:
+# If running interactively, enable checkwinsize
 if [ "$PS1" ]; then
     shopt -s checkwinsize
 fi
-    
-export HISTCONTROL=ignoredups:erasedups
-shopt -s histappend
-shopt -s cmdhist
 
+# git integration
+source $HOME/bin/git-completion.bash
+source $HOME/bin/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWCOLORHINTS=true
+   
+# set NEW_PWD and GITPS1
 function prompt_command() {
 	# How many characters of the $PWD should be kept
 	local pwdmaxlen=25
@@ -25,6 +29,7 @@ function prompt_command() {
 	GITPS1=$(__git_ps1)
 }
 
+# set PS1 on demand
 function prompt() {
 	local CYAN="\[\033[0;36m\]"
 	local GREEN="\[\033[1;92m\]"
@@ -35,16 +40,13 @@ function prompt() {
 	PS1="${CYAN}[\$(date +%H:%M:%S)] ${GREEN}${USER}@${HOSTNAME%%.*} ${BLUE}\${NEW_PWD}${PURPLE}\${GITPS1} \n${BLUE}\\$ ${NONE}"
 }
 
+## History
+export HISTCONTROL=ignoredups:erasedups
 export HISTTIMEFORMAT='[%F %T] '
+shopt -s histappend
+shopt -s cmdhist
 
-# git integration
-source $HOME/bin/git-completion.bash
-source $HOME/bin/git-prompt.sh
-
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWUNTRACKEDFILES=true
-export GIT_PS1_SHOWCOLORHINTS=true
-
+# set PROMPT_COMMAND and/or PS1
 case $TERM in
         xterm*|rxvt*|Eterm|screen)
 		export PROMPT_COMMAND=prompt_command
@@ -65,28 +67,26 @@ case "$(uname -s)" in
 		;;
 esac
 
-# aliases
+## aliases
 alias ..="cd ../"
 alias c="clear"
 alias e="exit"
+alias ls="ls $LS_OPTIONS"
 alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias alpine="alpine -disable-these-authenticators=GSSAPI"
+alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 
-if [ "$TERM" = "rxvt-unicode" ] ; then
-	export TERM=xterm
-	#export LC_ALL=en_US.utf8
-	export LC_CTYPE="en_US.utf8"
-	export LC_MESSAGES="en_US.utf8"
-	unset LESSCHARSET
-fi
-
-export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
+# news server
 export NNTPSERVER='news.psu.edu'
 
-if [ -d "$HOME/go" ] ; then
-	export GOROOT=$HOME/go
-	export PATH=$GOROOT/bin:$PATH
+## PATH
+export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
+
+## add Go workspace bin dir
+if [ -x "$(which go)" ] ; then
+	export GOPATH=$(go env GOPATH)
+	export PATH=$PATH:$GOPATH/bin
 fi
 
 ## GPG stuff
@@ -106,9 +106,7 @@ if [ -x "$(which gpg-agent)" ] ; then
 	fi
 fi
 
-# no sockets in AFS
-alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket"
-
+# source local settings
 if [ -f "$HOME/.bash_local" ] ; then
 	. "$HOME/.bash_local" 
 fi
