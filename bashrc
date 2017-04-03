@@ -83,10 +83,10 @@ export NNTPSERVER='news.psu.edu'
 ## PATH
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 
-## local Go
-if [ -x "$HOME/go/bin/go" ] ; then
-	export GOROOT=$HOME/go
-	export PATH=$GOROOT/bin:$PATH
+## add Go workspace bin dir
+if [ -x "$(which go)" ] ; then
+	export GOPATH=$(go env GOPATH)
+	export PATH=$PATH:$GOPATH/bin
 fi
 
 ## GPG stuff
