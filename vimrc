@@ -20,11 +20,11 @@ set number
 execute pathogen#infect()
 
 set background=dark
-set t_Co=256
+"set t_Co=256
 colorscheme molokai
 syntax on
 filetype plugin indent on
-let g:rehash256 = 1
+"let g:rehash256 = 1
 " set background black
 hi Normal ctermbg=black
 
