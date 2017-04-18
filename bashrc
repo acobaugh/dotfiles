@@ -1,5 +1,7 @@
 ## .bashrc
 
+umask 0777
+
 # If running interactively, enable checkwinsize
 if [ "$PS1" ]; then
     shopt -s checkwinsize
