@@ -1,6 +1,6 @@
 ## .bashrc
 
-umask 0777
+umask 077
 
 # If running interactively, enable checkwinsize
 if [ "$PS1" ]; then
