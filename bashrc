@@ -50,7 +50,7 @@ shopt -s cmdhist
 
 # set PROMPT_COMMAND and/or PS1
 case $TERM in
-        xterm*|rxvt*|Eterm|screen)
+        xterm*|rxvt*|Eterm|screen*)
 		export PROMPT_COMMAND=prompt_command
 		prompt
                 ;;
