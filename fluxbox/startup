@@ -60,9 +60,10 @@ test -x "`which redshift`" && redshift -l 40.8:-77.8 &
 
 # just for the laptop
 if [ "$(hostname)" == "zirzla" ] ; then
-	test -n "`which synclient`" && synclient TouchpadOff=1
-	test -n "`which nm-applet`" && nm-applet &
-	test -n "`which volumeicon`" && volumeicon &
-	test -n "`which notify-osd`" && notify-osd &
+	test -x "`which unburden-home-dir`" && unburden-home-dir
+	test -x "`which synclient`" && synclient TouchpadOff=1
+	test -x "`which nm-applet`" && nm-applet &
+	test -x "`which volumeicon`" && volumeicon &
+	test -x "`which notify-osd`" && notify-osd &
 	test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
 fi
