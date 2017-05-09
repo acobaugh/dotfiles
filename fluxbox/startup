@@ -2,41 +2,47 @@
 #
 # fluxbox startup-script:
 #
-# Lines starting with a '#' are ignored.
 
-# Change your keymap:
-if [ -f "$HOME/.Xmodmap" ] ; then
-	xmodmap "$HOME/.Xmodmap"
+# merge in defaults and keymaps
+if [ -f "/usr/local/etc/X11/xinit/.Xresources" ]; then
+    xrdb -merge "/usr/local/etc/X11/xinit/.Xresources"
 fi
 
-# Applications you want to run with fluxbox.
-# MAKE SURE THAT APPS THAT KEEP RUNNING HAVE AN ''&'' AT THE END.
-#
-# unclutter -idle 2 &
-# wmnd &
-# wmsmixer -w &
-# idesk &
-
-# And last but not least we start fluxbox.
-# Because it is the last app you have to run it with ''exec'' before it.
-
-test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
-test -n "`which gkrellm`" && gkrellm &
-
-test -x "`which xautolock`" && test -x "`which slock`" && xautolock -time 10 -locker slock &
-
-if [ "$(hostname)" == "zirzla" ] ; then
-	test -n "`which synclient`" && synclient TouchpadOff=1
-	test -n "`which nm-applet`" && nm-applet &
-	test -n "`which volumeicon`" && volumeicon &
-	test -n "`which notify-osd`" && notify-osd &
-	test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
+if [ -f "/usr/local/etc/X11/xinit/.Xmodmap" ]; then
+    xmodmap "/usr/local/etc/X11/xinit/.Xmodmap"
 fi
 
-test -x "`which redshift`" && redshift -l 40.8:-77.8 &
+if [ -f "$HOME/.Xresources" ]; then
+    xrdb -merge "$HOME/.Xresources"
+fi
+
+if [ -f "$HOME/.Xmodmap" ]; then
+    xmodmap "$HOME/.Xmodmap"
+fi
+
+if [ -d "$HOME/.Xresources.d" ] ; then
+	for f in "$HOME/.Xresources.d/*" ; do
+		xrdb -merge "$f"
+	done
+fi
+
+# start some nice programs
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+if [ -d /usr/local/etc/X11/xinit/xinitrc.d ] ; then
+	for f in /usr/local/etc/X11/xinit/xinitrc.d/?*.sh ; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
+fi
 
 if [ -d /usr/share/fonts/artwiz-fonts ] ; then
-        xset fp+ "/usr/share/fonts/artwiz-fonts/"
+	xset fp+ "/usr/share/fonts/artwiz-fonts/"
 fi
 
 # make capslock another control
@@ -45,6 +51,19 @@ setxkbmap -option "ctrl:nocaps"
 # turn off terminal bell
 xset -b
 
-exec fluxbox
-# or if you want to keep a log:
-# exec fluxbox -log "/home/phalenor/.fluxbox/log"
+exec startfluxbox
+
+test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
+test -n "`which gkrellm`" && gkrellm &
+test -x "`which xautolock`" && test -x "`which slock`" && xautolock -time 10 -locker slock &
+test -x "`which redshift`" && redshift -l 40.8:-77.8 &
+
+# just for the laptop
+if [ "$(hostname)" == "zirzla" ] ; then
+	test -x "`which unburden-home-dir`" && unburden-home-dir
+	test -x "`which synclient`" && synclient TouchpadOff=1
+	test -x "`which nm-applet`" && nm-applet &
+	test -x "`which volumeicon`" && volumeicon &
+	test -x "`which notify-osd`" && notify-osd &
+	test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
+fi
