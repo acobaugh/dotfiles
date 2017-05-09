@@ -78,6 +78,7 @@ alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias alpine="alpine -disable-these-authenticators=GSSAPI"
 alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
+alias ap="ansible-playbook"
 
 # news server
 export NNTPSERVER='news.psu.edu'
