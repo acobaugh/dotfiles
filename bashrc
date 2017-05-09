@@ -1,5 +1,7 @@
 ## .bashrc
 
+umask 077
+
 # If running interactively, enable checkwinsize
 if [ "$PS1" ]; then
     shopt -s checkwinsize
@@ -48,7 +50,7 @@ shopt -s cmdhist
 
 # set PROMPT_COMMAND and/or PS1
 case $TERM in
-        xterm*|rxvt*|Eterm|screen)
+        xterm*|rxvt*|Eterm|screen*)
 		export PROMPT_COMMAND=prompt_command
 		prompt
                 ;;

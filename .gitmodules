@@ -19,3 +19,6 @@
 [submodule "vim/plugins/molokai"]
 	path = vim/plugins/molokai
 	url = https://github.com/tomasr/molokai.git
+[submodule "vim/bundle/nagios.vim"]
+	path = vim/bundle/nagios.vim
+	url = https://github.com/crazy-canux/nagios.vim
