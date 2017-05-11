@@ -61,6 +61,13 @@ case $TERM in
                 ;;
 esac
 
+# set TERM to something that things will recognize
+case $TERM in
+        screen-bce)
+		export TERM=xterm-256color
+                ;;
+esac
+
 # per-OS settings
 case "$(uname -s)" in
 	Linux)
