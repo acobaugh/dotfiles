@@ -51,7 +51,8 @@ setxkbmap -option "ctrl:nocaps"
 # turn off terminal bell
 xset -b
 
-exec startfluxbox
+exec fluxbox &
+fbpid=$!
 
 test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
 test -n "`which gkrellm`" && gkrellm &
@@ -67,3 +68,5 @@ if [ "$(hostname)" == "zirzla" ] ; then
 	test -x "`which notify-osd`" && notify-osd &
 	test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
 fi
+
+wait $fbpid
