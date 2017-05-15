@@ -20,7 +20,7 @@ set number
 execute pathogen#infect()
 
 set background=dark
-"set t_Co=256
+set t_Co=256
 colorscheme molokai
 syntax on
 filetype plugin indent on
