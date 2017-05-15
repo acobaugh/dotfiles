@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-base=/home/phalenor/dvdrip
+base=$HOME/dvdrip
 device='/dev/dvd'
 vbitrate="1200"
 abitrate=256
