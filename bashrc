@@ -77,8 +77,11 @@ alias ls="ls $LS_OPTIONS"
 alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias alpine="alpine -disable-these-authenticators=GSSAPI"
-alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 alias ap="ansible-playbook"
+
+if [[ "$HOME" == *"/afs/"* ]] ; then
+	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
+fi
 
 # news server
 export NNTPSERVER='news.psu.edu'
@@ -89,7 +92,11 @@ export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 ## add Go workspace bin dir
 if [ -x "$(which go 2>&1)" ] ; then
 	export GOPATH=$(go env GOPATH)
-	export PATH=$PATH:$GOPATH/bin
+	export PATH=$GOPATH/bin:$PATH
+fi
+
+if [ -d "$HOME/.yarn/bin" ] ; then
+	export PATH="$HOME/.yarn/bin:$PATH"
 fi
 
 ## GPG stuff
@@ -113,3 +120,5 @@ fi
 if [ -f "$HOME/.bash_local" ] ; then
 	. "$HOME/.bash_local" 
 fi
+
+export PATH="$HOME/.yarn/bin:$PATH"
