@@ -87,7 +87,7 @@ export NNTPSERVER='news.psu.edu'
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 
 ## add Go workspace bin dir
-if [ -x "$(which go >/dev/null 2>&1)" ] ; then
+if [ -x "$(which go 2>&1)" ] ; then
 	export GOPATH=$(go env GOPATH)
 	export PATH=$PATH:$GOPATH/bin
 fi
