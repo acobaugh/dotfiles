@@ -99,6 +99,10 @@ if [ -d "$HOME/.yarn/bin" ] ; then
 	export PATH="$HOME/.yarn/bin:$PATH"
 fi
 
+if [ -d "$HOME/zoom" ] ; then
+	export PATH="$HOME:$HOME/zoom"
+fi
+
 ## GPG stuff
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
