@@ -100,7 +100,7 @@ if [ -d "$HOME/.yarn/bin" ] ; then
 fi
 
 if [ -d "$HOME/zoom" ] ; then
-	export PATH="$HOME:$HOME/zoom"
+	export PATH="$PATH:$HOME/zoom"
 fi
 
 ## GPG stuff
