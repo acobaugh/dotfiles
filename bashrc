@@ -77,7 +77,11 @@ alias ls="ls $LS_OPTIONS"
 alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias alpine="alpine -disable-these-authenticators=GSSAPI"
+
 alias ap="ansible-playbook"
+alias apv="pass ansible/vault | ansible-playbook --vault=/bin/cat"
+alias av="pass ansible/vault | ansible --vault=/bin/cat"
+alias ave="pass ansible/vault | EDITOR=vim ansible-vault edit --vault=/bin/cat"
 
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
