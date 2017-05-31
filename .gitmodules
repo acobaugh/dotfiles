@@ -22,3 +22,6 @@
 [submodule "vim/bundle/nagios.vim"]
 	path = vim/bundle/nagios.vim
 	url = https://github.com/crazy-canux/nagios.vim
+[submodule "bin/mustache.sh"]
+	path = bin/mustache.sh
+	url = https://github.com/rcrowley/mustache.sh.git
