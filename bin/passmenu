@@ -2,6 +2,8 @@
 
 shopt -s nullglob globstar
 
+export PINENTRY_USER_DATA=gtk
+
 typeit=0
 if [[ $1 == "--type" ]]; then
 	typeit=1
@@ -22,4 +24,9 @@ if [[ $typeit -eq 0 ]]; then
 else
 	pass show "$password" | { read -r pass; printf %s "$pass"; } |
 		xdotool type --clearmodifiers --file -
+fi
+if [ $? -eq 0 ] ; then
+	notify-send -t 5 "copied $password to clipboard"
+else
+	notify-send -t 5 "ERROR: pass returned $?"
 fi
