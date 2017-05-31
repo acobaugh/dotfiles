@@ -106,7 +106,6 @@ fi
 ## GPG stuff
 export PINENTRY="$HOME/bin/my-pinentry" # wrapper
 export PINENTRY_USER_DATA="curses" # default to pinentry-curses
-alias gpg-agent="gpg-agent --pinentry-program $PINENTRY"
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
 	if [ "${gav:0:3}" != "2.1" ] ; then
