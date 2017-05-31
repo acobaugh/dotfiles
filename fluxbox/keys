@@ -38,6 +38,7 @@ Mod1 Return :ExecCommand uxterm
 Mod1 q :Close
 Mod1 m :Maximize
 Mod1 d :ExecCommand dmenu_run
+Mod1 p :ExecCommand ~/bin/passmenu
 
 OnLeftGrip Move1 :StartResizing bottomleft
 OnRightGrip Move1 :StartResizing bottomright
