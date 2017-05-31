@@ -121,6 +121,9 @@ if [ -x "$(which gpg-agent)" ] ; then
 	fi
 fi
 
+# password-store options
+export PASSWORD_STORE_X_SELECTION="primary"
+
 # source local settings
 if [ -f "$HOME/.bash_local" ] ; then
 	. "$HOME/.bash_local" 
