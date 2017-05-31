@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 # choose pinentry depending on PINENTRY_USER_DATA
 
-echo PINENTRY_USER_DATA=$PINENTRY_USER_DATA >&2
 case $PINENTRY_USER_DATA in
 gtk)
   exec pinentry-gtk-2 "$@"
-  ;;
-curses-xterm)
-  exec pinentry-curses-xterm "$@"
   ;;
 curses|*)
   exec pinentry-curses "$@"
