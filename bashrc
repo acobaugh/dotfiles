@@ -99,13 +99,24 @@ if [ -x "$(which go 2>&1)" ] ; then
 	export PATH=$GOPATH/bin:$PATH
 fi
 
+## node.js yarn
 if [ -d "$HOME/.yarn/bin" ] ; then
 	export PATH="$HOME/.yarn/bin:$PATH"
 fi
 
+## Scala build tool
+if [ -d "$HOME/sbt/latest/bin" ] ; then
+	export PATH="$HOME/sbt/latest/bin:$PATH"
+fi
+
+## Zoom
 if [ -d "$HOME/zoom" ] ; then
 	export PATH="$PATH:$HOME/zoom"
 fi
+
+## Java
+export JAVA_HOME=$(readlink -f /usr/bin/java | sed -e "s|bin/java||;s|jre/$||")
+export CLASSPATH="$JAVA_HOME/lib"
 
 ## GPG stuff
 export PINENTRY="$HOME/bin/my-pinentry" # wrapper
