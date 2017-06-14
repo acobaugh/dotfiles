@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# choose pinentry depending on PINENTRY_USER_DATA
+
+case $PINENTRY_USER_DATA in
+gtk)
+  exec pinentry-gtk-2 "$@"
+  ;;
+curses|*)
+  exec pinentry-curses "$@"
+  ;;
+esac

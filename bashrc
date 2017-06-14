@@ -99,20 +99,32 @@ if [ -x "$(which go 2>&1)" ] ; then
 	export PATH=$GOPATH/bin:$PATH
 fi
 
+## node.js yarn
 if [ -d "$HOME/.yarn/bin" ] ; then
 	export PATH="$HOME/.yarn/bin:$PATH"
 fi
 
+## Scala build tool
+if [ -d "$HOME/sbt/latest/bin" ] ; then
+	export PATH="$HOME/sbt/latest/bin:$PATH"
+fi
+
+## Zoom
 if [ -d "$HOME/zoom" ] ; then
 	export PATH="$PATH:$HOME/zoom"
 fi
 
+## Java
+export JAVA_HOME=$(readlink -f /usr/bin/java | sed -e "s|bin/java||;s|jre/$||")
+export CLASSPATH="$JAVA_HOME/lib"
+
 ## GPG stuff
+export PINENTRY="$HOME/bin/my-pinentry" # wrapper
+export PINENTRY_USER_DATA="curses" # default to pinentry-curses
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
 	if [ "${gav:0:3}" != "2.1" ] ; then
 		# We only need all this cruft if we are running something older than 2.1
-		export PINENTRY=$(which pinentry-curses)
 		gpgenvfile="$HOME/.gnupg/gpg-agent.env"
 		if [[ -e "$gpgenvfile" ]] && kill -0 $(grep GPG_AGENT_INFO "$gpgenvfile" | cut -d: -f 2) 2>/dev/null; then
 			eval "$(cat "$gpgenvfile")"
@@ -123,6 +135,9 @@ if [ -x "$(which gpg-agent)" ] ; then
 		export SSH_AUTH_SOCK   # enable gpg-agent for ssh
 	fi
 fi
+
+# password-store options
+export PASSWORD_STORE_X_SELECTION="primary"
 
 # source local settings
 if [ -f "$HOME/.bash_local" ] ; then
