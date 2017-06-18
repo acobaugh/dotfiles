@@ -25,3 +25,6 @@
 [submodule "bin/mustache.sh"]
 	path = bin/mustache.sh
 	url = https://github.com/rcrowley/mustache.sh.git
+[submodule "vim/bundle/vim-scala"]
+	path = vim/bundle/vim-scala
+	url = https://github.com/derekwyatt/vim-scala
