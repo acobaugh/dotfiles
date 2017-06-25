@@ -95,7 +95,8 @@ export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 
 ## add Go workspace bin dir
 if [ -x "$(which go 2>&1)" ] ; then
-	export GOPATH=$(go env GOPATH)
+	_GOPATH="$(go env GOPATH)"
+	export GOPATH=${_GOPATH:-$HOME/go}
 	export PATH=$GOPATH/bin:$PATH
 fi
 
