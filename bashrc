@@ -83,6 +83,9 @@ alias apv="pass ansible/vault | ansible-playbook --vault=/bin/cat"
 alias av="pass ansible/vault | ansible --vault=/bin/cat"
 alias ave="pass ansible/vault | EDITOR=vim ansible-vault edit --vault=/bin/cat"
 
+alias pssh="pssh -o StrictHostKeyChecking=no"
+alias psudo="pssh --extra-args '-t -t'"
+
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 fi
