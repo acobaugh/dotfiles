@@ -45,6 +45,8 @@ if [ -d /usr/share/fonts/artwiz-fonts ] ; then
 	xset fp+ "/usr/share/fonts/artwiz-fonts/"
 fi
 
+fc-cache -f $HOME/.fonts/
+
 # make capslock another control
 setxkbmap -option "ctrl:nocaps"
 

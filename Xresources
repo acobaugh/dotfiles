@@ -2,8 +2,8 @@ xterm*foreground:	#ffffff
 xterm*background:	#000000
 xterm*saveLines:	1000
 xterm*cursorColor:	#ff0000
-!xterm*faceName:         Inconsolata:size=12
-xterm*faceName:		Terminus:size=12
+xterm*faceName:         Inconsolata:size=12
+!xterm*faceName:		Terminus:size=12
 xterm*scaleHeight:	1.1
 xterm*visualBell:	true
 
