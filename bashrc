@@ -76,7 +76,7 @@ alias e="exit"
 alias ls="ls $LS_OPTIONS"
 alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
-alias alpine="alpine -disable-these-authenticators=GSSAPI"
+#alias alpine="alpine"
 
 alias ap="ansible-playbook"
 alias apv="pass ansible/vault | ansible-playbook --vault=/bin/cat"
