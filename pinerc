@@ -148,7 +148,7 @@ pruning-rule=
 folder-reopen-rule=yes-yes
 
 # Style that MESSAGE INDEX is displayed in when threading.
-threading-display-style=subj1
+threading-display-style=mutt
 
 # Style of THREAD INDEX or default MESSAGE INDEX when threading.
 threading-index-style=
@@ -583,7 +583,7 @@ normal-background-color=000,000,000
 reverse-foreground-color=255,255,255
 reverse-background-color=068,068,068
 title-foreground-color=000,000,000
-title-background-color=174,000,174
+title-background-color=135,000,255
 title-closed-foreground-color=
 title-closed-background-color=
 folder-foreground-color=
@@ -616,8 +616,8 @@ special-text-foreground-color=
 special-text-background-color=
 prompt-foreground-color=
 prompt-background-color=
-header-general-foreground-color=
-header-general-background-color=
+header-general-foreground-color=064,064,064
+header-general-background-color=transparent
 index-to-me-foreground-color=
 index-to-me-background-color=
 index-important-foreground-color=
