@@ -1,0 +1,125 @@
+#!/bin/sh
+
+########################################################
+## ez-pine-gpg-encrypt                                ##
+## part of ez-pine-gpg v0.4h // gpg filters for pine  ##
+## http://Business-PHP.com/opensource/ez-pine-gpg/    ##
+## (c) 13 Feb 2004, Atom Emet                         ##
+## (c) 16 Dec 2004, Atom Emet                         ##
+## Atom {at} Business-PHP.com                         ##
+## Distributed under the GNU General Public License   ##
+## http://www.gnu.org/copyleft/gpl.html               ##
+##                                                    ##
+##  ################################################  ##
+##                                                    ##
+## This program is free software; you can             ##
+## redistribute it and/or modify it under the terms   ##
+## of the GNU General Public License as published by  ##
+## the Free Software Foundation; either version 2 of  ##
+## the License, or (at your option) any later         ##
+## version.                                           ##
+##                                                    ##
+## This program is distributed in the hope that it    ##
+## will be useful, but WITHOUT ANY WARRANTY; without  ##
+## even the implied warranty of MERCHANTABILITY or    ##
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     ##
+## General Public License for more details.           ##
+##                                                    ##
+## You should have received a copy of the GNU         ##
+## General Public License along with this program;    ##
+## if not, write to the                               ##
+## Free Software Foundation, Inc.,                    ##
+## 59 Temple Place - Suite 330,                       ##
+## Boston, MA  02111-1307, USA.                       ##
+########################################################
+
+#########################################
+## PATH is configured during installation
+PATH=/usr/sbin:$HOME/bin
+
+###################
+## clear the screen
+clear 1>&2
+
+###############################################################
+## display notices and give the user an opportunity to bail out
+##
+echo '#########################################################################' 1>&2
+echo '## This message is being processed by ez-pine-gpg v0.4h                ##' 1>&2
+echo '## http://Business-PHP.com/opensource/ez-pine-gpg/                     ##' 1>&2
+echo '## (c) 13 Feb 2004, Atom Emet                                          ##' 1>&2
+echo '## (c) 16 Dec 2004, Atom Emet                                          ##' 1>&2
+echo '## Distributed under the GNU General Public License                    ##' 1>&2
+echo '## See source for details                                              ##' 1>&2
+echo '##                                                                     ##' 1>&2
+echo '##         THIS FILTER ENCRYPTS BUT DOES NOT SIGN YOUR MESSAGE!        ##' 1>&2
+echo '##                                                                     ##' 1>&2
+echo '##      (May not be safe for BCC recipients -- see documentation)      ##' 1>&2
+echo '##                                                                     ##' 1>&2
+echo '## Are you sure you want to send this message without signing it?      ##' 1>&2
+echo '## Press ENTER to continue or ^C to cancel.                            ##' 1>&2
+echo '#########################################################################' 1>&2
+
+####################################################
+## we only need an acknowledgment: hit <ENTER> or ^C
+## of course, some loser will type in their passphrase
+## so we want it to NOT echo and we want to unset it
+## hopefully this will be unset before their
+## passphrase is written to disk cache
+## the stty commmand also compensates for an un-acknowledged display bug in pine
+##
+stty -f /dev/tty -echo
+read answer 0< /dev/tty
+answer=
+stty -f /dev/tty echo
+
+#######################################
+## function to gracefully handle errors
+## if something goes wrong display an error message
+## that includes the recipients
+##
+gpg_failed () {
+    echo '#########################################################################' 1>&2
+    echo '##      Something went wrong     ####     See above for more info      ##' 1>&2
+    echo '#########################################################################' 1>&2
+    echo "## Tried encrypting to: <user>`printf '\011'`(key ID)" 1>&2
+    for each_recipient in ${@}
+    do
+	[ "`echo ${each_recipient} | egrep '@'`" ] && echo "##     <${each_recipient}>`printf '\011'`(`gpg --with-colons --list-keys ${each_recipient} 2> /dev/null | egrep ^pub | head -n 1 | cut -d : -f 5`)" 1>&2
+    done
+    echo '#########################################################################' 1>&2
+    ########################
+    ## unset these variables
+    recipients= ; each_recipient=
+    #############################################################################
+    ## a non-zero exit status will force pine to recognize that the script failed
+    ## forcing an acknowledgment here will leave diagnostic info visible to user
+    echo '/////////////////////// Press <ENTER> to continue ///////////////////////' 1>&2
+    read dead < /dev/tty
+    clear 1>&2
+    exit 1
+}
+
+###############################################
+## recipients are passed as arguments from pine
+## and processed by "ez-pine-gpg-helper-recipient"
+## if a key can't be found for an address
+## then bail out with an error message
+##
+recipients=`ez-pine-gpg-helper-recipient ${@}` || gpg_failed ${@}
+
+####################################################
+## send the message from STDIN through gpg to STDOUT
+## if it fails then bail out with an error message
+##
+gpg -ea ${recipients} || gpg_failed ${recipients}
+
+########################################
+## unset variables we don't need anymore
+##
+recipients= ; each_recipient=
+
+#############
+## we're done
+##
+exit 0

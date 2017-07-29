@@ -1,0 +1,100 @@
+#!/bin/sh
+
+# $Id: ppf_mime_decrypt,v 1.9 2010/07/28 00:33:32 dougb Exp $
+
+# Please see detailed Copyright below
+
+PATH=/bin:/usr/bin:/home/acobaugh/bin//bin ; export PATH
+umask 077
+
+clear 1>&2
+
+fail_common () {
+	echo '' >&2
+	echo '-------------------------- Sleeping for 10 seconds -------------------------' >&2
+	sleep 10
+	exit 1
+}
+
+: ${TMPDIR:=/tmp}
+TDIR=`mktemp -d ${TMPDIR}/ppf_mime_decrypt.XXXXXXXX` ||
+    {	echo '' >&2
+	echo "$0: mktemp failed, exiting" >&2
+	fail_common;}
+
+trap "rm -f ${TDIR}/* ; rmdir ${TDIR} ; exit" 0 1 2 15
+
+pgp_failed () {
+	echo "$0: Your pgp command failed" >&2
+	echo '' >&2
+	cat ${TDIR}/stderr >&2
+	fail_common
+}
+
+csplit -s -k -f ${TDIR}/f - '/^Content-Type: /' '{9}' 2>/dev/null
+
+# Reliably find the encrypted file
+cfile=`grep -l '^-----BEGIN PGP MESSAGE-----$' ${TDIR}/f*`
+case "$cfile" in
+'')	echo 'No PGP encrypted message found' > ${TDIR}/stderr
+	pgp_failed
+	;;
+esac
+
+/usr/bin/gpg2 -o${TDIR}/message --decrypt $cfile 2>${TDIR}/stderr || pgp_failed
+
+# Output will be 19 characters total so adjust status message length accordingly
+date=`date +"%Y-%m-%d %H:%M:%S"`
+
+# Remove the results of the password request, and give some spacing
+# to make this version of the message look more like "normal" ones.
+{ echo '' ; echo ''
+
+egrep -hi '^(From|Resent-From|To|Reply-To|Resent-To|Cc|Resent-cc|Bcc|Newsgroups|Followup-To|Date|Resent-Date|Organi[sz]ation|X-Mailer|User-Agent|Subject|Resent-Subject):' ${TDIR}/f0[01]
+echo ''
+echo '---------------------------- PGP Command Output ----------------------------'
+grep -v '^$' ${TDIR}/stderr
+echo "-------------- Begin PGP Message Decrypted $date -------------"
+
+# Remove the MIME headers from the message, and display it as a side effect
+sed -e 's/^=2E/./' -e 's/^=2D/-/' -e 's/^=46/F/' -e 's/^=66/f/' ${TDIR}/message |
+sed ':a
+N
+$!ba
+s/=\n//g' |
+sed -e '1,4 s/^Content-.*/76trombones/' -e '1,4 s/^[ 	].*[a-z]=.*/76trombones/' -e '/^76trombones$/d' \
+    -e 's,=20, ,g' -e 's,=3D,=,g'
+
+echo ''
+echo "--------------- End PGP Message Decrypted $date --------------"
+echo ''
+echo '--------------------------- Type q to exit pager ---------------------------';
+} | LESS= less --CLEAR-SCREEN --tilde
+
+clear 1>&2
+
+exit 0
+
+#  Copyright (c) 2003-2010 Douglas Barton
+#  All rights reserved.
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#  SUCH DAMAGE.

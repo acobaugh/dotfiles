@@ -1,0 +1,87 @@
+#!/bin/sh
+
+# $Id: configure,v 1.9 2010/07/28 00:38:44 dougb Exp $
+
+# Please see detailed Copyright below
+
+PATH=/bin:/usr/bin ; export PATH
+umask 077
+
+# This is NOT a GNU autoconf-generated thingy. But, the general idea
+# is a useful one, so I'm stealing it. :)
+
+usage () {
+	echo ''
+	echo "Usage: $0 [--help | [--prefix=/path] [--gnupg=[gpg|gpg2]]]"
+	echo ''
+}
+
+while [ -n "${1}" ]; do
+	case "${1}" in
+	--help)	usage; exit 0 ;;
+	--prefix=*) PREFIX=${1#--prefix=} ;;
+	--gnupg=*) gnupg=${1#--gnupg=} ;;
+	*)	usage; exit 1 ;;
+	esac
+	shift
+done
+
+case "${PREFIX}" in
+'')	PREFIX=/usr/local ;;
+esac
+
+echo ''
+echo "Using ${PREFIX} as the prefix"
+echo ''
+
+if [ ! -d "${PREFIX}/libexec" ]; then
+	echo ''
+	echo "${PREFIX}/libexec does not exist. It will be created during make install."
+	echo ''
+fi
+
+for bin in $gnupg gpg2 gpg; do
+	for dir in ${PREFIX}/bin /usr/bin /bin /opt/bin /opt/local/bin; do
+		if [ -x "${dir}/${bin}" ]; then
+			if ${dir}/${bin} --version >/dev/null 2>&1; then
+				gpg="${dir}/${bin}"
+				echo "$gpg found"
+				echo ''
+				break 2
+			fi
+		fi
+	done
+done
+
+if [ -z "$gpg" ]; then
+	echo "Configuration failed, no gpg found on this system"
+	exit 1
+fi
+
+sed -e "s#@@PREFIX@@#${PREFIX}#g" -e "s#@@GPG@@#${gpg}#g" Makefile.in > Makefile
+
+exit 0
+
+#  Copyright (c) 2003-2010 Douglas Barton
+#  All rights reserved.
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#  SUCH DAMAGE.
