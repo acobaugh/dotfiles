@@ -1,0 +1,159 @@
+#!/bin/sh
+
+########################################################
+## ez-pine-gpg-incoming                               ##
+## part of ez-pine-gpg v0.4h // gpg filters for pine  ##
+## http://Business-PHP.com/opensource/ez-pine-gpg/    ##
+## (c) 13 Feb 2004, Atom Emet                         ##
+## (c) 16 Dec 2004, Atom Emet                         ##
+## Atom {at} Business-PHP.com                         ##
+## Distributed under the GNU General Public License   ##
+## http://www.gnu.org/copyleft/gpl.html               ##
+##                                                    ##
+##  ################################################  ##
+##                                                    ##
+## This program is free software; you can             ##
+## redistribute it and/or modify it under the terms   ##
+## of the GNU General Public License as published by  ##
+## the Free Software Foundation; either version 2 of  ##
+## the License, or (at your option) any later         ##
+## version.                                           ##
+##                                                    ##
+## This program is distributed in the hope that it    ##
+## will be useful, but WITHOUT ANY WARRANTY; without  ##
+## even the implied warranty of MERCHANTABILITY or    ##
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     ##
+## General Public License for more details.           ##
+##                                                    ##
+## You should have received a copy of the GNU         ##
+## General Public License along with this program;    ##
+## if not, write to the                               ##
+## Free Software Foundation, Inc.,                    ##
+## 59 Temple Place - Suite 330,                       ##
+## Boston, MA  02111-1307, USA.                       ##
+########################################################
+
+#########################################
+## PATH is configured during installation
+PATH=/usr/sbin:$HOME/bin
+
+###################
+## clear the screen
+clear 1>&2
+
+echo '#########################################################################' 1>&2
+echo '## This message is being processed by ez-pine-gpg v0.4h                ##' 1>&2
+echo '## http://Business-PHP.com/opensource/ez-pine-gpg/                     ##' 1>&2
+echo '## (c) 13 Feb 2004, Atom Emet                                          ##' 1>&2
+echo '## (c) 16 Dec 2004, Atom Emet                                          ##' 1>&2
+echo '## Distributed under the GNU General Public License                    ##' 1>&2
+echo '## See source for details                                              ##' 1>&2
+echo '#########################################################################' 1>&2
+
+####################################################
+## if things go wrong, this notice will be displayed
+## along with the incoming message
+##
+gpg_failed () {
+    echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    echo '%%%%%%%%%%%% Something went wrong --- See above for more info %%%%%%%%%%%%'
+    echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    #############################
+    ## if the message is textmode
+    if [ "${textmode}" = 'yes' ]
+    then
+        ############################################################
+        ## display the input and un-dash-escape any clearsigned text
+        echo "${input}" | sed '/^-----BEGIN PGP SIGNED MESSAGE-----/,/^-----BEGIN PGP SIGNATURE-----/ s/^- -/-/'
+    elif [ "${textmode}" = 'no' ] && [ "${stdout}" ]
+    then
+	#######################################
+	## if the message seems to be encrypted
+	## and gpg produces STDOUT display the decrypted message
+	echo "${stdout}"
+    else
+	##############################################################################
+	## if we're here then the message was encrypted but not successfully decrypted
+	## just display the input
+	echo "${input}"
+    fi
+    #############################################
+    ## unset variables that we don't need anymore
+    input= ; stdout= ; textmode=
+    ############################################
+    ## just because something went wrong doesn't
+    ## mean that pine needs to know about it.
+    ## a zero exit status makes pine happy
+    clear 1>&2
+    exit 0
+}
+
+###########################################
+## do the right thing even if ^C is pressed
+##
+trap 'gpg_failed' 2
+
+############################################################
+## create a variable "input" containing STDIN to this script
+##
+input="`cat`"
+
+#####################################################
+## test if the message in textmode or binary/armored?
+if echo "${input}" | gpg --list-only --list-packets 2>&1 | egrep -q '^[[:space:]]+mode t'
+then
+    export textmode=yes
+else
+    export textmode=no
+fi
+
+##############################################################
+## echo a message that let's us know ez-pine-gpg is being used
+## and display the machine name and current date/time
+##
+echo '##########################################################################'
+echo '## ez-pine-gpg v0.4h ## http://Business-PHP.com/opensource/ez-pine-gpg/'
+echo "## `date` ## `uname -n`"
+echo '##########################################################################'
+
+#################################################
+## display some information about the the message
+## we're only concerned with STDERR
+echo "${input}" | gpg --list-only > /dev/null
+
+###############################################
+## the variable "stdout" is the output from gpg
+## notices from gpg STDERR are redirected to STDOUT and displayed
+## if gpg fails then bail out with an error message
+##
+{ stdout="`echo "${input}" | gpg --decrypt`" || gpg_failed ; } 2>&1
+
+#############################################
+## figure out how to best display the message
+##
+if [ "${textmode}" = 'no' ]
+then
+    ########################################################
+    ## if the message is armored display the output from gpg
+    echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    echo '%%%%%%%%%%%%%%%%%%%%%%%% OpenPGP ENCODED MESSAGE %%%%%%%%%%%%%%%%%%%%%%%%%'
+    echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    echo "${stdout}"
+else
+    ##########################################################################################
+    ## if the message is clearsigned (or malformed?) display the input and un-dash-escape text
+    echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    echo '%%%%%%%%%%%%%%%%%%%%%%%%% OpenPGP SIGNED MESSAGE %%%%%%%%%%%%%%%%%%%%%%%%%'
+    echo '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    echo "${input}" | sed '/^-----BEGIN PGP SIGNED MESSAGE-----/,/^-----BEGIN PGP SIGNATURE-----/ s/^- -/-/'
+fi
+
+###########################
+## get rid of the variables
+## containing the message
+input= ; stdout= ; textmode=
+
+#############
+## we're done
+##
+exit 0

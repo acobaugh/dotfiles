@@ -78,7 +78,9 @@ feature-list=enable-fast-recent-test,
 	combined-subdirectory-display,
 	enable-incoming-folders,
 	enable-incoming-folders-checking,
-	incoming-checking-includes-total
+	incoming-checking-includes-total,
+	expanded-view-of-folders,
+	single-column-folder-list
 
 # Alpine executes these keys upon startup (e.g. to view msg 13: i,j,1,3,CR,v)
 initial-keystroke-list=
@@ -87,7 +89,7 @@ initial-keystroke-list=
 default-composer-hdrs=
 
 # Add these customized headers (and possible default values) when composing
-customized-hdrs=
+customized-hdrs=From: Andy Cobaugh <atc135@psu.edu>
 
 # When viewing messages, include this list of headers
 viewer-hdrs=
@@ -114,7 +116,7 @@ fcc-name-rule=
 # Sets presentation order of messages in Index. Choices:
 # Subject, From, Arrival, Date, Size, To, Cc, OrderedSubj, Score, and Thread.
 # Order may be reversed by appending /Reverse. Default: "Arrival".
-sort-key=
+sort-key=tHread
 
 # #Sets presentation order of threads in thread index. Choices:
 #arrival, and thread.
@@ -146,7 +148,7 @@ pruning-rule=
 folder-reopen-rule=yes-yes
 
 # Style that MESSAGE INDEX is displayed in when threading.
-threading-display-style=
+threading-display-style=mutt
 
 # Style of THREAD INDEX or default MESSAGE INDEX when threading.
 threading-index-style=
@@ -266,14 +268,16 @@ use-only-domain-name=
 
 # This variable takes a list of programs that message text is piped into
 # after MIME decoding, prior to display.
-display-filters=
+display-filters=_LEADING("-----BEGIN PGP")_ $HOME/bin/ez-pine-gpg-incoming
 
 # This defines a program that message text is piped into before MIME
 # encoding, prior to sending
-sending-filters=
+sending-filters=$HOME/bin/ez-pine-gpg-sign-and-encrypt _INCLUDEALLHDRS_ _RECIPIENTS_,
+	$HOME/bin/ez-pine-gpg-encrypt _RECIPIENTS_,
+	$HOME/bin/ez-pine-gpg-sign _INCLUDEALLHDRS_
 
 # A list of alternate addresses the user is known by
-alt-addresses=
+alt-addresses=atc135@psu.edu
 
 # A list of keywords for use in categorizing messages
 keywords=
@@ -576,10 +580,10 @@ titlebar-color-style=
 # Choose: black, blue, green, cyan, red, magenta, yellow, or white.
 normal-foreground-color=255,255,255
 normal-background-color=000,000,000
-reverse-foreground-color=
-reverse-background-color=
+reverse-foreground-color=255,255,255
+reverse-background-color=068,068,068
 title-foreground-color=000,000,000
-title-background-color=174,000,174
+title-background-color=135,000,255
 title-closed-foreground-color=
 title-closed-background-color=
 folder-foreground-color=
@@ -612,8 +616,8 @@ special-text-foreground-color=
 special-text-background-color=
 prompt-foreground-color=
 prompt-background-color=
-header-general-foreground-color=
-header-general-background-color=
+header-general-foreground-color=064,064,064
+header-general-background-color=transparent
 index-to-me-foreground-color=
 index-to-me-background-color=
 index-important-foreground-color=

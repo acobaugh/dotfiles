@@ -31,3 +31,6 @@
 [submodule "vim/bundle/vim-ft-go"]
 	path = vim/bundle/vim-ft-go
 	url = https://github.com/google/vim-ft-go.git
+[submodule "vim/bundle/vim-terraform"]
+	path = vim/bundle/vim-terraform
+	url = https://github.com/hashivim/vim-terraform

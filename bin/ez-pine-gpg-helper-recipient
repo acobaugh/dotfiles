@@ -1,0 +1,112 @@
+#!/bin/sh
+
+########################################################
+## ez-pine-gpg-helper-recipient                       ##
+## part of ez-pine-gpg v0.4h // gpg filters for pine  ##
+## http://Business-PHP.com/opensource/ez-pine-gpg/    ##
+## (c) 13 Feb 2004, Atom Emet                         ##
+## (c) 16 Dec 2004, Atom Emet                         ##
+## Atom {at} Business-PHP.com                         ##
+## Distributed under the GNU General Public License   ##
+## http://www.gnu.org/copyleft/gpl.html               ##
+##                                                    ##
+##  ################################################  ##
+##                                                    ##
+## This program is free software; you can             ##
+## redistribute it and/or modify it under the terms   ##
+## of the GNU General Public License as published by  ##
+## the Free Software Foundation; either version 2 of  ##
+## the License, or (at your option) any later         ##
+## version.                                           ##
+##                                                    ##
+## This program is distributed in the hope that it    ##
+## will be useful, but WITHOUT ANY WARRANTY; without  ##
+## even the implied warranty of MERCHANTABILITY or    ##
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     ##
+## General Public License for more details.           ##
+##                                                    ##
+## You should have received a copy of the GNU         ##
+## General Public License along with this program;    ##
+## if not, write to the                               ##
+## Free Software Foundation, Inc.,                    ##
+## 59 Temple Place - Suite 330,                       ##
+## Boston, MA  02111-1307, USA.                       ##
+########################################################
+
+#########################################
+## PATH is configured during installation
+PATH=/usr/sbin:$HOME/bin
+
+########################################################################
+## make sure all specified recipients have a valid key in the keyring ##
+########################################################################
+
+#####################################################
+## clear out variables that might have been inherited
+recipient= ; recipient_list=
+
+#########################################
+## this function checks if each recipient
+## has a valid key in the keyring
+## if a valid key is not found it will try to
+## find a reasonable substitute
+##
+valid_recipient () {
+    recipient=`echo ${1} | tr -d '\r'`
+    if gpg --batch --list-public-keys ${recipient} 2>&- 1>&-
+    then
+	## if a valid public key is found that's good
+	echo "-r ${recipient}"
+	exit 0
+    elif [ "`echo ${recipient} | egrep '.*-.*@'`" ]
+    then
+	echo '/////////////////////////////////////////////////////////////////////////' 1>&2
+	echo "// No public key found in keyring for <${recipient}>" 1>&2
+	recipient=`echo ${recipient} | sed 's/-.*@/@/'`
+	echo "// Should I try encrypting to a key for <${recipient}>? [Y/n]: " | tr -d '\n' 1>&2
+	read answer 0< /dev/tty
+	echo 1>&2
+	if [ "`echo "${answer}" | egrep -i n`" ]
+	then
+	    ## don't try to substitute the email address
+	    exit 3
+	elif gpg --batch --list-public-keys ${recipient} 2>&- 1>&-
+	then
+	    ## a valid public key is found after modification
+	    echo "-r ${recipient}"
+	    exit 0
+	fi
+    fi
+    ## unable to find a valid key -- bail out
+    echo '/////////////////////////////////////////////////////////////////////////' 1>&2
+    echo "//  No valid public key found in keyring for <${recipient}>" 1>&2
+    echo "// Please import a valid key for <${recipient}>" 1>&2
+    echo '/////////////////////////////////////////////////////////////////////////' 1>&2
+    exit 3
+}
+
+###############################################
+## for each address that's given as an argument
+## make sure a valid key exists in the keyring
+##
+for n in ${@}
+do
+    recipient_list="${recipient_list} `valid_recipient ${1}`" || exit 3
+    shift
+done
+
+#########################################
+## return a list of addresses that have a
+## valid public key in the keyring
+##
+echo "${recipient_list}"
+
+########################################
+## unset variables we don't need anymore
+##
+recipient= ; recipient_list=
+
+#######
+## exit
+##
+exit 0

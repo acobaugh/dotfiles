@@ -1,0 +1,159 @@
+#!/bin/sh
+
+# $Id: ppf_mime,v 1.11 2010/07/28 00:20:06 dougb Exp $
+
+# Please see detailed Copyright below
+
+PATH=/bin:/usr/bin:/home/acobaugh/bin//bin ; export PATH
+umask 077
+
+: ${TMPDIR:=/tmp}
+TDIR=`mktemp -d ${TMPDIR}/ppf_mime.XXXXXXXX` ||
+    {	echo '' >&2
+	echo "$0: mktemp failed, exiting" >&2
+	echo '' >&2
+	exit 1;}
+
+trap "rm -f ${TDIR}/* ; rmdir ${TDIR} ; exit" 0 1 2 15
+
+pgp_failed () {
+	echo "$0: Your pgp command failed" >&2
+	echo '' >&2
+	cat ${TDIR}/stderr >&2
+	exit 1
+}
+
+cat - >${TDIR}/raw
+
+set_boundary () {
+	boundary="${1##*boundary=}"
+	boundary="${boundary#\"}"
+	boundary="${boundary%%[:;\"]*}"
+}
+
+space_twiddle=space_twiddle
+ll='-e $d'
+
+while read line; do
+	case "$line" in
+	*micalg\=[Pp][Gg][Pp]*boundary\=*)
+			set_boundary "$line"
+			if [ -z "$apple_ver" ]; then
+				break
+			else
+				micalg=true
+			fi ;;
+	*boundary\=*)	if [ -z "$apple_ver" ]; then
+				set_boundary "$line"
+			else
+				[ -z "$micalg" ] && set_boundary "$line"
+			fi ;;
+	*delsp\=yes*)	delsp=delsp ; break ;;
+	*Apple\ Message\ framework*)
+			apple_ver="${line##* v}"
+			apple_ver="${apple_ver%\)}"
+			apple_ver="${apple_ver%\.*}"
+			[ $apple_ver -ge 929 ] && unset space_twiddle
+			;;
+	User-Agent\:\ KMail*) unset space_twiddle ;;
+	X-Mailer\:\ exmh*) unset space_twiddle ;;
+	X-Mailer\:\ Mulberry*|X-Mailer\:\ The\ Bat*) rlcm="-e \$s/.\$//" ; unset ll ;;
+	*micalg\=[Pp][Gg][Pp]*)	micalg=true ;;
+	--${boundary}*)	[ -n "$micalg" -a -z "$apple_ver" ] && break ;;
+	-----BEGIN\ PGP*) break ;;	# Last gasp if Apple but not delsp
+	esac
+done < ${TDIR}/raw
+
+if [ -z "$boundary" ]; then
+	echo '' >&2
+	echo 'This does not appear to be a MIME-encoded message' >&2
+	echo '' >&2
+	exit 1
+fi
+
+csplit -s -k -f ${TDIR}/f ${TDIR}/raw "/--${boundary}/" '{9}' 2>/dev/null
+
+# Reliably find the message body and signature
+sigfile=`grep -l '^-----BEGIN PGP SIGNATURE-----$' ${TDIR}/f*`
+if [ -z "$sigfile" ]; then
+	# The Bat
+	sigfile=`grep -l '^-----BEGIN PGP MESSAGE-----$' ${TDIR}/f*`
+
+	if [ -z "$sigfile" ]; then
+		echo 'No PGP signature found' > ${TDIR}/stderr
+		pgp_failed
+	fi
+fi
+
+# Assuming the signature is in body part < 10 (which is very likely)
+filenum="${sigfile##*f0}"
+msgfile="f0$(( $filenum - 1 ))"
+
+# The first and last lines of the file are added by MIME encoding,
+# so they must be stripped in order for the signature to verify.
+# The other sed patterns canonicalize the EOL characters per RFC 3156.
+if [ -n "$space_twiddle" ]; then
+	sed -e '1d' $ll -e 's,$,,g' -e 's,[ ]*$,,' -e 's,$,,g' $rlcm ${TDIR}/$msgfile >${TDIR}/message
+
+	# The Bat! and Mulberry clients need the last linefeed character removed, which sed cannot do
+	if [ -n "$rlcm" ]; then
+		awk 'NR > 1 { print h } { h = $0 } END { printf "%s", $0 }' ${TDIR}/message > ${TDIR}/awked
+		mv ${TDIR}/awked ${TDIR}/message
+	fi
+else
+	sed -e '1d' -e '$d' -e 's,$,,g' -e 's,$,,g' ${TDIR}/$msgfile >${TDIR}/message
+fi
+
+/usr/bin/gpg2 --verify $sigfile ${TDIR}/message 2>${TDIR}/stderr || pgp_failed
+
+# Output will be 19 characters total so adjust status message length accordingly
+date=`date +"%Y-%m-%d %H:%M:%S"`
+
+egrep -hi '^(From|Resent-From|To|Reply-To|Resent-To|Cc|Resent-cc|Bcc|Newsgroups|Followup-To|Date|Resent-Date|Organi[sz]ation|X-Mailer|User-Agent|Subject|Resent-Subject):' ${TDIR}/f0[01]
+echo ''
+echo '---------------------------- PGP Command Output ----------------------------'
+grep -v '^$' ${TDIR}/stderr
+echo "----------- Begin PGP Signed Message Verified $date ----------"
+
+# Remove the MIME headers from the message, and display it as a side effect
+if [ -z "$delsp" ]; then
+sed -e 's/^=2E/./' -e 's/^=2D/-/' -e 's/^=46/F/' -e 's/^=66/f/' ${TDIR}/message |
+sed ':a
+N
+$!ba
+s/=\n//g' |
+sed -e '1,4 s/^Content-.*/76trombones/' -e '1,4 s/^[ 	].*[a-z]=.*/76trombones/' -e '/^76trombones$/d' \
+    -e 's,=20, ,g' -e 's,=3D,=,g'
+else
+sed -e '1,4 s/^Content-.*/76trombones/' -e '1,4 s/^[ 	].*[a-z]=.*/76trombones/' -e '/^76trombones$/d' \
+    -e 's,=20, ,g' -e 's,=3D,=,g' ${TDIR}/message
+fi
+
+echo ''
+echo "------------ End PGP Signed Message Verified $date -----------"
+
+exit 0
+
+#  Copyright (c) 2003-2010 Douglas Barton
+#  All rights reserved.
+#
+#  Redistribution and use in source and binary forms, with or without
+#  modification, are permitted provided that the following conditions
+#  are met:
+#  1. Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+#  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#  ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+#  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+#  DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+#  OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+#  HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+#  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+#  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#  SUCH DAMAGE.
