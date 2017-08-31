@@ -1,0 +1,21 @@
+dotfiles=""
+plainfiles=""
+test -f "$BASE/dotfiles/config" && . "$BASE/dotfiles/config"
+
+link() {
+	target=$1
+	linkname=$2
+
+	if [ ! -d "$(dirname "$linkname")" ] ; then
+		echo "   mkdir $(dirname "$linkname")"
+		mkdir -p "$(dirname "$linkname")"
+	fi
+	if [ "$(readlink -f "$linkname")" = "$(readlink -f "$target")" ] ; then
+		echo "  Already up to date"
+	else
+		out=$(ln -sf "$target" "$linkname" 2>&1)
+		test -n "$out" && echo "  $out"
+	fi
+}
+
+

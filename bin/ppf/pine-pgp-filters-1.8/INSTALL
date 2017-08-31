@@ -1,0 +1,152 @@
+# $Id: INSTALL,v 1.13 2010/07/29 19:57:03 dougb Exp $
+
+Before you start you will need the following:
+/bin/sh, mktemp, [e]grep, less, sed, tr, cat, csplit, and the latest version
+of GnuPG. ppf_mime requires awk to verify messages from The Bat! and Mulberry.
+If you are a FreeBSD user you will find GnuPG in the ports collection at
+ports/security/gnupg[1], and the rest of the binaries installed by default.
+
+The configure script will first look for your gpg2 binary in PREFIX/bin,
+/usr/bin, /bin, /opt/bin, and /opt/local/bin; in that order. It will then
+repeat the search for gpg 1.x if version 2 is not found. The option exists
+to specify one version if you have both installed. The default PREFIX is
+/usr/local.
+
+These scripts have been tested with Alpine 2.00. Previous versions were
+developed with Pine 4.64, and almost certainly remain compatible with it.
+
+Installation is quite simple:
+
+./configure [--help | [--prefix=/path] [--gnupg=[gpg|gpg2]]]
+make install
+
+The Makefile will install the scripts to PREFIX/libexec. To make use of them
+you will have to modify your Alpine config. First make a backup of your config,
+then start Alpine and type M for "Menu" (if you're not already there), S for
+"Setup," and C for "Config." Assuming that /usr/local is your PREFIX, to verify
+and/or decrypt files put the following in your display-filters option, exactly
+as shown:
+
+_LEADING("-----BEGIN PGP SIGNED ")_ /usr/local/libexec/ppf_verify _TMPFILE_
+_LEADING("-----BEGIN PGP MESSAGE")_ /usr/local/libexec/ppf_decrypt _TMPFILE_
+
+I highly recommend using _LEADING() instead of _BEGINNING() since it is a
+lot faster for Alpine to scan just one line for filters than every line of
+every message.
+
+If you want to verify or decrypt pgp messages that occur other places in the
+text of an e-mail just pipe the message to 'gpg --verify' (for example).
+
+To sign and/or encrypt messages that you send, put the following in your
+sending-filters option:
+
+/usr/local/libexec/ppf_sign _INCLUDEALLHDRS_
+/usr/local/libexec/ppf_encrypt _INCLUDEALLHDRS_ _RECIPIENTS_
+
+To sign or encrypt a file, when you choose ^X to send, you should see the
+following options:
+
+Send message (unfiltered)?
+ ? Help         Y [Yes]         ^P Prev Filter  ^R Background
+^C Cancel       N No            ^N Next Filter
+
+To sign or encrypt, use the ^N or ^P options to rotate to the desired filter,
+then type y (for Yes), or just hit Enter. If you regularly sign or encrypt
+your mail, you might want to choose the "compose-send-offers-first-filter"
+option from the Composer Preferences menu.
+
+*** WARNING ***
+Because of the way Alpine handles attachments it is not possible to encrypt
+or sign them using a filter. If you need privacy or verification for your
+attachments that must be done outside of Alpine.
+
+Other options you may find useful are:
+enable-8bit-esmtp-negotiation
+character-set=iso-8859-1
+
+Be sure to read the help for those options, and test them out in your
+environment before sending anything critical. Of course, iso-8859-1 is
+not going to be an appropriate choice for everyone, you'll have to weigh
+your alternatives.
+
+If you use a different character set, you should make sure that the setting
+in Alpine and the setting in your terminal emulator match. You might also
+want to consider using the display-charset option in your gpg.conf file.
+
+You might also consider adding an OpenPGP header either in the general
+Customized Headers field, or in a role configuration. While the header is
+not fully standardized it is fairly common and a lot of mail clients know
+how to use it. This is especially useful if you have more than one key.
+Mine looks like this:
+OpenPGP: id=1A1ABC84
+
+If this header is present it will be preferred for the signing key in
+the ppf_encrypt and ppf_sign filters.
+
+Another way to accomplish this on a general basis is the "default-key" option
+in ~/.gnupg/gpg.conf. You can then specify an OpenPGP header on a per-role
+basis if necessary. You might also want to consider adding an "encrypt-to" line
+in your gpg.conf file with your primary encryption key ID. This will insure that
+you can always read messages that you encrypt.
+
+Finally, in order to use the ppf_mime "filters" to verify messages whose pgp
+signatures are attached to the message with MIME type application/pgp, you
+will need to choose the enable-unix-pipe-cmd Config option, since there is no
+way to do this task with a real filter at this time.
+
+To verify the signature of a MIME encoded e-mail, choose the | (Pipe) option,
+then ^W for Raw Text, then type in the filter name:
+
+Pipe RAW message 1 to : ppf_mime
+^G Help                       ^W Shown Text   ^R With Delimiter
+^C Cancel      Ret Accept     ^Y Free Output
+
+While this procedure is a little cumbersome the first time through, the good
+news is that Alpine will offer these choices as the defaults for subsequent
+invocations of the | command during that same session. Once you've viewed
+the processed message output, just type E (Exit Viewer) and you're back to the
+message view you were in previously.
+
+To use the ppf_mime_decrypt script you use the same procedure, except that
+you also need to toggle the ^Y option which normally reads "Free Output"
+as above to read "Capture Output." This is necessary to deal with what
+appears to be a bug in Alpine that prevents entering the password at the
+GnuPG prompt. The output of the command is piped to less for viewing. To
+switch back to using ppf_mime for verification, you will have to toggle
+the ^Y option back to its default position.
+
+Messages without attachments should display the same, or nearly the same as
+they do in Alpine. There is no text coloring, and in order to keep the number
+of sed patterns to a minimum for speed and efficiency certain 8-bit characters
+are not decoded. If you have favorite characters you would like to add it
+is quite easy to do so, look around lines 126 and 129 of ppf_mime, and in the
+similar location in ppf_mime_decrypt. Certain types of messages sent with
+format=flowed will line wrap as they are in the raw message (at around 70
+columns) instead of how they do in Alpine. This is still quite readable, and
+the additional special-case handling necessary to make them display the same
+as they do in Alpine is not worth the additional "cost" of processing time to
+do so. (There are already a rather large number of special cases just to make
+messages from less-standards-compliant clients verify, and/or display in a
+readable manner.)
+
+For PGP/MIME messages with attachments, IF the attachments were signed they
+will display with the message when the signature is verified. Along with the
+message and attachments you will see some of the "Content-Type" and other MIME
+headers that are typically stripped from MIME signed messages before display.
+Once again, since messages with attachments are not the common case, and these
+extra headers do not dramatically affect readability, I chose not to add more
+special-case code to filter them out.
+
+PLEASE NOTE: Attachments can be present in messages signed with PGP/MIME that
+are NOT signed themselves. If you do not see the attachment(s) when you run the
+pgp_mime script the attachment(s) are NOT signed, whether the signature on the
+message verifies or not. In this case, depending on your needs, you should
+contact the sender of the message and ask for the attachments to be sent in a
+manner that allows you to verify them appropriately.
+
+These pgp_mime* scripts can be a bit cumbersome but to my knowledge this is the
+only set of stand alone  "filters" that work with MIME signatures or encrypted
+files.
+
+(But for another take on PGP/MIME that involves patching Alpine:
+ http://homepage.ntlworld.com/phil.brooke/topal/)

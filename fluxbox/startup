@@ -45,18 +45,22 @@ if [ -d /usr/share/fonts/artwiz-fonts ] ; then
 	xset fp+ "/usr/share/fonts/artwiz-fonts/"
 fi
 
+fc-cache -f $HOME/.fonts/
+
 # make capslock another control
 setxkbmap -option "ctrl:nocaps"
 
 # turn off terminal bell
 xset -b
 
-exec startfluxbox
+# start and background fluxbox
+exec fluxbox &
+fbpid=$!
 
 test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
 test -n "`which gkrellm`" && gkrellm &
-test -x "`which xautolock`" && test -x "`which slock`" && xautolock -time 10 -locker slock &
-test -x "`which redshift`" && redshift -l 40.8:-77.8 &
+test -n "`which xautolock`" && test -n "`which slock`" && xautolock -time 10 -notify 30 -notifier "notify-send -u critical -t 5000 -- 'locking screen in 30 seconds'" -locker slock &
+test -n "`which redshift`" && redshift -l 40.8:-77.8 &
 
 # just for the laptop
 if [ "$(hostname)" == "zirzla" ] ; then
@@ -67,3 +71,6 @@ if [ "$(hostname)" == "zirzla" ] ; then
 	test -x "`which notify-osd`" && notify-osd &
 	test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
 fi
+
+# don't exit until fluxbox does
+wait $fbpid

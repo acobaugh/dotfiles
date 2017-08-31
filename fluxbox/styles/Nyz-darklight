@@ -103,4 +103,4 @@ handleWidth:                    4
 #background:			flat
 #background.color:		grey20
 
-rootCommand:                    /usr/bin/feh --bg-scale /home/phalenor/.fluxbox/backgrounds/darklight.jpg
+rootCommand:                    /usr/bin/feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg

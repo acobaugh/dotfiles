@@ -1,0 +1,6 @@
+# $Id: BUGS,v 1.4 2010/04/12 00:18:46 dougb Exp $
+
+1. The ppf_mime_decrypt script is more difficult to use than it should be
+   due to an apparent bug in Alpine that prevents it from properly handling
+   input to GnuPG when it's evoked by the script unless the option for
+   Capture Output/Free Output is toggled.

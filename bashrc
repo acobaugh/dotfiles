@@ -83,9 +83,19 @@ alias e="exit"
 alias ls="ls $LS_OPTIONS"
 alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
-alias alpine="alpine -disable-these-authenticators=GSSAPI"
-alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
+#alias alpine="alpine"
+
 alias ap="ansible-playbook"
+alias apv="pass ansible/vault | ansible-playbook --vault=/bin/cat"
+alias av="pass ansible/vault | ansible --vault=/bin/cat"
+alias ave="pass ansible/vault | EDITOR=vim ansible-vault edit --vault=/bin/cat"
+
+alias pssh="pssh -o StrictHostKeyChecking=no"
+alias psudo="pssh --extra-args '-t -t'"
+
+if [[ "$HOME" == *"/afs/"* ]] ; then
+	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
+fi
 
 # news server
 export NNTPSERVER='news.psu.edu'
@@ -94,17 +104,38 @@ export NNTPSERVER='news.psu.edu'
 export PATH=$HOME/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 
 ## add Go workspace bin dir
-if [ -x "$(which go >/dev/null 2>&1)" ] ; then
-	export GOPATH=$(go env GOPATH)
-	export PATH=$PATH:$GOPATH/bin
+if [ -x "$(which go 2>&1)" ] ; then
+	_GOPATH="$(go env GOPATH)"
+	export GOPATH=${_GOPATH:-$HOME/go}
+	export PATH=$GOPATH/bin:$PATH
 fi
 
+## node.js yarn
+if [ -d "$HOME/.yarn/bin" ] ; then
+	export PATH="$HOME/.yarn/bin:$PATH"
+fi
+
+## Scala build tool
+if [ -d "$HOME/sbt/latest/bin" ] ; then
+	export PATH="$HOME/sbt/latest/bin:$PATH"
+fi
+
+## Zoom
+if [ -d "$HOME/zoom" ] ; then
+	export PATH="$PATH:$HOME/zoom"
+fi
+
+## Java
+export JAVA_HOME=$(readlink -f /usr/bin/java | sed -e "s|bin/java||;s|jre/$||")
+export CLASSPATH="$JAVA_HOME/lib"
+
 ## GPG stuff
+export PINENTRY="$HOME/bin/my-pinentry" # wrapper
+export PINENTRY_USER_DATA="curses" # default to pinentry-curses
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
 	if [ "${gav:0:3}" != "2.1" ] ; then
 		# We only need all this cruft if we are running something older than 2.1
-		export PINENTRY=$(which pinentry-curses)
 		gpgenvfile="$HOME/.gnupg/gpg-agent.env"
 		if [[ -e "$gpgenvfile" ]] && kill -0 $(grep GPG_AGENT_INFO "$gpgenvfile" | cut -d: -f 2) 2>/dev/null; then
 			eval "$(cat "$gpgenvfile")"
@@ -116,7 +147,12 @@ if [ -x "$(which gpg-agent)" ] ; then
 	fi
 fi
 
+# password-store options
+export PASSWORD_STORE_X_SELECTION="primary"
+
 # source local settings
 if [ -f "$HOME/.bash_local" ] ; then
 	. "$HOME/.bash_local" 
 fi
+
+export PATH="$HOME/.yarn/bin:$PATH"

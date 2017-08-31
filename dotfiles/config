@@ -1,4 +1,25 @@
 # files/directories to symlink
 
-dotfiles="vim vimrc gitconfig bash_profile bashrc screenrc ssh/config.example fluxbox/backgrounds fluxbox/keys fluxbox/menuconfig fluxbox/startup fluxbox/styles Xresources gkrellm2/theme_config gkrellm2/themes tmux.conf"
+dotfiles="
+	vim
+	vimrc
+	gitconfig
+	bash_profile
+	bashrc
+	screenrc
+	ssh/config.example
+	fluxbox/backgrounds
+	fluxbox/keys
+	fluxbox/menuconfig
+	fluxbox/startup
+	fluxbox/styles
+	Xresources
+	gkrellm2/theme_config
+	gkrellm2/themes
+	tmux.conf
+	fonts
+	pinerc
+"
+
 plainfiles="bin"
+templatedotfiles="gnupg/gpg-agent.conf"

@@ -1,0 +1,117 @@
+#!/bin/sh
+
+########################################################
+## ez-pine-gpg-helper-sender                          ##
+## part of ez-pine-gpg v0.4h // gpg filters for pine  ##
+## http://Business-PHP.com/opensource/ez-pine-gpg/    ##
+## (c) 13 Feb 2004, Atom Emet                         ##
+## (c) 16 Dec 2004, Atom Emet                         ##
+## Atom {at} Business-PHP.com                         ##
+## Distributed under the GNU General Public License   ##
+## http://www.gnu.org/copyleft/gpl.html               ##
+##                                                    ##
+##  ################################################  ##
+##                                                    ##
+## This program is free software; you can             ##
+## redistribute it and/or modify it under the terms   ##
+## of the GNU General Public License as published by  ##
+## the Free Software Foundation; either version 2 of  ##
+## the License, or (at your option) any later         ##
+## version.                                           ##
+##                                                    ##
+## This program is distributed in the hope that it    ##
+## will be useful, but WITHOUT ANY WARRANTY; without  ##
+## even the implied warranty of MERCHANTABILITY or    ##
+## FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     ##
+## General Public License for more details.           ##
+##                                                    ##
+## You should have received a copy of the GNU         ##
+## General Public License along with this program;    ##
+## if not, write to the                               ##
+## Free Software Foundation, Inc.,                    ##
+## 59 Temple Place - Suite 330,                       ##
+## Boston, MA  02111-1307, USA.                       ##
+########################################################
+
+#########################################
+## PATH is configured during installation
+PATH=/usr/sbin:$HOME/bin
+
+##########################################################################
+## make sure the role being used to send has a valid key in the keyring ##
+##########################################################################
+
+#####################################################
+## the var "msg" is the full headers and message body
+##
+msg="`cat`"
+
+######################################################################################
+## if there is an "OpenPGP" find the "id" field <http://josefsson.org/openpgp-header/>
+## use that key for signing:
+##                                  OpenPGP: id=0x12345678
+##
+if which 822fields >& - 2>& -
+then
+    key_id=`echo "${msg}" | 822fields OpenPGP | sed 's!([^)]*)!!g' | tr ' ;' '\n'  | egrep ^id | cut -d= -f2`
+    if [ "${key_id}" ]
+    then
+	echo "Signing with \"OpenPGP\" UID: ${key_id}" 1>&2
+	echo "${key_id}"
+	key_id= ; msg=
+	exit 0
+    fi
+fi
+
+###############################################################
+## if there is a header "X-OpenPGP-KeyID" or "X-OpenPGP-Key-ID"
+## use that key for signing:
+##                                  X-OpenPGP-KeyID: 0x12345678
+##
+key_id=`echo "${msg}" | tr -d '\r' | egrep -i '^X-OpenPGP-Key(-)?ID: ' | tr ' ' '\n' | egrep '0x' | head -n 1`
+if [ "${key_id}" ]
+then
+    echo "${key_id}"
+    key_id= ; msg=
+    exit 0
+fi
+
+###############################################
+## the last token on the "From" line is used as
+## gpg's "--local-user" option
+## angle brackets (<>) are stripped off
+##
+from=`echo "${msg}" | egrep '^From: ' | head -n 1 | tr -d '[\n\r]' | sed 's/^.* // ; s/[<>]//g'`
+
+#######################################
+## make sure we've found a valid sender
+##
+if ! gpg --list-secret-keys ${from} 2>&- 1>&- && [ "`echo ${from} | egrep '.*-.*@'`" ]
+then
+    echo '/////////////////////////////////////////////////////////////////////////' 1>&2
+    echo "// No secret key found for <${from}>"                                      1>&2
+    from=`echo ${from} | sed 's/-.*@/@/'`
+    echo "// Should I try signing with a key for <${from}>? [Y/n]: " | tr -d '\n'    1>&2
+    read answer 0< /dev/tty
+    if [ `echo "${answer}" | egrep -i n` ]
+    then
+	msg= ; from=
+	exit 2
+    fi
+    echo 1>&2
+fi
+
+#########################################################
+## echo the sending address that we have a secret key for
+## this returns the address to the calling process
+echo "${from}"
+
+########################################
+## unset variables we don't need anymore
+##
+msg= ; from=
+
+#############
+## we're done
+##
+exit 0

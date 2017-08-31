@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+my @vars = ();
+my @sections = ();
+
+while (<>) {
+	chomp;
+	push @vars, /.*?{{([^\.\^#\/{}][a-zA-Z0-9._]+)?}}.*?|.*/g;
+	push @sections, /.*?{{#([^\.\/][a-zA-Z0-9._]+)?}}.*?|.*/g;
+}
+
+print "vars\n---\n";
+defined $_ and print "$_\n" foreach (@vars);
+
+print "\n";
+
+print "sections\n---\n";
+defined $_ and print "$_\n" foreach (@sections);
+

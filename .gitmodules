@@ -22,3 +22,15 @@
 [submodule "vim/bundle/nagios.vim"]
 	path = vim/bundle/nagios.vim
 	url = https://github.com/crazy-canux/nagios.vim
+[submodule "bin/mustache.sh"]
+	path = bin/mustache.sh
+	url = https://github.com/rcrowley/mustache.sh.git
+[submodule "vim/bundle/vim-scala"]
+	path = vim/bundle/vim-scala
+	url = https://github.com/derekwyatt/vim-scala
+[submodule "vim/bundle/vim-ft-go"]
+	path = vim/bundle/vim-ft-go
+	url = https://github.com/google/vim-ft-go.git
+[submodule "vim/bundle/vim-terraform"]
+	path = vim/bundle/vim-terraform
+	url = https://github.com/hashivim/vim-terraform
