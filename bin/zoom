@@ -1,0 +1,2 @@
+#!/bin/sh
+LD_LIBRARY_PATH=$HOME/zoom/current/zoom/ $HOME/zoom/current/zoom/zoom
