@@ -43,8 +43,16 @@ au BufRead,BufNewFile *.mustache set syntax=mustache
 " JSON syntax
 let g:vim_json_syntax_conceal = 0
 
+" Terraform syntax
+let g:terraform_align=1
+
 " Jump to last losition when opening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
+
+" airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline_theme='dark'

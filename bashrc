@@ -76,6 +76,7 @@ alias e="exit"
 alias ls="ls $LS_OPTIONS"
 alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
+alias tf=terraform
 #alias alpine="alpine"
 
 alias ap="ansible-playbook"
