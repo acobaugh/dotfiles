@@ -19,7 +19,8 @@ set foldlevelstart=99
 set number
 execute pathogen#infect()
 
-set background=dark
+set background=light
+
 set t_Co=256
 colorscheme molokai
 syntax on
@@ -42,6 +43,9 @@ au BufRead,BufNewFile *.mustache set syntax=mustache
 
 " JSON syntax
 let g:vim_json_syntax_conceal = 0
+
+" JSON formatter
+nmap =j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=4)"
 
 " Terraform syntax
 let g:terraform_align=1
