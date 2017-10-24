@@ -95,7 +95,7 @@ fi
 export NNTPSERVER='news.psu.edu'
 
 ## PATH
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
+export PATH=$HOME/bin:$HOME/:$HOME/.npm-global/bin:.local/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 
 ## add Go workspace bin dir
 if [ -x "$(which go 2>&1)" ] ; then
@@ -118,6 +118,9 @@ fi
 if [ -d "$HOME/zoom" ] ; then
 	export PATH="$PATH:$HOME/zoom"
 fi
+
+## nodejs local install prefix
+export NPM_CONFIG_PREFIX=~/.npm-global
 
 ## Java
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed -e "s|bin/java||;s|jre/$||")
