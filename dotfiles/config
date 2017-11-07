@@ -19,6 +19,7 @@ dotfiles="
 	tmux.conf
 	fonts
 	pinerc
+	zshrc
 "
 
 plainfiles="bin"
