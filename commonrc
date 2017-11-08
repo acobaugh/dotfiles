@@ -75,7 +75,7 @@ export PINENTRY="$HOME/bin/my-pinentry" # wrapper
 export PINENTRY_USER_DATA="curses" # default to pinentry-curses
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
-	test=$(echo ${gav:0:3}'<'2.1 | bc -l)
+	test=$(echo ${gav:0:3}'<'2.1 | bc -l 2>/dev/null)
 	if [ "$test" = "1" ] ; then
 		echo "test = $test"
 		# We only need all this cruft if we are running something older than 2.1
