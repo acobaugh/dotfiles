@@ -5,7 +5,7 @@ umask 077
 
 commonrc_deps=(bc)
 for d in $commonrc_deps ; do
-	test -x "$(which $d)" || echo "commonrc: missing dep '$d'"
+	test -x "$(which $d 2>/dev/null)" || echo "commonrc: missing dep '$d'"
 done
 
 export EDITOR=vim
