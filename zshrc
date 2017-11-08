@@ -17,7 +17,10 @@ compinit
 ## oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME=""
-plugins=(git pass terraform kubectl docker go aws screen)
+plugins=(git pass terraform kubectl docker go screen)
+
+# conditional plugins
+test -x "$(which aws_completer)" && plugins+='aws'
 source $ZSH/oh-my-zsh.sh
 
 NEWLINE=$'\n'
