@@ -1,7 +1,7 @@
 ## .bashrc
 
 # conditionally execute zsh
-if [ -z "$NOZSH" ]; then
+if [ -z "$NOZSH" ] && [ -x "$(which zsh)" ]; then
 	exec zsh
 fi
 
