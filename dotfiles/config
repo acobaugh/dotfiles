@@ -1,6 +1,7 @@
 # files/directories to symlink
 
 dotfiles="
+	commonrc
 	vim
 	vimrc
 	gitconfig
@@ -19,6 +20,8 @@ dotfiles="
 	tmux.conf
 	fonts
 	pinerc
+	zshrc
+	oh-my-zsh
 "
 
 plainfiles="bin"
