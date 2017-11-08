@@ -3,6 +3,11 @@
 
 umask 077
 
+commonrc_deps=(bc)
+for d in $commonrc_deps ; do
+	test -x "$(which $d)" || echo "commonrc: missing dep '$d'"
+done
+
 export EDITOR=vim
 
 # per-OS settings
