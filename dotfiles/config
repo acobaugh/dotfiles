@@ -1,6 +1,7 @@
 # files/directories to symlink
 
 dotfiles="
+	commonrc
 	vim
 	vimrc
 	gitconfig
@@ -20,6 +21,7 @@ dotfiles="
 	fonts
 	pinerc
 	zshrc
+	oh-my-zsh
 "
 
 plainfiles="bin"
