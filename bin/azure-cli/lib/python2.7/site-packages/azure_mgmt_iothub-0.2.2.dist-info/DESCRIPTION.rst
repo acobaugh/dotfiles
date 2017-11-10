@@ -1,0 +1,89 @@
+Microsoft Azure SDK for Python
+==============================
+
+This is the Microsoft Azure IoTHub Management Client Library.
+
+Azure Resource Manager (ARM) is the next generation of management APIs that
+replace the old Azure Service Management (ASM).
+
+This package has been tested with Python 2.7, 3.3, 3.4 and 3.5.
+
+For the older Azure Service Management (ASM) libraries, see
+`azure-servicemanagement-legacy <https://pypi.python.org/pypi/azure-servicemanagement-legacy>`__ library.
+
+For a more complete set of Azure libraries, see the `azure <https://pypi.python.org/pypi/azure>`__ bundle package.
+
+
+Compatibility
+=============
+
+**IMPORTANT**: If you have an earlier version of the azure package
+(version < 1.0), you should uninstall it before installing this package.
+
+You can check the version using pip:
+
+.. code:: shell
+
+    pip freeze
+
+If you see azure==0.11.0 (or any version below 1.0), uninstall it first:
+
+.. code:: shell
+
+    pip uninstall azure
+
+
+Usage
+=====
+
+For code examples, see `IoTHub Management
+<https://azure-sdk-for-python.readthedocs.org/en/latest/sample_azure-mgmt-iothub.html>`__
+on readthedocs.org.
+
+
+Provide Feedback
+================
+
+If you encounter any bugs or have suggestions, please file an issue in the
+`Issues <https://github.com/Azure/azure-sdk-for-python/issues>`__
+section of the project.
+
+
+.. :changelog:
+
+Release History
+===============
+
+0.2.2 (2017-04-20)
+++++++++++++++++++
+
+**Bugfixes**
+
+- Fix possible deserialization error, but updating from dict<str, enumtype> to dict<str, str> when applicable
+
+**Notes**
+
+- This wheel package is now built with the azure wheel extension
+
+0.2.1 (2016-12-16)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Fix #920 - Invalid return type for `list_event_hub_consumer_groups`
+
+0.2.0 (2016-12-12)
+++++++++++++++++++
+
+**Bugfixes**
+
+* Better parameters checking (change exception from CloudError to TypeError)
+* Date parsing fix (incorrect None date)
+* CreateOrUpdate random exception fix
+
+0.1.0 (2016-08-12)
+++++++++++++++++++
+
+* Initial Release
+
+
