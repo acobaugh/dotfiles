@@ -28,3 +28,4 @@ ZSH_THEME_GIT_PROMPT_PREFIX='('
 ZSH_THEME_GIT_PROMPT_SUFFIX=')'
 PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
 
+export TZ='America/New_York'

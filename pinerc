@@ -116,11 +116,11 @@ fcc-name-rule=
 # Sets presentation order of messages in Index. Choices:
 # Subject, From, Arrival, Date, Size, To, Cc, OrderedSubj, Score, and Thread.
 # Order may be reversed by appending /Reverse. Default: "Arrival".
-sort-key=tHread
+sort-key=Date
 
 # #Sets presentation order of threads in thread index. Choices:
 #arrival, and thread.
-thread-sort-key=
+thread-sort-key=tHread
 
 # Sets presentation order of address book entries. Choices: dont-sort,
 # fullname-with-lists-last, fullname, nickname-with-lists-last, nickname
