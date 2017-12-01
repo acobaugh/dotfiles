@@ -1,8 +1,8 @@
 ## .bashrc
 
 # conditionally execute zsh
-if [ -z "$NOZSH" ] && [ -x "$(which zsh)" ]; then
-	exec zsh
+if [ -z "$NOZSH" ] && [[ $- == *i* ]] && [ -x "$(which zsh)" ]; then
+	exec zsh $@
 fi
 
 source ~/.commonrc
