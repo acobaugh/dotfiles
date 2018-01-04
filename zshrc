@@ -16,6 +16,7 @@ compinit
 
 ## oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
+DISABLE_AUTO_UPDATE="true"
 ZSH_THEME=""
 plugins=(git pass terraform kubectl docker go screen)
 
