@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# From https://github.com/hashicorp/terraform/issues/11270#issuecomment-308004799
+# From https://github.com/kubernetes/AWS/issues/226#issuecomment-278879348
+# and https://github.com/kubernetes/AWS/blob/master/docs/mfa.md
+
+# set -euo pipefail
+
+set -x
+
+usage() {
+	echo "Usage: $0 <terraform args>"
+	echo "ENV vars (can also be sourced from ~/.aws/\$AWS_MFA_PROFILE):"
+	echo " AWS_MFA_PROFILE: name of profile to source the other vars from"
+	echo " AWS_MFA_ARN: arn of MFA device (arn:aws:iam::ACCOUNTID:mfa/USER)"
+	echo " AWS_MFA_ROLE_ARN: arn of role to assume (arn:aws:iam::ACCOUNTID:role/<ROLE>)"
+	echo " AWS_MFA_ID: Access key ID of user assuming the identity"
+	echo " AWS_MFA_SECRET: Secret access key of user assuming the identity"
+	echo
+}
+
+if [ "$1" == "-h" ] || [ -z "$1" ] ; then
+	usage
+	exit 1
+fi
+
+if [ -n "$(which aws 2>&1 >/dev/null)" ] ; then
+	echo "aws cli not found in PATH" 1>&2
+	usage
+	exit 1
+fi
+
+if [ -n "$AWS_MFA_PROFILE" ] && [ -r ~/.aws/${PROFILE_NAME} ]; then
+	. ~/.aws/${PROFILE_NAME}
+fi
+
+role_arn="${AWS_MFA_ROLE_ARN:-}"
+serial_number="${AWS_MFA_ARN:-}"
+token_code=""
+
+if [ -z "${role_arn}" ]; then
+	echo "Set the AWS_MFA_ROLE_ARN environment variable" 1>&2
+	exit 1
+fi
+
+if [ -z "${serial_number}" ]; then
+	echo "Set the AWS_MFA_ARN environment variable" 1>&2
+	exit 1
+fi
+
+echo -n "Enter MFA Code: "
+read -s token_code
+echo
+
+# NOTE: The keys should not be exported as AWS_ACCESS_KEY_ID
+# or AWS_SECRET_ACCESS_KEY_ID. This will not work. They
+# should be exported as other names which can be used below. This prevents
+# them from incorrectly being picked up from libraries or commands.
+temporary_credentials="$(\
+	AWS_SECRET_ACCESS_KEY="${AWS_MFA_KEY}" \
+	AWS_ACCESS_KEY_ID="${AWS_MFA_ID}" \
+	aws sts assume-role \
+	--role-arn="${role_arn}" \
+	--serial-number="${serial_number}" \
+	--token-code="${token_code}" \
+	--role-session-name="terraform-access"
+)"
+if [ $? -ne 0 ] ; then
+	echo "$temporary_credentials"
+	exit 1
+fi
+unset AWS_PROFILE
+
+echo "AssumedRoleUser = $(echo "${temporary_credentials}" | jq -re '.AssumedRoleUser.Arn')"
+echo "Expiration = $(echo "${temporary_credentials}" | jq -re '.Credentials.Expiration')"
+
+export AWS_ACCESS_KEY_ID="$(echo "${temporary_credentials}" | jq -re '.Credentials.AccessKeyId')"
+export AWS_SECRET_ACCESS_KEY="$(echo "${temporary_credentials}" | jq -re '.Credentials.SecretAccessKey')"
+export AWS_SESSION_TOKEN="$(echo "${temporary_credentials}" | jq -re '.Credentials.SessionToken')"
+
+exec terraform "$@"
