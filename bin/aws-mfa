@@ -7,7 +7,7 @@
 # set -euo pipefail
 
 usage() {
-	echo "Usage: $0 <terraform args>"
+	echo "Usage: $0 <command with args>"
 	echo "ENV vars (can also be sourced from ~/.aws/\$AWS_MFA_PROFILE):"
 	echo " AWS_MFA_PROFILE: name of profile to source the other vars from"
 	echo " AWS_MFA_ARN: arn of MFA device (arn:aws:iam::ACCOUNTID:mfa/USER)"
@@ -76,4 +76,4 @@ export AWS_ACCESS_KEY_ID="$(echo "${temporary_credentials}" | jq -re '.Credentia
 export AWS_SECRET_ACCESS_KEY="$(echo "${temporary_credentials}" | jq -re '.Credentials.SecretAccessKey')"
 export AWS_SESSION_TOKEN="$(echo "${temporary_credentials}" | jq -re '.Credentials.SessionToken')"
 
-exec terraform "$@"
+exec "$@"
