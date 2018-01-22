@@ -6,8 +6,6 @@
 
 # set -euo pipefail
 
-set -x
-
 usage() {
 	echo "Usage: $0 <terraform args>"
 	echo "ENV vars (can also be sourced from ~/.aws/\$AWS_MFA_PROFILE):"
