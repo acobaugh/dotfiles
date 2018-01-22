@@ -21,7 +21,7 @@ ZSH_THEME=""
 plugins=(git pass terraform kubectl docker go screen)
 
 # conditional plugins
-test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
+#test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
 source $ZSH/oh-my-zsh.sh
 
 NEWLINE=$'\n'
