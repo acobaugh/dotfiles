@@ -44,7 +44,7 @@ fi
 export NNTPSERVER='news.psu.edu'
 
 ## PATH
-export PATH=$HOME/bin:$HOME/:$HOME/.npm-global/bin:.local/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
+export PATH=$HOME/bin:$HOME/:$HOME/.npm-global/bin:$HOME/.local/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 
 ## add Go workspace bin dir
 if [ -x "$(which go 2>&1)" ] ; then
