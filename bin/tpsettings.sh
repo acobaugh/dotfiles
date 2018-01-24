@@ -15,7 +15,7 @@ if [ -d "$TPDEV" ]; then
     echo "Configuring Trackpoint"
     echo -n 140 | sudo tee $TPDEV/sensitivity
     echo -n 65 | sudo tee $TPDEV/speed
-    echo -n 2   | sudo tee $TPDEV/drift_time
+    echo -n 5   | sudo tee $TPDEV/drift_time
 else
     echo "Couldn't find trackpoint device $TPDEV"
 fi

@@ -25,7 +25,7 @@ unsetopt share_history
 setopt no_share_history
 
 # conditional plugins
-test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
+#test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
 source $ZSH/oh-my-zsh.sh
 
 NEWLINE=$'\n'
