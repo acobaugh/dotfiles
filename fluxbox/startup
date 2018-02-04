@@ -59,7 +59,7 @@ fbpid=$!
 
 test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
 test -n "`which gkrellm`" && gkrellm &
-test -n "`which redshift`" && redshift -l 40.8:-77.8 -t 6300:4800 &
+test -n "`which redshift`" && redshift -l 40.8:-77.8 -t 6300:4000 &
 
 test -n "$(which slock-pam 2>/dev/null)" && slock=slock-pam || slock=slock
 test -n "`which xautolock`" && xautolock -time 10 -notify 30 -notifier "notify-send -u critical -t 5000 -- 'locking screen in 30 seconds'" -locker $slock &
