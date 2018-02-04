@@ -50,6 +50,9 @@ nmap =j :%!python -c "import json, sys, collections; print json.dumps(json.load(
 " Terraform syntax
 let g:terraform_align=1
 
+" YAML syntax
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
 " Jump to last losition when opening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")

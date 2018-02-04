@@ -49,3 +49,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule "vim/bundle/vim-yaml-indent"]
+	path = vim/bundle/vim-yaml-indent
+	url = https://github.com/avakhov/vim-yaml
