@@ -17,6 +17,13 @@ set showmatch matchtime=3
 set modelines=2
 set foldlevelstart=99 
 set number
+
+" Terraform syntax
+let g:terraform_align=1
+let g:terraform_fold_sections=1
+let g:terraform_remap_spacebar=1
+
+" run pathogen plugins
 execute pathogen#infect()
 
 set background=light
@@ -47,8 +54,6 @@ let g:vim_json_syntax_conceal = 0
 " JSON formatter
 nmap =j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=4)"
 
-" Terraform syntax
-let g:terraform_align=1
 
 " YAML syntax
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
