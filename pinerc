@@ -26,7 +26,10 @@ nntp-server=
 
 # Path of (local or remote) INBOX, e.g. ={mail.somewhere.edu}inbox
 # Normal Unix default is the local INBOX (usually /usr/spool/mail/$USER).
-inbox-path={ucs.psu.edu:993/norsh/ssl/user=atc135}inbox
+
+#inbox-path={ucs.psu.edu:993/norsh/ssl/user=atc135}inbox
+inbox-path={outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Inbox
+folder-collections={outlook.office365.com:993/ssl/user=atc135@psu.edu}[]
 
 # List of folder pairs; the first indicates a folder to archive, and the
 # second indicates the folder read messages in the first should
@@ -40,7 +43,7 @@ pruned-folders=
 # Over-rides default path for sent-mail folder, e.g. =old-mail (using first
 # folder collection dir) or ={host2}sent-mail or ="" (to suppress saving).
 # Default: sent-mail (Unix) or SENTMAIL.MTX (PC) in default folder collection.
-default-fcc={ucs.psu.edu:993/norsh/ssl/user=atc135}Sent
+default-fcc={outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Sent\ Items
 
 # Over-rides default path for saved-msg folder, e.g. =saved-messages (using 1st
 # folder collection dir) or ={host2}saved-mail or ="" (to suppress saving).
@@ -50,7 +53,7 @@ default-saved-msg-folder=
 # Over-rides default path for postponed messages folder, e.g. =pm (which uses
 # first folder collection dir) or ={host4}pm (using home dir on host4).
 # Default: postponed-msgs (Unix) or POSTPOND.MTX (PC) in default fldr coltn.
-postponed-folder={ucs.psu.edu:993/norsh/novalidate-cert/ssl/user=atc135}Drafts
+postponed-folder={outlook.office365.com:993/ssl/novalidate-cert/user=atc135}Drafts
 
 # If set, specifies where already-read messages will be moved upon quitting.
 read-message-folder=
@@ -419,11 +422,6 @@ newmail-window-width=
 # Syntax: optnl-label {optnl-imap-host-name}folder-path
 incoming-folders=
 
-# List of directories where saved-message folders may be. First one is
-# the default for Saves. Example: Main {host1}mail/[], Desktop mail\[]
-# Syntax: optnl-label {optnl-imap-hostname}optnl-directory-path[]
-folder-collections=UCS {ucs.psu.edu:993/norsh/novalidate-cert/ssl/user=atc135}[]
-
 # List, only needed if nntp-server not set, or news is on a different host
 # than used for NNTP posting. Examples: News *[] or News *{host3/nntp}[]
 # Syntax: optnl-label *{news-host/protocol}[]
@@ -440,7 +438,9 @@ address-book=
 global-address-book=
 
 # Set by Alpine; controls beginning-of-month sent-mail pruning.
-last-time-prune-questioned=9999
+## NOTE: This is year.month, where year is [0-11]. This is set to something
+## big to prevent this from being updated once a month and messing with dotfiles
+last-time-prune-questioned=130.11
 
 # Set by Alpine; controls display of "new version" message.
 last-version-used=6.21
