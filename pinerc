@@ -120,7 +120,7 @@ fcc-name-rule=
 # Sets presentation order of messages in Index. Choices:
 # Subject, From, Arrival, Date, Size, To, Cc, OrderedSubj, Score, and Thread.
 # Order may be reversed by appending /Reverse. Default: "Arrival".
-sort-key=tHread
+sort-key=Arrival
 
 # #Sets presentation order of threads in thread index. Choices:
 #arrival, and thread.
@@ -444,7 +444,7 @@ global-address-book=
 last-time-prune-questioned=130.11
 
 # Set by Alpine; controls display of "new version" message.
-last-version-used=6.21
+last-version-used=6.21.99
 
 # This names the path to an alternative program, and any necessary arguments,
 # to be used in posting mail messages.  Example:
