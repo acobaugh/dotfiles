@@ -24,8 +24,8 @@ let g:terraform_fold_sections=1
 let g:terraform_remap_spacebar=1
 
 " CFEngine syntax
-au BufRead,BufNewFile *.cf.in set ft=cf3
-au BufRead,BufNewFile *.cf set ft=cf3
+au BufRead,BufNewFile *.cf.in set ft=cf3 nofoldenable
+au BufRead,BufNewFile *.cf set ft=cf3 nofoldenable
 let g:DisableCF3Ftplugin=1
 
 " run pathogen plugins
