@@ -2,4 +2,4 @@
 	email = andrew.cobaugh@gmail.com
 	name = Andy Cobaugh
 [push]
-	default = simple
+	default = current
