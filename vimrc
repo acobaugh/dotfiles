@@ -23,8 +23,15 @@ let g:terraform_align=1
 let g:terraform_fold_sections=1
 let g:terraform_remap_spacebar=1
 
+" CFEngine syntax
+let g:DisableCF3Ftplugin=1
+
 " run pathogen plugins
 execute pathogen#infect()
+
+" CFEngine file settings
+au BufRead,BufNewFile *.cf.in set ft=cf3 nofoldenable
+au BufRead,BufNewFile *.cf set ft=cf3 nofoldenable
 
 set background=light
 
@@ -40,10 +47,6 @@ set hlsearch
 autocmd FileType text setlocal textwidth=78
 set cmdheight=2
 
-" CFEngine syntax
-au BufRead,BufNewFile *.cf.in set ft=cf3
-au BufRead,BufNewFile *.cf set ft=cf3
-let g:DisableCF3Ftplugin=1
 
 " Mustache syntax
 au BufRead,BufNewFile *.mustache set syntax=mustache

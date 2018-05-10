@@ -1,0 +1,18 @@
+body common control
+{
+	bundlesequence => {
+		"main",
+	};
+}
+
+bundle agent main
+{
+	methods:
+
+		"any" usebundle => test;
+}
+
+bundle agent test
+{
+
+}
