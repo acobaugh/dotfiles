@@ -3,3 +3,5 @@
 	name = Andy Cobaugh
 [push]
 	default = current
+[gpg]
+	program = gpg2
