@@ -1,0 +1,201 @@
+Azure CLI Interactive Shell
+***************************
+
+The interactive shell for Microsoft Azure CLI (Command Line Interface)
+######################################################################
+
+* Interactive Tutorials
+* Lightweight Drop Down Completions 
+* Auto Cached Suggestions 
+* Dynamic parameter completion 
+* Defaulting scopes of commands
+* On the fly descriptions of the commands AND parameters 
+* On the fly examples of how to utilize each command 
+* Optional "az" component 
+* Query the previous command
+* Navigation of example pane 
+* Optional layout configurations 
+* Fun Colors 
+
+
+Running
+#######
+
+To start the application
+
+.. code-block:: console
+
+   $ az shell
+
+
+Then type your commands and hit [Enter]
+
+To use commands outside the application
+
+.. code-block:: console
+
+   $ #[command]
+
+
+To Search through the last command as json
+jmespath format for querying
+
+.. code-block:: console
+
+   $ ? [param]
+
+
+*Note: Only if the previous command dumps out json, e.g. vm list*
+
+To only see the commands for a command
+
+.. code-block:: console
+
+   $ %% [top-level command] [sub-level command] etc
+
+
+To undefault a value
+
+.. code-block:: console
+
+   $ %% ..
+
+
+Use Examples
+############
+
+Type a command, for example:
+
+.. code-block:: console
+
+   $ vm create
+
+
+Look at the examples
+
+*Scroll through the pane with Control Y for up and Control N for down #*
+
+Pick the example you want with:
+
+.. code-block:: console
+
+   $ vm create :: [Example Number]
+
+
+Dev Setup
+#########
+
+Fork and clone repository
+
+.. code-block:: console
+
+   $ . dev_setup.py
+
+
+To get the Exit Code of the previous command:
+
+.. code-block:: console
+
+   $ $
+
+
+Clear History
+#############
+
+Only clears the appended suggestion when you restart the shell
+
+.. code-block:: console
+
+   $ clear-history
+
+
+
+.. :changelog:
+
+Release History
+===============
+
+0.3.11
+++++++
+* minor fixes
+
+0.3.10 (2017-09-22)
++++++++++++++++++++
+* minor fixes
+
+0.3.9 (2017-08-31)
+++++++++++++++++++
+* minor fixes
+
+0.3.8 (2017-08-28)
+++++++++++++++++++
+* minor fixes
+
+0.3.7 (2017-07-27)
+++++++++++++++++++
+
+* Improves the start up time by using cached commands
+
+
+0.3.7 (2017-07-27)
+++++++++++++++++++
+
+* Increase test coverage
+
+0.3.5 (2017-06-21)
+++++++++++++++++++
+
+* Enhance the '?' gesture to also inject into the next command
+
+0.3.4 (2017-06-13)
+++++++++++++++++++
+
+* Fixes Interactive errors with the profile 2017-03-09-profile-preview (#3587)
+* Allows '--version' as a parameter for interactive mode (#3645)
+* Stop Interactive Mode from Throwing errors from Validation completions (#3570)
+* Progress Reporting for template deployments (#3510)
+
+0.3.3 (2017-05-30)
+++++++++++++++++++
+
+* --progress flag
+* Removed --debug and --verbose from completions
+
+0.3.2 (2017-05-18)
+++++++++++++++++++
+
+* Bug fixes.
+* Remove 'interactive' from completions (#3324)
+
+0.3.1 (2017-05-09)
+++++++++++++++++++
+
+* Add link to blog in ‘az interactive —help’ (#3252)
+
+
+0.3.0 (2017-05-05)
+++++++++++++++++++
+
+* Integrate interactive into az
+* Colors Options
+* Rename 'shell' => 'interactive'
+
+
+0.2.1
+++++++++++++++++++
+
+* CLI Performance changes integrated
+
+
+0.2.0
+++++++++++++++++++
+
+* Public Preview release
+
+
+0.1.1
+++++++++++++++++++
+
+* Preview release
+
+

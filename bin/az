@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-$HOME/lib/azure-cli/bin/python -m azure.cli "$@"
+$HOME/bin/azure-cli/bin/python -m azure.cli "$@"
