@@ -6,4 +6,4 @@
 #	$HOME \
 #	172.30.0.10:/afs/phalengard.com/backups/zirzla/home-acobaugh/
 
-restic -r b2:acobaugh-restic: backup $HOME
+restic --exclude-file $HOME/bin/homedir_backup_exclude.txt -r b2:acobaugh-restic: backup $HOME
