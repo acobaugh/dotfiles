@@ -14,7 +14,7 @@ compinit
 export ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
 ZSH_THEME=""
-plugins=(git pass terraform kubectl docker go screen)
+plugins=(git pass terraform kubectl docker go screen azure)
 
 # conditional plugins
 #test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
