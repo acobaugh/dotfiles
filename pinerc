@@ -43,7 +43,7 @@ pruned-folders=
 # Over-rides default path for sent-mail folder, e.g. =old-mail (using first
 # folder collection dir) or ={host2}sent-mail or ="" (to suppress saving).
 # Default: sent-mail (Unix) or SENTMAIL.MTX (PC) in default folder collection.
-default-fcc={outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Sent Items
+default-fcc="{outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Sent Items"
 
 # Over-rides default path for saved-msg folder, e.g. =saved-messages (using 1st
 # folder collection dir) or ={host2}saved-mail or ="" (to suppress saving).
@@ -53,7 +53,7 @@ default-saved-msg-folder=
 # Over-rides default path for postponed messages folder, e.g. =pm (which uses
 # first folder collection dir) or ={host4}pm (using home dir on host4).
 # Default: postponed-msgs (Unix) or POSTPOND.MTX (PC) in default fldr coltn.
-postponed-folder={outlook.office365.com:993/ssl/novalidate-cert/user=atc135}Drafts
+postponed-folder={outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Drafts
 
 # If set, specifies where already-read messages will be moved upon quitting.
 read-message-folder=
@@ -62,11 +62,11 @@ read-message-folder=
 form-letter-folder=
 
 # If set, specifies where trash is moved to in Web Alpine.
-trash-folder=
+trash-folder={outlook.office365.com:993/ssl/novalidate-cert/user=atc135}Deleted Items
 
 # Contains the actual signature contents as opposed to the signature filename.
 # If defined, this overrides the signature-file. Default is undefined.
-literal-signature=--\nAndy Cobaugh\nSystem Design Specialist\n
+literal-signature=--\nAndy Cobaugh\nSystem Design Specialist\n<begin pgp signed message to disable safelinks/>\n
 
 # Over-rides default path for signature file. Default is ~/.signature
 signature-file=
@@ -272,7 +272,8 @@ use-only-domain-name=
 
 # This variable takes a list of programs that message text is piped into
 # after MIME decoding, prior to display.
-display-filters=_LEADING("-----BEGIN PGP")_ $HOME/bin/ez-pine-gpg-incoming
+display-filters=safelinks.protection.outlook.com $HOME/bin/safelinks.pl,
+	_LEADING("-----BEGIN PGP")_ $HOME/bin/ez-pine-gpg-incoming
 
 # This defines a program that message text is piped into before MIME
 # encoding, prior to sending
@@ -603,8 +604,8 @@ selectable-item-foreground-color=
 selectable-item-background-color=
 meta-message-foreground-color=
 meta-message-background-color=
-quote1-foreground-color=
-quote1-background-color=
+quote1-foreground-color=000,255,255
+quote1-background-color=000,000,000
 quote2-foreground-color=
 quote2-background-color=
 quote3-foreground-color=

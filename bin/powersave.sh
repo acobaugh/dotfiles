@@ -1,5 +1,2 @@
-echo 1 > /sys/devices/system/cpu/sched_mc_power_savings 
-echo 1 > /sys/module/snd_hda_intel/parameters/power_save
-echo 0 > /proc/sys/kernel/nmi_watchdog 
-ethtool -s em1 wol d
-
+echo powersave | sudo tee /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+sudo powertop --auto-tune
