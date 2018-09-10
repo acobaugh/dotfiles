@@ -1,8 +1,11 @@
+$HOME/.cache
+$HOME.Cache
+$HOME/.config
+$HOME/.minikube
+$HOME/.vagrant.d
+$HOME/.npm
 .DS_Store
 *Cache*
 *cache*
-.cache
-.Cache
 *.o
 .thumbnails
-.config
