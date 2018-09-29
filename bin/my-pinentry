@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # choose pinentry depending on PINENTRY_USER_DATA
 
+test -n "$LC_CTYPE" && export LC_CTYPE="UTF-8"
+
 case $PINENTRY_USER_DATA in
 gtk)
   exec pinentry-gtk-2 "$@"
