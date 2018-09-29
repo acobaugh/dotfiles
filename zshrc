@@ -14,7 +14,11 @@ compinit
 export ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
 ZSH_THEME=""
-plugins=(git pass terraform kubectl docker go screen)
+
+plugins=(pass terraform kubectl docker go screen azure)
+if ! [[ "$HOME" =~ "^/pass" ]] ; then
+	plugins+=git
+fi
 
 # conditional plugins
 #test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
@@ -24,7 +28,12 @@ source $ZSH/oh-my-zsh.sh
 NEWLINE=$'\n'
 ZSH_THEME_GIT_PROMPT_PREFIX='('
 ZSH_THEME_GIT_PROMPT_SUFFIX=')'
-PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
+
+if ! [[ "$HOME" =~ "^/pass" ]] ; then
+	PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
+else
+	PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
+fi
 
 
 export TZ='America/New_York'

@@ -1,0 +1,266 @@
+Microsoft Azure CLI 2.0
+=======================
+
+A great cloud needs great tools; we're excited to introduce *Azure CLI 2.0*, our next generation multi-platform command line experience for Azure.
+
+Usage
+=====
+.. code-block:: console
+
+    $ az [ group ] [ subgroup ] [ command ] {parameters}
+
+
+Getting Started
+=====================
+
+After installation, use the ``az configure`` command to help setup your environment.
+
+.. code-block:: console
+
+   $ az configure
+
+For usage and help content, pass in the ``-h`` parameter, for example:
+
+.. code-block:: console
+
+   $ az storage -h
+   $ az vm create -h
+
+Highlights
+===========
+
+Here are a few features and concepts that can help you get the most out of the Azure CLI 2.0
+
+The following examples are showing using the ``--output table`` format, you can change your default using the ``$ az configure`` command.
+
+Tab Completion
+++++++++++++++
+
+We support tab-completion for groups, commands, and some parameters
+
+.. code-block:: console
+
+   # looking up resource group and name
+   $ az vm show -g [tab][tab]
+   AccountingGroup   RGOne  WebPropertiesRG
+   $ az vm show -g WebPropertiesRG -n [tab][tab]
+   StoreVM  Bizlogic
+   $ az vm show -g WebPropertiesRG -n Bizlogic
+
+Querying
+++++++++
+
+You can use the ``--query`` parameter and the JMESPath query syntax to customize your output.
+
+.. code-block:: console
+
+   $ az vm list --query '[].{name:name,os:storageProfile.osDisk.osType}'
+   Name                    Os
+   ----------------------  -------
+   storevm                 Linux
+   bizlogic                Linux
+   demo32111vm             Windows
+   dcos-master-39DB807E-0  Linux
+
+Creating a new Linux VM
++++++++++++++++++++++++
+The following block creates a new resource group in the 'westus' region, then creates a new Ubuntu VM.  We automatically provide a series of smart defaults, such as setting up SSH with your  ``~/.ssh/id_rsa.pub`` key.  For more details, try ``az vm create -h``.
+
+.. code-block:: console
+
+   $ az group create -l westus -n MyGroup
+   Name     Location
+   -------  ----------
+   MyGroup  westus
+
+   $ az vm create -g MyGroup -n MyVM --image ubuntults
+   MacAddress         ResourceGroup    PublicIpAddress    PrivateIpAddress
+   -----------------  ---------------  -----------------  ------------------
+   00-0D-3A-30-B2-D7  MyGroup          52.160.111.118     10.0.0.4
+
+   $ ssh 52.160.111.118
+   Welcome to Ubuntu 14.04.4 LTS (GNU/Linux 3.19.0-65-generic x86_64)
+
+   System information as of Thu Sep 15 20:47:31 UTC 2016
+
+   System load: 0.39              Memory usage: 2%   Processes:       80
+   Usage of /:  39.6% of 1.94GB   Swap usage:   0%   Users logged in: 0
+
+   jasonsha@MyVM:~$
+
+More Samples and Snippets
++++++++++++++++++++++++++
+For more usage examples, take a look at our `GitHub samples repo <http://github.com/Azure/azure-cli-samples>`__.
+
+Reporting issues and feedback
+=======================================
+
+If you encounter any bugs with the tool please file an issue in the `Issues <https://github.com/Azure/azure-cli/issues>`__ section of our GitHub repo.
+
+To provide feedback from the command line, try the ``az feedback`` command.
+
+License
+=======
+
+`MIT <https://github.com/Azure/azure-cli/blob/master/LICENSE.txt>`__
+
+
+.. :changelog:
+
+Release History
+===============
+
+2.0.20
+++++++
+
+2.0.19 (2017-10-09)
++++++++++++++++++++
+* no changes
+
+2.0.18 (2017-09-22)
++++++++++++++++++++
+* no changes
+
+2.0.17 (2017-09-11)
++++++++++++++++++++
+* no changes
+
+2.0.16 (2017-08-31)
++++++++++++++++++++
+* no changes
+
+2.0.15 (2017-08-28)
++++++++++++++++++++
+* no changes
+
+2.0.14 (2017-08-15)
++++++++++++++++++++
+* no changes
+
+2.0.13 (2017-08-11)
++++++++++++++++++++
+* no changes
+
+2.0.12 (2017-07-28)
++++++++++++++++++++
+* no changes
+
+2.0.11 (2017-07-27)
++++++++++++++++++++
+* Allow finer grained chunking for Data Lake Store transfer (#4014)
+
+2.0.10 (2017-07-07)
++++++++++++++++++++
+* no changes
+
+2.0.9 (2017-06-21)
+++++++++++++++++++
+* no changes
+
+2.0.8 (2017-06-13)
+++++++++++++++++++
+* no changes
+
+2.0.7 (2017-05-30)
+++++++++++++++++++
+
+* Add billing modules to setup (#3465)
+
+2.0.6 (2017-05-09)
+++++++++++++++++++
+
+* documentdb renamed to cosmosdb
+* Add rdbms
+
+2.0.5 (2017-05-05)
+++++++++++++++++++
+
+* Include Data Lake Analytics and Data Lake Store modules.
+* Include Cognitive Services module.
+* Include Service Fabric module.
+* Include Interactive module.
+* Remove Container module
+
+2.0.4 (2017-04-28)
+++++++++++++++++++
+
+* Add 'az -v' as shortcut for 'az --version' (#2926)
+
+2.0.3 (2017-04-17)
+++++++++++++++++++
+
+* Improve performance of package load and command execution (#2819)
+* Alter JSON string parsing from shell (#2705)
+
+2.0.2 (2017-04-03)
+++++++++++++++++++
+
+* Add acr, lab and monitor modules to default list.
+
+2.0.1 (2017-03-13)
+++++++++++++++++++
+
+* Add 'az find' module
+
+2.0.0 (2017-02-27)
+++++++++++++++++++
+
+* GA release.
+
+0.1.2rc2 (2017-02-22)
++++++++++++++++++++++
+
+* Fix format of package readme on PyPI.
+
+
+0.1.2rc1 (2017-02-17)
++++++++++++++++++++++
+
+* Handle cloud switching in more user friendly way + remove context
+* Include the following command modules by default:
+
+azure-cli-acs
+azure-cli-appservice
+azure-cli-batch
+azure-cli-cloud
+azure-cli-component
+azure-cli-configure
+azure-cli-container
+azure-cli-documentdb
+azure-cli-feedback
+azure-cli-iot
+azure-cli-keyvault
+azure-cli-network
+azure-cli-profile
+azure-cli-redis
+azure-cli-resource
+azure-cli-role
+azure-cli-sql
+azure-cli-storage
+azure-cli-vm
+
+
+0.1.1b3 (2017-01-30)
+++++++++++++++++++++
+
+* Support Python 3.6.
+
+
+0.1.1b2 (2017-01-19)
+++++++++++++++++++++
+
+* Modify telemetry code to be compatible with the change to azure-cli-core 0.1.1b2.
+
+
+0.1.1b1 (2017-01-17)
+++++++++++++++++++++
+
+* [Tab completion] Enable zsh compatibility mode for zsh shell for 'pip' installed CLI.
+* Modify telemetry code to be compatible with the change to azure-cli-core.
+
+0.1.0b11 (2016-12-12)
++++++++++++++++++++++
+
+* Preview release.
+
+

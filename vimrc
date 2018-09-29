@@ -61,6 +61,9 @@ nmap =j :%!python -c "import json, sys, collections; print json.dumps(json.load(
 " YAML syntax
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
+" Golang syntax
+autocmd FileType golang setlocal ts=4 sts=4 sw=2
+
 " Jump to last losition when opening a file
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
