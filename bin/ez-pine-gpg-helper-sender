@@ -35,7 +35,7 @@
 
 #########################################
 ## PATH is configured during installation
-PATH=/usr/sbin:$HOME/bin
+PATH=/usr/sbin:/usr/bin:/bin:/sbin:$HOME/bin
 
 ##########################################################################
 ## make sure the role being used to send has a valid key in the keyring ##

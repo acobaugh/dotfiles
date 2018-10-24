@@ -28,7 +28,7 @@ Mod1 F4 :Workspace 4
 Mod1 F5 :Workspace 5
 Mod1 F6 :Workspace 6
 
-Mod1 Return :ExecCommand uxterm 
+Mod1 Return :ExecCommand alacritty --live-config-reload
 Mod1 q :Close
 Mod1 m :Maximize
 Mod1 d :ExecCommand sh -c dmenu_run

@@ -1,0 +1,118 @@
+*cf3.txt* Help for vim_cf3 plugins.
+
+*cf3setup
+
+Install the provided files.
+.vim/ftplugin/cf3.vim
+.vim/syntax/cf3.vim
+.vim/ftdetect/cf3.vim
+.vim/doc/cf3.txt
+
+Add to your .vimrc file:
+
+:helptags ~/.vim/doc/
+
+*cf3prerequisites*
+
+Eatchar and Getchar functions. Here are copies:
+fun! Getchar()
+  let c = getchar()
+  if c != 0
+    let c = nr2char(c)
+  endif
+  return c
+endfun
+
+fun! Eatchar(pat)
+   let c = Getchar()
+   return (c =~ a:pat) ? '' : c
+endfun
+
+*cf3usage*
+
+Add "let EnableCFE3PermissionFix=1" to your .vimrc in order to enable
+automatic permission fixing, which removes group write and all "other"
+permissions from a file upon saving.
+
+*cf3abbreviations*
+
+The following expansions.  Type the first, in insert mode, then space and get
+the second automatically.  Add "let EnableCFE3KeywordAbbreviations=1" to your
+.vimrc to enable this behavior.
+
+= =>
+ba bundle agent
+bc bundle common
+bu bundle 
+cano canonify(
+cla classes:
+comma commands:
+comme comment => "
+exp expression => 
+fil files:
+han handle => "
+ifv ifvarclass =>
+met methods:
+pro processes:
+rep reports:
+sli slist =>
+str string =>
+sysw ${sys.workdir}
+ub usebundle =>
+var vars:
+
+*cf3snippets
+
+A tech preview. Insert your snippet files.  For example, in insert mode type //tmp and the skeleton template will be inserted.
+
+*cf3folds*
+
+Does basic folding of body types using markers { and }.  See folds for normal commands.
+
+It may be useful to add
+autocmd BufRead,BufNewFile *.cf normal zR
+to your .vimrc in order to start up with all folds unfolded.
+
+*cf3maps*
+
+Maps, type the first, in normal mode and get the following results.
+
+*cf3quotes*
+
+,q Wrap word in quotes.  Also quotes a list of words, one per line, when
+visually blocked.
+
+*cf3promise* *cf3comment* *cf3handle*
+
+,p Inserts a blank promise including blank handles and comment attributes.
+
+*cf3skeleton* *cf3template*
+
+,k Inserts the skeleton of a self-contained Cfengine policy including a
+bundlesequence, inputs, a main bundle and a test bundle.
+
+<ESC>= Aligns string, slist, etc and => across multiple lines to make it pretty.
+,= Aligns => across multiple lines to make it pretty.
+
+*cf3Author*
+
+Neil H. Watson <neil@watson-wilson.ca>
+See Github for the lastest.
+https://github.com/neilhwatson/vim_cf3
+
+*cf3License* 
+
+vim_cf3 files (https://github.com/neilhwatson/vim_cf3)
+Copyright (C) 2011 Neil H. Watson <neil@watson-wilson.ca>
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later
+version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>.

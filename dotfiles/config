@@ -1,6 +1,8 @@
 # files/directories to symlink
 
 dotfiles="
+	config/alacritty/alacritty.yml
+	commonrc
 	vim
 	vimrc
 	gitconfig
@@ -19,6 +21,8 @@ dotfiles="
 	tmux.conf
 	fonts
 	pinerc
+	zshrc
+	oh-my-zsh
 "
 
 plainfiles="bin"

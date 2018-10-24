@@ -26,7 +26,10 @@ nntp-server=
 
 # Path of (local or remote) INBOX, e.g. ={mail.somewhere.edu}inbox
 # Normal Unix default is the local INBOX (usually /usr/spool/mail/$USER).
-inbox-path={ucs.psu.edu:993/norsh/ssl/user=atc135}inbox
+
+#inbox-path={ucs.psu.edu:993/norsh/ssl/user=atc135}inbox
+inbox-path={outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Inbox
+folder-collections={outlook.office365.com:993/ssl/user=atc135@psu.edu}[]
 
 # List of folder pairs; the first indicates a folder to archive, and the
 # second indicates the folder read messages in the first should
@@ -40,7 +43,7 @@ pruned-folders=
 # Over-rides default path for sent-mail folder, e.g. =old-mail (using first
 # folder collection dir) or ={host2}sent-mail or ="" (to suppress saving).
 # Default: sent-mail (Unix) or SENTMAIL.MTX (PC) in default folder collection.
-default-fcc={ucs.psu.edu:993/norsh/ssl/user=atc135}Sent
+default-fcc="{outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Sent Items"
 
 # Over-rides default path for saved-msg folder, e.g. =saved-messages (using 1st
 # folder collection dir) or ={host2}saved-mail or ="" (to suppress saving).
@@ -50,7 +53,7 @@ default-saved-msg-folder=
 # Over-rides default path for postponed messages folder, e.g. =pm (which uses
 # first folder collection dir) or ={host4}pm (using home dir on host4).
 # Default: postponed-msgs (Unix) or POSTPOND.MTX (PC) in default fldr coltn.
-postponed-folder={ucs.psu.edu:993/norsh/novalidate-cert/ssl/user=atc135}Drafts
+postponed-folder={outlook.office365.com:993/ssl/novalidate-cert/user=atc135@psu.edu}Drafts
 
 # If set, specifies where already-read messages will be moved upon quitting.
 read-message-folder=
@@ -59,11 +62,11 @@ read-message-folder=
 form-letter-folder=
 
 # If set, specifies where trash is moved to in Web Alpine.
-trash-folder=
+trash-folder={outlook.office365.com:993/ssl/novalidate-cert/user=atc135}Deleted Items
 
 # Contains the actual signature contents as opposed to the signature filename.
 # If defined, this overrides the signature-file. Default is undefined.
-literal-signature=--\nAndy Cobaugh\nSystem Design Specialist\n
+literal-signature=--\nAndy Cobaugh\nSystem Design Specialist\n<begin pgp signed message to disable safelinks/>\n
 
 # Over-rides default path for signature file. Default is ~/.signature
 signature-file=
@@ -80,7 +83,8 @@ feature-list=enable-fast-recent-test,
 	enable-incoming-folders-checking,
 	incoming-checking-includes-total,
 	expanded-view-of-folders,
-	single-column-folder-list
+	single-column-folder-list,
+	signature-at-bottom
 
 # Alpine executes these keys upon startup (e.g. to view msg 13: i,j,1,3,CR,v)
 initial-keystroke-list=
@@ -116,11 +120,11 @@ fcc-name-rule=
 # Sets presentation order of messages in Index. Choices:
 # Subject, From, Arrival, Date, Size, To, Cc, OrderedSubj, Score, and Thread.
 # Order may be reversed by appending /Reverse. Default: "Arrival".
-sort-key=tHread
+sort-key=Arrival
 
 # #Sets presentation order of threads in thread index. Choices:
 #arrival, and thread.
-thread-sort-key=
+thread-sort-key=Arrival
 
 # Sets presentation order of address book entries. Choices: dont-sort,
 # fullname-with-lists-last, fullname, nickname-with-lists-last, nickname
@@ -268,7 +272,8 @@ use-only-domain-name=
 
 # This variable takes a list of programs that message text is piped into
 # after MIME decoding, prior to display.
-display-filters=_LEADING("-----BEGIN PGP")_ $HOME/bin/ez-pine-gpg-incoming
+display-filters=safelinks.protection.outlook.com $HOME/bin/safelinks.pl,
+	_LEADING("-----BEGIN PGP")_ $HOME/bin/ez-pine-gpg-incoming
 
 # This defines a program that message text is piped into before MIME
 # encoding, prior to sending
@@ -419,11 +424,6 @@ newmail-window-width=
 # Syntax: optnl-label {optnl-imap-host-name}folder-path
 incoming-folders=
 
-# List of directories where saved-message folders may be. First one is
-# the default for Saves. Example: Main {host1}mail/[], Desktop mail\[]
-# Syntax: optnl-label {optnl-imap-hostname}optnl-directory-path[]
-folder-collections=UCS {ucs.psu.edu:993/norsh/novalidate-cert/ssl/user=atc135}[]
-
 # List, only needed if nntp-server not set, or news is on a different host
 # than used for NNTP posting. Examples: News *[] or News *{host3/nntp}[]
 # Syntax: optnl-label *{news-host/protocol}[]
@@ -440,10 +440,12 @@ address-book=
 global-address-book=
 
 # Set by Alpine; controls beginning-of-month sent-mail pruning.
-last-time-prune-questioned=117.7
+## NOTE: This is year.month, where year is [0-11]. This is set to something
+## big to prevent this from being updated once a month and messing with dotfiles
+last-time-prune-questioned=130.11
 
 # Set by Alpine; controls display of "new version" message.
-last-version-used=6.21
+last-version-used=6.21.9999
 
 # This names the path to an alternative program, and any necessary arguments,
 # to be used in posting mail messages.  Example:
@@ -602,8 +604,8 @@ selectable-item-foreground-color=
 selectable-item-background-color=
 meta-message-foreground-color=
 meta-message-background-color=
-quote1-foreground-color=
-quote1-background-color=
+quote1-foreground-color=000,255,255
+quote1-background-color=000,000,000
 quote2-foreground-color=
 quote2-background-color=
 quote3-foreground-color=
@@ -715,3 +717,10 @@ wp-state=
 
 # Web Alpine preferred width for message display in characters
 wp-columns=
+
+# If this much time has elapsed at the time of a tcp read or write timeout,
+# Alpine will close the connection automatically without user intervention.
+# Setting this value to zero (the default) disables this. Setting this variable
+# to a smaller value than tcp-query-timeout will close the connection
+# automatically, and you will never be asked if you want to wait.
+close-connection-timeout=
