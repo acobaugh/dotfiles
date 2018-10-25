@@ -445,7 +445,7 @@ global-address-book=
 last-time-prune-questioned=130.11
 
 # Set by Alpine; controls display of "new version" message.
-last-version-used=6.21.99
+last-version-used=6.21.9999
 
 # This names the path to an alternative program, and any necessary arguments,
 # to be used in posting mail messages.  Example:
@@ -717,3 +717,10 @@ wp-state=
 
 # Web Alpine preferred width for message display in characters
 wp-columns=
+
+# If this much time has elapsed at the time of a tcp read or write timeout,
+# Alpine will close the connection automatically without user intervention.
+# Setting this value to zero (the default) disables this. Setting this variable
+# to a smaller value than tcp-query-timeout will close the connection
+# automatically, and you will never be asked if you want to wait.
+close-connection-timeout=

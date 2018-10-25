@@ -35,7 +35,7 @@
 
 #########################################
 ## PATH is configured during installation
-PATH=/usr/sbin:$HOME/bin
+PATH=/usr/sbin:/usr/bin:/bin:/sbin:$HOME/bin
 
 ###################
 ## clear the screen
@@ -116,7 +116,7 @@ trap 'gpg_failed' 2
 ## pipe the message body into the gpg clearsign command
 ## pine will read the signed message from STDOUT
 ##
-{ echo "${body}" ; echo ; } | gpg --local-user "${from}" --clearsign || gpg_failed
+{ echo "${body}" ; echo ; } | gpg2 --local-user "${from}" --clearsign || gpg_failed
 
 #############################################
 ## unset variables that we don't need anymore
