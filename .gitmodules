@@ -52,3 +52,6 @@
 [submodule "vim/bundle/vim-yaml-indent"]
 	path = vim/bundle/vim-yaml-indent
 	url = https://github.com/avakhov/vim-yaml
+[submodule "vim/bundle/vim-toml"]
+	path = vim/bundle/vim-toml
+	url = https://github.com/cespare/vim-toml
