@@ -36,6 +36,7 @@ alias ave="pass ansible/vault | EDITOR=vim ansible-vault edit --vault=/bin/cat"
 
 alias pssh="pssh -o StrictHostKeyChecking=no"
 alias psudo="pssh --extra-args '-t -t'"
+alias imgrename="exiv2 rename -F -r '%Y%m%d-%H%M%S'"
 
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
