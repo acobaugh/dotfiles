@@ -78,8 +78,8 @@ export JAVA_HOME=$(readlink -f /usr/bin/java | sed -e "s|bin/java||;s|jre/$||")
 export CLASSPATH="$JAVA_HOME/lib"
 
 ## GPG stuff
-export PINENTRY="$HOME/bin/my-pinentry" # wrapper
-export PINENTRY_USER_DATA="curses" # default to pinentry-curses
+#export PINENTRY="$HOME/bin/my-pinentry" # wrapper
+#export PINENTRY_USER_DATA="curses" # default to pinentry-curses
 if [ -x "$(which gpg-agent)" ] ; then
 	gav=$(gpg-agent --version | head -1 | awk '{ print $NF }')
 	test=$(echo ${gav:0:3}'<'2.1 | bc -l 2>/dev/null)
