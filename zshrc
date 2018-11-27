@@ -46,4 +46,4 @@ setopt appendhistory
 unsetopt share_history
 setopt no_share_history
 
-
+test -e "$(which direnv 2>/dev/null)" && eval "$(direnv hook zsh)"

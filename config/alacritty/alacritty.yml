@@ -19,8 +19,8 @@ window:
   # Falls back to size specified by window manager if set to 0x0.
   # (changes require restart)
   dimensions:
-    columns: 118
-    lines: 34
+    columns: 80
+    lines: 24
 
   # Adds this many blank pixels of padding around the window
   # Units are physical pixels; this is not DPI aware.
@@ -81,7 +81,7 @@ font:
     # style: Italic
 
   # Point size of the font
-  size: 12.0
+  size: 10
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -100,7 +100,7 @@ font:
   # screens and make reading text a little easier.
   # On X11 it is possible to change the DPI for each instance of alacritty by using
   # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: false
+  scale_with_dpi: true
 
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
