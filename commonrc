@@ -100,4 +100,7 @@ export GPG_TTY=$(tty)
 # password-store options
 export PASSWORD_STORE_X_SELECTION="primary"
 
+## system-local settings
+test -f $HOME/.localrc && source .localrc
+
 ## vim: syntax=sh
