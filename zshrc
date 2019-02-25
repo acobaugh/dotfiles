@@ -2,8 +2,8 @@
 
 export shell="zsh"
 
+## settings common to all shells
 source ~/.commonrc
-
 
 zstyle :compinstall filename '/usr/home/atc135/.zshrc'
 
@@ -29,12 +29,12 @@ NEWLINE=$'\n'
 ZSH_THEME_GIT_PROMPT_PREFIX='('
 ZSH_THEME_GIT_PROMPT_SUFFIX=')'
 
+## disable git prompt when $HOME is in /pass
 if ! [[ "$HOME" =~ "^/pass" ]] ; then
 	PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}%{$fg[magenta]%}$(git_prompt_info)%{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
 else
 	PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
 fi
-
 
 export TZ='America/New_York'
 
@@ -46,4 +46,5 @@ setopt appendhistory
 unsetopt share_history
 setopt no_share_history
 
+## direnv
 test -e "$(which direnv 2>/dev/null)" && eval "$(direnv hook zsh)"
