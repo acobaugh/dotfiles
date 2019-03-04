@@ -84,7 +84,8 @@ feature-list=enable-fast-recent-test,
 	incoming-checking-includes-total,
 	expanded-view-of-folders,
 	single-column-folder-list,
-	signature-at-bottom
+	signature-at-bottom,
+	convert-dates-to-localtime
 
 # Alpine executes these keys upon startup (e.g. to view msg 13: i,j,1,3,CR,v)
 initial-keystroke-list=
