@@ -4,6 +4,7 @@ $HOME/.config
 $HOME/.minikube
 $HOME/.vagrant.d
 $HOME/.npm
+$HOME/go/pkg
 .DS_Store
 *Cache*
 *cache*
