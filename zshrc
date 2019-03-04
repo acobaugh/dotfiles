@@ -15,7 +15,17 @@ export ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
 ZSH_THEME=""
 
-plugins=(pass terraform kubectl docker go screen azure)
+## history
+#HISTFILE=~/.zsh_history
+#HISTSIZE=5000
+#SAVEHIST=5000
+#setopt appendhistory
+#unsetopt share_history
+#setopt no_share_history
+HIST_STAMPS="yyyy-mm-dd" # omz history wrapper
+
+
+plugins=(pass terraform kubectl docker go screen azure history)
 if ! [[ "$HOME" =~ "^/pass" ]] ; then
 	plugins+=git
 fi
@@ -37,14 +47,6 @@ else
 fi
 
 export TZ='America/New_York'
-
-## history
-HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
-setopt appendhistory
-unsetopt share_history
-setopt no_share_history
 
 ## direnv
 test -e "$(which direnv 2>/dev/null)" && eval "$(direnv hook zsh)"
