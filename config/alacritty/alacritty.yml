@@ -13,14 +13,15 @@ env:
   # You can verify this by checking for the presence of `smso` and `sitm` in
   # `infocmp xterm-256color`.
   TERM: xterm-256color
+  WINIT_HIDPI_FACTOR: 1.0
 
 window:
   # Window dimensions in character columns and lines
   # Falls back to size specified by window manager if set to 0x0.
   # (changes require restart)
   dimensions:
-    columns: 118
-    lines: 34
+    columns: 80
+    lines: 24
 
   # Adds this many blank pixels of padding around the window
   # Units are physical pixels; this is not DPI aware.
@@ -31,7 +32,7 @@ window:
 
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
-  decorations: true
+  decorations: full
 
 # Display tabs using this many cells (changes require restart)
 tabspaces: 8
@@ -81,7 +82,7 @@ font:
     # style: Italic
 
   # Point size of the font
-  size: 12.0
+  size: 12
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -96,12 +97,6 @@ font:
     x: 0
     y: 0
 
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  # On X11 it is possible to change the DPI for each instance of alacritty by using
-  # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: false
-
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
   # false.
@@ -110,10 +105,8 @@ font:
 # Should display the render timer
 render_timer: false
 
-# Use custom cursor colors. If true, display the cursor in the cursor.foreground
-# and cursor.background colors, otherwise invert the colors of the cursor.
-custom_cursor_colors: true
-
+cursor:
+  style: Block
 colors:
    cursor:
      text: '0x000000'
@@ -253,22 +246,15 @@ mouse:
   # scrolling for applications like `man`.
   #
   # To disable this completely, set `faux_scrollback_lines` to 0.
-  faux_scrollback_lines: 1
+  faux_scrolling_lines: 1
+  hide_when_typing: false
+  url:
+    launcher: 
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
 dynamic_title: true
-
-hide_cursor_when_typing: false
-
-# Style of the cursor
-#
-# Values for 'cursor_style':
-# - Block
-# - Underline
-# - Beam
-cursor_style: Block
 
 # Live config reload (changes require restart)
 live_config_reload: true

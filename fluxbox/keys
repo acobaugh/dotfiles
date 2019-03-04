@@ -1,3 +1,10 @@
+OnTitlebar Mouse1 :MacroCmd {Focus} {Raise} {ActivateTab}
+!mouse actions added by fluxbox-update_configs
+OnTitlebar Move1 :StartMoving
+OnLeftGrip Move1 :StartResizing bottomleft
+OnRightGrip Move1 :StartResizing bottomright
+OnWindowBorder Move1 :StartMoving
+
 !mouse actions added by fluxbox-update_configs
 OnTitlebar Mouse2 :StartTabbing
 
@@ -19,8 +26,8 @@ OnDesktop Mouse3 :RootMenu
 OnDesktop Mouse4 :NextWorkspace
 OnDesktop Mouse5 :PrevWorkspace
 
-Mod1 Tab :NextWindow
-Mod1 Shift Tab :PrevWindow
+Mod1 Tab :NextWindow (workspace=[current])
+Mod1 Shift Tab :PrevWindow (workspace=[current])
 Mod1 F1 :Workspace 1
 Mod1 F2 :Workspace 2
 Mod1 F3 :Workspace 3
@@ -31,9 +38,13 @@ Mod1 F6 :Workspace 6
 Mod1 Return :ExecCommand alacritty --live-config-reload
 Mod1 q :Close
 Mod1 m :Maximize
-Mod1 d :ExecCommand sh -c dmenu_run
+Mod1 d :ExecCommand zsh -c dmenu_run
 Mod1 p :ExecCommand ~/bin/passmenu
 
 OnLeftGrip Move1 :StartResizing bottomleft
 OnRightGrip Move1 :StartResizing bottomright
 OnTitlebar Move1  :StartMoving
+
+
+
+
