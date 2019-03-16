@@ -91,6 +91,7 @@ window.frame.unfocusColor:      grey30
 window.font:                    snap
 window.justify:                 right
 
+window.title.height:		16
 borderColor:                    grey10
 
 bevelWidth:                     1
