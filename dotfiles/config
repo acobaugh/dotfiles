@@ -2,6 +2,7 @@
 
 dotfiles="
 	config/alacritty/alacritty.yml
+	config/dunst/dunstrc
 	commonrc
 	vim
 	vimrc
