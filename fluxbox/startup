@@ -62,17 +62,18 @@ test -n "`which gkrellm`" && gkrellm &
 test -n "`which redshift`" && redshift -l 40.8:-77.8 -t 6300:4000 &
 
 test -n "$(which slock-pam 2>/dev/null)" && slock=slock-pam || slock=slock
-test -n "`which xautolock`" && xautolock -time 10 -notify 30 -notifier "notify-send -u critical -t 5000 -- 'locking screen in 30 seconds'" -locker $slock &
+test -n "`which xautolock`" && xautolock -time 10 -notify 30 -notifier "notify-send.sh -u critical -t 5000 -- 'locking screen in 30 seconds'" -locker $slock &
 
 # just for the laptop
-if [ "$(hostname)" == "zirzla" ] ; then
-	test -x "`which unburden-home-dir`" && unburden-home-dir
-	test -x "`which synclient`" && synclient TouchpadOff=1
-	test -x "`which nm-applet`" && nm-applet &
-	test -x "`which volumeicon`" && volumeicon &
-	test -x "`which notify-osd`" && notify-osd &
-	test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
-fi
+case "$(hostname)" in
+	zirzla|xaxis)
+		test -x "`which unburden-home-dir`" && unburden-home-dir
+		test -x "`which synclient`" && synclient TouchpadOff=1
+		test -x "`which nm-applet`" && nm-applet &
+		test -x "`which volumeicon`" && volumeicon &
+		test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
+		;;
+esac
 
 # don't exit until fluxbox does
 wait $fbpid
