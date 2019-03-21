@@ -103,4 +103,9 @@ export PASSWORD_STORE_X_SELECTION="primary"
 ## system-local settings
 test -f $HOME/.localrc && source .localrc
 
+## vscode
+if [ ! -x "$(which vscode)" ] && [ -x "$(which code-oss)" ] ; then
+	alias vscode=code-oss
+fi
+
 ## vim: syntax=sh
