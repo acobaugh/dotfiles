@@ -2,6 +2,7 @@
 
 dotfiles="
 	config/alacritty/alacritty.yml
+	config/dunst/dunstrc
 	commonrc
 	vim
 	vimrc
@@ -18,6 +19,7 @@ dotfiles="
 	Xresources
 	gkrellm2/theme_config
 	gkrellm2/themes
+	gkrellm2/plugins/gkrellm-wifi.so
 	tmux.conf
 	fonts
 	pinerc

@@ -27,7 +27,7 @@ alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias tf=terraform
 alias tg=terragrunt
-#alias alpine="alpine"
+alias travis-docker='docker run -it -v $(pwd):/project --rm skandyla/travis-cli'
 
 alias ap="ansible-playbook"
 alias apv="pass ansible/vault | ansible-playbook --vault=/bin/cat"
@@ -102,5 +102,10 @@ export PASSWORD_STORE_X_SELECTION="primary"
 
 ## system-local settings
 test -f $HOME/.localrc && source .localrc
+
+## vscode
+if [ ! -x "$(which code)" ] && [ -x "$(which code-oss)" ] ; then
+	alias code=code-oss
+fi
 
 ## vim: syntax=sh
