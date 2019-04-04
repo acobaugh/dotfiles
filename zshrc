@@ -25,7 +25,7 @@ ZSH_THEME=""
 HIST_STAMPS="yyyy-mm-dd" # omz history wrapper
 
 
-plugins=(pass terraform kubectl docker go screen azure history)
+plugins=(pass terraform kubectl docker go screen azure history ssh-agent)
 if ! [[ "$HOME" =~ "^/pass" ]] ; then
 	plugins+=git
 fi
