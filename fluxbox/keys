@@ -38,7 +38,7 @@ Mod1 F6 :Workspace 6
 Mod1 Return :ExecCommand alacritty --live-config-reload
 Mod1 q :Close
 Mod1 m :Maximize
-Mod1 d :ExecCommand zsh -c dmenu_run
+Mod1 d :ExecCommand ~/bin/dmenu_run_zsh
 Mod1 p :ExecCommand ~/bin/passmenu
 
 OnLeftGrip Move1 :StartResizing bottomleft
