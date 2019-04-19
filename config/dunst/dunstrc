@@ -1,4 +1,5 @@
 [global]
+    timeout = 30
     ### Display ###
 
     # Which monitor should the notifications be displayed on.
