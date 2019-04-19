@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+dmenu_path | dmenu "$@" | ${SHELL:-"/bin/sh"} &

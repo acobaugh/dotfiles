@@ -1,0 +1,102 @@
+#!/bin/bash
+
+
+# sets sane defaults
+
+namespace=eio-swe
+secret_name=${PWD##*/} 
+cert_url=https://sealed-secrets.k8s.psu.edu/v1/cert.pem
+key=SOME_SECRET
+output="string"
+
+function usage {
+  echo "Usage:
+  $0 [OPTIONS]
+
+Options:
+  -h, --help          Shows this message
+  -n, --name          Application name. Defaults to \$pwd
+  -e, --env           Environment, or branch name (develop, feature-bar) Defaults to empty (prod)
+  -ns, --namespace    Namespace where SealedSecret is stored. Defaults to eio-swe
+  -k, --key           Secret key. Useful when -o is sealedsecret
+  -o, --output        [string|sealedsecret] How to output the SealedSecret. Defaults to string
+  "
+}
+
+while :
+do
+if [[ -z $1 ]]; then
+  break;
+fi
+  case "$1" in
+    -n |  --name)
+      if [ $environment ]; then
+        secret_name=$2-$environment
+      else
+        secret_name=$2
+      fi
+      shift 2
+      ;;
+    -e | --env)
+      environment=$2
+      secret_name=$secret_name-$environment
+      cert_url=https://sealed-secrets.qa.k8s.psu.edu/v1/cert.pem
+      shift 2
+      ;;
+    -ns | --namespace)
+      namespace=$2
+      shift 2
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    -k | --key)
+      key=$2
+      shift 2
+      ;;
+    -o | --output)
+      case $2 in
+        string)
+          output="string"
+          shift 2
+          ;;
+        sealedsecret)
+          output="sealedsecret"
+          shift 2
+          ;;
+        *)
+          echo "i don't know what the french you are talking about"
+          echo "outputting string"
+          shift 2
+          ;;
+      esac
+      ;;
+    --)
+      shift
+      break;
+      ;;
+    *)
+      echo "unknown option $1"
+      break;
+      exit 1
+      ;;
+  esac
+done
+
+wget -O /tmp/cert -q $cert_url -nv
+
+echo "Secret Name:" $secret_name
+echo "Namespace:" $namespace
+echo "Cert:" $cert_url
+
+echo -n "value: "
+read value
+
+
+echo "---"
+if [ $output = "string" ]; then
+  kubectl create secret generic $secret_name --namespace=$namespace --from-literal=$key=$value -o json --dry-run | kubeseal --cert=/tmp/cert | jq ".spec.encryptedData.$key"
+else
+  kubectl create secret generic $secret_name --namespace=$namespace --from-literal=$key=$value -o json --dry-run | kubeseal --cert=/tmp/cert --format=yaml
+fi

@@ -24,6 +24,7 @@ dotfiles="
 	fonts
 	pinerc
 	zshrc
+	xprofile
 	oh-my-zsh
 "
 
