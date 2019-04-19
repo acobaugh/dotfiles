@@ -1,2 +1,2 @@
-#!/bin/sh
-LD_LIBRARY_PATH=$HOME/zoom/current/zoom/ $HOME/zoom/current/zoom/zoom
+date > $HOME/.zoom.log
+LD_LIBRARY_PATH=/opt/zoom/ /opt/zoom/zoom >> $HOME/.zoom.log 2>&1
