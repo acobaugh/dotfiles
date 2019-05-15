@@ -57,10 +57,22 @@ xset -b
 exec fluxbox &
 fbpid=$!
 
+case "$(hostname)" in
+	xaxis)
+		redshift_day=5500
+		redshift_night=3500
+		;;
+	zirzla|*)
+	
+		redshift_day=6300
+		redshift_night=4000
+		;;
+esac
+
 test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
 test -n "`which gkrellm`" && gkrellm &
 killall redshift
-test -n "`which redshift`" && redshift -l 40.8:-77.8 -t 6300:4000 &
+test -n "`which redshift`" && redshift -l 40.8:-77.8 -t $redshift_day:$redshift_night&
 
 test -n "$(which slock-pam 2>/dev/null)" && slock=slock-pam || slock=slock
 test -n "`which xautolock`" && xautolock -time 10 -notify 30 -notifier "notify-send.sh -u critical -t 5000 -- 'locking screen in 30 seconds'" -locker $slock &
