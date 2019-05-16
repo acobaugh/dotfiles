@@ -37,8 +37,7 @@ ZSH_THEME=""
 #setopt no_share_history
 HIST_STAMPS="yyyy-mm-dd" # omz history wrapper
 
-
-plugins=(pass terraform kubectl docker go screen azure history ssh-agent )
+plugins=( pass terraform kubectl docker go screen history ssh-agent kube-ps1 )
 if ! [[ "$HOME" =~ "^/pass" ]] ; then
 	plugins+=(git git-prompt)
 fi
@@ -47,6 +46,9 @@ fi
 #test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
 source $ZSH/oh-my-zsh.sh
 
+KUBE_PS1_COLOR_SYMBOL="%F{cyan}"
+KUBE_PS1_ENABLED=false
+
 ## theme configuration
 NEWLINE=$'\n'
 ZSH_THEME_GIT_PROMPT_PREFIX='('
@@ -54,7 +56,7 @@ ZSH_THEME_GIT_PROMPT_SUFFIX=')'
 
 ## disable git prompt when $HOME is in /pass
 if ! [[ "$HOME" =~ "^/pass" ]] ; then
-       PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}%{$fg[magenta]%}$(git_repo_name_prompt)%{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
+	PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}%{$fg[magenta]%}$(git_repo_name_prompt)%{$reset_color%} $(kube_ps1)$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
 else
        PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
 fi
