@@ -37,7 +37,6 @@ ZSH_THEME=""
 #setopt no_share_history
 HIST_STAMPS="yyyy-mm-dd" # omz history wrapper
 
-
 plugins=( pass terraform kubectl docker go screen history ssh-agent kube-ps1 )
 if ! [[ "$HOME" =~ "^/pass" ]] ; then
 	plugins+=(git git-prompt)
@@ -46,6 +45,9 @@ fi
 # conditional plugins
 #test -x "$(which aws_completer 2>/dev/null)" && plugins+='aws'
 source $ZSH/oh-my-zsh.sh
+
+KUBE_PS1_COLOR_SYMBOL="%F{cyan}"
+KUBE_PS1_ENABLED=false
 
 ## theme configuration
 NEWLINE=$'\n'
