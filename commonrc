@@ -38,6 +38,12 @@ alias pssh="pssh -o StrictHostKeyChecking=no"
 alias psudo="pssh --extra-args '-t -t'"
 alias imgrename="exiv2 rename -F -r '%Y%m%d-%H%M%S'"
 
+## k8s aliases
+alias kg="kubectl get"
+alias kd="kubectl describe"
+alias kgpo="kubectl get pod"
+alias kdpo="kubectl describe pod"
+
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 fi
