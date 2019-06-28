@@ -28,12 +28,10 @@ alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
 alias tf=terraform
 alias tg=terragrunt
 alias travis-docker='docker run -it -v $(pwd):/project --rm skandyla/travis-cli'
-
 alias ap="ansible-playbook"
 alias apv="pass ansible/vault | ansible-playbook --vault=/bin/cat"
 alias av="pass ansible/vault | ansible --vault=/bin/cat"
 alias ave="pass ansible/vault | EDITOR=vim ansible-vault edit --vault=/bin/cat"
-
 alias pssh="pssh -o StrictHostKeyChecking=no"
 alias psudo="pssh --extra-args '-t -t'"
 alias imgrename="exiv2 rename -F -r '%Y%m%d-%H%M%S'"
@@ -107,5 +105,12 @@ test -f $HOME/.localrc && source .localrc
 if [ ! -x "$(which code >/dev/null 2>/dev/null)" ] && [ -x "$(which code-oss 2>/dev/null)" ] ; then
 	alias code=code-oss
 fi
+
+## docker aliases
+alias tqsl="docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v $HOME:/home/tsql \
+        -e DISPLAY=unix$DISPLAY \
+        --name tsql \
+        quay.io/acobaugh/tsql"
 
 ## vim: syntax=sh
