@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
 ###
 ### Author: rdt12@psu.edu
 ### Date: March 1, 2018
@@ -10,8 +10,18 @@
 ###       the inital https and a final &data= to delimit
 ###       the encoded URL.
 use strict;
+use warnings;
+
 use FileHandle;
-use URI::Encode;
+
+# fail gracefuly
+eval {
+	require URI::Encode;
+};
+if ($@) {
+	while (<>) { print };
+	exit 0;
+}
 
 my($uri) =  URI::Encode->new( { encode_reserved => 0 } );
 

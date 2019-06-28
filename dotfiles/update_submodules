@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+git submodule sync
+git submodule init
+git submodule update
+git submodule update --remote --merge 
+
+for i in $(git submodule foreach --quiet 'echo $path')
+do
+  echo "Adding $i to root repo"
+  git add "$i"
+done
+
+git commit -m 'Updated submodules'
