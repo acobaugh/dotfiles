@@ -33,8 +33,8 @@ ZSH_THEME=""
 #HISTSIZE=5000
 #SAVEHIST=5000
 #setopt appendhistory
-#unsetopt share_history
-#setopt no_share_history
+unsetopt share_history
+setopt no_share_history
 HIST_STAMPS="yyyy-mm-dd" # omz history wrapper
 
 plugins=( pass terraform kubectl docker go screen history ssh-agent kube-ps1 )

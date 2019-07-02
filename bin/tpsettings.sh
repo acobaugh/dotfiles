@@ -16,7 +16,7 @@ if [ -d "$TPDEV" ]; then
     #echo -n 140 | sudo tee $TPDEV/sensitivity # def 200 on t450s
     #echo -n 65 | sudo tee $TPDEV/speed # def 97 on t450s
     #echo -n 5   | sudo tee $TPDEV/drift_time # def 5 on t450s
-    echo -n 150 | sudo tee $TPDEV/sensitivity # def 200 on t450s
+    echo -n 128 | sudo tee $TPDEV/sensitivity # def 200 on t450s
     echo -n 75 | sudo tee $TPDEV/rate # def 100 on t450s
 else
     echo "Couldn't find trackpoint device $TPDEV"
