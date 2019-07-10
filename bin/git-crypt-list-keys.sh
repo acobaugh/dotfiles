@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-gpg_program="$(git config --get gpg.program)"
+gpg_program="$(which $(git config --get gpg.program))"
 if [ -x "$gpg_program" ] ; then
 	GPG="$gpg_program"
 else
