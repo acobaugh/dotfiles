@@ -119,4 +119,12 @@ alias tqsl="docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix \
         --name tsql \
         quay.io/acobaugh/tsql"
 alias az="docker run --rm -it -v ${HOME}/.azure:/root/.azure mcr.microsoft.com/azure-cli az"
+
+## WINIT_HIDPI_FACTOR for alacritty, per hostname
+case "$(hostname)" in
+	zirzla)
+		export WINIT_HIDPI_FACTOR=1.1
+		;;
+esac
+
 ## vim: syntax=sh
