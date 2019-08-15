@@ -123,7 +123,7 @@ alias az="docker run --rm -it -v ${HOME}/.azure:/root/.azure mcr.microsoft.com/a
 ## WINIT_HIDPI_FACTOR for alacritty, per hostname
 case "$(hostname)" in
 	zirzla|xaxis)
-		export WINIT_HIDPI_FACTOR=1.1
+		export WINIT_HIDPI_FACTOR=1.0
 		;;
 esac
 
