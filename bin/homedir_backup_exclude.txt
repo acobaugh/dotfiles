@@ -10,3 +10,4 @@ $HOME/go/pkg
 *cache*
 *.o
 .thumbnails
+.git
