@@ -55,3 +55,6 @@
 [submodule "vim/bundle/vim-toml"]
 	path = vim/bundle/vim-toml
 	url = https://github.com/cespare/vim-toml
+[submodule "kubectl-aliases"]
+	path = kubectl-aliases
+	url = https://github.com/ahmetb/kubectl-aliases
