@@ -38,7 +38,7 @@ alias imgrename="exiv2 rename -F -r '%Y%m%d-%H%M%S'"
 
 ## k8s aliases
 [ -f ~/.kubectl-aliases/.kubectl-aliases ] && source ~/.kubectl-aliases/.kubectl-aliases
-function kubectl() { echo "+ kubectl $@" ; command kubectl $@; }
+function kubectl() { test $0 != kubectl && echo "+ kubectl $@" ; command kubectl $@; }
 
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
