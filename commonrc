@@ -37,10 +37,8 @@ alias psudo="pssh --extra-args '-t -t'"
 alias imgrename="exiv2 rename -F -r '%Y%m%d-%H%M%S'"
 
 ## k8s aliases
-alias kg="kubectl get"
-alias kd="kubectl describe"
-alias kgpo="kubectl get pod"
-alias kdpo="kubectl describe pod"
+[ -f ~/.kubectl-aliases/.kubectl-aliases ] && source ~/.kubectl-aliases/.kubectl-aliases
+function kubectl() { test $0 != kubectl && echo "+ kubectl $@" ; command kubectl $@; }
 
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
@@ -123,7 +121,7 @@ alias az="docker run --rm -it -v ${HOME}/.azure:/root/.azure mcr.microsoft.com/a
 ## WINIT_HIDPI_FACTOR for alacritty, per hostname
 case "$(hostname)" in
 	zirzla|xaxis)
-		export WINIT_HIDPI_FACTOR=1.1
+		export WINIT_HIDPI_FACTOR=1.0
 		;;
 esac
 

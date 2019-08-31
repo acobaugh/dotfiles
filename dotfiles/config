@@ -26,6 +26,7 @@ dotfiles="
 	zshrc
 	xprofile
 	oh-my-zsh
+	kubectl-aliases
 "
 
 plainfiles="bin"
