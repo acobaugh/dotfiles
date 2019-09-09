@@ -39,7 +39,7 @@ alias gitlog="git log --pretty=format:'%C(yellow)%h %Cred%aI %Cblue%an%Cgreen%d 
 ## k8s aliases
 #[ -f ~/.kubectl-aliases/.kubectl-aliases ] && source ~/.kubectl-aliases/.kubectl-aliases
 #function kubectl() { test $0 != kubectl && echo "+ kubectl $@" ; command kubectl $@; }
-
+alias ktoolbox='kubectl run --generator=run-pod/v1 ktoolbox-${USER}-$(date +"%s") --rm -i --tty --image quay.io/pennstate/ktoolbox -- /bin/bash'
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 fi
