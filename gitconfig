@@ -21,3 +21,7 @@
   added = yellow
   changed = green
   untracked = cyan
+
+[url "git@git.psu.edu:"]
+  insteadOf = https://git.psu.edu/
+
