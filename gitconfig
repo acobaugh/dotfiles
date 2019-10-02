@@ -3,6 +3,8 @@
 	name = Andy Cobaugh
 [push]
 	default = current
+[fetch]
+	recurseSubmodules = on-demand
 [gpg]
 	program = gpg2
 
