@@ -55,6 +55,7 @@ if [ -x "$(which go 2>&1)" ] ; then
 	_GOPATH="$(go env GOPATH)"
 	export GOPATH=${_GOPATH:-$HOME/go}
 	export PATH=$GOPATH/bin:$PATH
+	export GOPRIVATE="git.psu.edu"
 fi
 
 ## node.js yarn
