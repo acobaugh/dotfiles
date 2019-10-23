@@ -3,6 +3,7 @@
 dotfiles="
 	config/alacritty/alacritty.yml
 	config/dunst/dunstrc
+	config/i3
 	commonrc
 	vim
 	vimrc
