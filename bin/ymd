@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -x
+
+if [ "$(basename $(pwd))" != "incoming" ] ; then
+	echo "Must be run from incoming"
+	exit 1
+fi
+
+for d in $(ls -1 *.jpg | cut -f1 -d_ | sort | uniq) ; do
+	ymd=$(date -d"$d" +"%Y-%m-%d")
+	mkdir -p ../$ymd
+	mv ${d}* ../$ymd
+done

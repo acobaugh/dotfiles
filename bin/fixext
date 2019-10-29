@@ -1,0 +1,3 @@
+set +x
+rename JPG jpg *.JPG
+rename NEF nef *.NEF
