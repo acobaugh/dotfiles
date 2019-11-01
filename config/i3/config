@@ -190,7 +190,7 @@ bar {
 gaps inner 10
 gaps outer 0
 smart_borders on
-new_window none
+#new_window none
 
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
