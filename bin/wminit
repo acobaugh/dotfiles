@@ -70,8 +70,6 @@ case "$(hostname)" in
 esac
 
 test -n "`which feh`" && feh --bg-scale $HOME/.fluxbox/backgrounds/darklight.jpg
-killall redshift
-test -n "`which redshift`" && redshift -l 40.8:-77.8 -t $redshift_day:$redshift_night&
 
 test -n "$(which slock-pam 2>/dev/null)" && slock=slock-pam || slock=slock
 test -n "`which xautolock`" && xautolock -time 10 -notify 30 -notifier "notify-send.sh -u critical -t 5000 -- 'locking screen in 30 seconds'" -locker $slock &
@@ -86,4 +84,8 @@ case "$(hostname)" in
 		test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
 		;;
 esac
+
+killall redshift
+sleep 5
+test -n "`which redshift`" && redshift -l 40.8:-77.8 -t $redshift_day:$redshift_night&
 
