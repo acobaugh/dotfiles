@@ -4,6 +4,7 @@ dotfiles="
 	config/alacritty/alacritty.yml
 	config/dunst/dunstrc
 	config/i3
+	config/i3status
 	commonrc
 	vim
 	vimrc
@@ -28,6 +29,7 @@ dotfiles="
 	xprofile
 	oh-my-zsh
 	kubectl-aliases
+	compton.conf
 "
 
 plainfiles="bin"
