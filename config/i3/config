@@ -182,7 +182,7 @@ bar {
 	font pango:Inconsolata 10
         #status_command i3status
 	#status_command $HOME/bin/i3status.sh
-	status_command bumblebee-status -m weather cpu load memory battery traffic pasink xrandr time -t solarized-powerline -p time.format="%Y/%m/%d %H:%M:%S" traffic.exclude="lo,virbr,docker,vboxnet,veth,br" weather.unit=imperial
+	status_command bumblebee-status -m weather cpu load memory battery traffic xrandr time -t solarized-powerline -p time.format="%Y/%m/%d %H:%M:%S" traffic.exclude="lo,virbr,docker,vboxnet,veth,br" weather.unit=imperial
 }
 
 # i3-gaps configuration
