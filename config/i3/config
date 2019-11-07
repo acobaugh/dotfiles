@@ -29,7 +29,7 @@ font pango:monospace 8
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id $HOME/bin/wminit
-exec --no-startup-id compton -b
+#exec --no-startup-id compton -b
 #exec --no-startup-id $HOME/bin/i3bat.sh
 
 # Use pactl to adjust volume in PulseAudio.
