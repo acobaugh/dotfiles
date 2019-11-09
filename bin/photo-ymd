@@ -7,8 +7,9 @@ if [ "$(basename $(pwd))" != "incoming" ] ; then
 	exit 1
 fi
 
-for d in $(ls -1 *.jpg | cut -f1 -d_ | sort | uniq) ; do
-	ymd=$(date -d"$d" +"%Y-%m-%d")
+for d in $(ls -1 *.jpg *.nef | cut -f1 -d- | sort | uniq) ; do
+	ymd=$(date -d"$d" +"%Y-%m-%d") 
+	test $? -ne 0 && exit 1
 	mkdir -p ../$ymd
 	mv ${d}* ../$ymd
 done
