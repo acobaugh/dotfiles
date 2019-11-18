@@ -1,1 +1,0 @@
-exiftool -d %Y%m%d-%H%M%S '-filename<${DateTimeOriginal}${SubSecTimeOriginal}0.%e' *.JPG *.NEF
