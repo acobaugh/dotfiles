@@ -61,7 +61,7 @@ else
        PROMPT='%{$fg[cyan]%}[%*] %{$fg_bold[green]%}%n@%m%{$fg_bold[blue]%} %(3~|%-1~/…/%1~|%2~) %{$reset_color%}$NEWLINE%{$fg_bold[blue]%}%% %{$reset_color%}'
 fi
 
-export TZ='America/New_York'
+#export TZ='America/New_York'
 
 ## direnv
 test -e "$(which direnv 2>/dev/null)" && eval "$(direnv hook zsh)"
