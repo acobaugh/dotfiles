@@ -87,5 +87,6 @@ esac
 
 killall redshift
 sleep 5
-test -n "`which redshift`" && redshift -l 40.8:-77.8 -t $redshift_day:$redshift_night&
+test -n "`which redshift`" && redshift -l geoclue2 -t $redshift_day:$redshift_night &
+#redshift -l 40.8:-77.8 -t $redshift_day:$redshift_night&
 
