@@ -184,22 +184,22 @@ bar {
 	#status_command $HOME/bin/i3status.sh
 	status_command bumblebee-status \
 		-m \
-			weather \
+			traffic \
 			cpu \
 			load \
 			memory \
+			weather \
 			battery \
-			traffic \
 			xrandr \
 			datetimetz:dt_utc \
-			datetimetz:dt_local \
+			datetime \
 			datetime:date \
 		-t solarized-powerline \
 		-p \
-			date.format="%Y/%m/%d :%S" \
+			date.format="%Y/%m/%d" \
 			dt_utc.format="%H:%M UTC" \
 			dt_utc.timezone="UTC" \
-			dt_local.format="%H:%M Local" \
+			datetime.format="%H:%M:%S Local" \
 			dt_local.timezone="PST8PDT" \
 			traffic.exclude="lo,virbr,docker,vboxnet,veth,br" \
 			weather.unit=imperial
