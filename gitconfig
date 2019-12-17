@@ -28,3 +28,6 @@
 [url "git@git.psu.edu:"]
   insteadOf = https://git.psu.edu/
 
+[url "git@github.com:PennState"]
+  insteadOf = https://github.com/PennState
+
