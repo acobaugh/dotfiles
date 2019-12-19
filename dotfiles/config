@@ -4,7 +4,6 @@ dotfiles="
 	config/alacritty/alacritty.yml
 	config/dunst/dunstrc
 	config/i3
-	config/i3status
 	commonrc
 	vim
 	vimrc
