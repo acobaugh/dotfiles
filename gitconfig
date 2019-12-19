@@ -4,11 +4,11 @@
 [push]
 	default = current
 [fetch]
-	recurseSubmodules = on-demand
+#	recurseSubmodules = on-demand
 [gpg]
 	program = gpg2
 [diff]
-	ignoreSubmodules = all
+#	ignoreSubmodules = all
 [color]
   ui = auto
 [color "branch"]
