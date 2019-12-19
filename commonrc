@@ -58,6 +58,9 @@ if [ -x "$(which go 2>&1)" ] ; then
 	export GOPRIVATE="git.psu.edu"
 fi
 
+## kubectl krew
+export PATH="$HOME/.krew/bin:$PATH"
+
 ## node.js yarn
 if [ -d "$HOME/.yarn/bin" ] ; then
 	export PATH="$HOME/.yarn/bin:$PATH"

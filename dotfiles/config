@@ -5,6 +5,7 @@ dotfiles="
 	config/dunst/dunstrc
 	config/i3
 	commonrc
+	krew
 	vim
 	vimrc
 	gitconfig

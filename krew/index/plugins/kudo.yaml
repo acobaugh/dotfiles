@@ -1,0 +1,66 @@
+apiVersion: krew.googlecontainertools.github.com/v1alpha2
+kind: Plugin
+metadata:
+  name: kudo
+spec:
+  version: "v0.8.0"
+
+  shortDescription: Declaratively build, install, and run operators using KUDO.
+  homepage: https://kudo.dev/
+  description: |
+    The Kubernetes Universal Declarative Operator (KUDO) is a highly productive
+    toolkit for writing operators for Kubernetes. Using KUDO, you can deploy
+    your applications, give your users the tools they need to operate it, and
+    understand how it's behaving in their environments — all without a PhD in
+    Kubernetes.
+  caveats: |
+    Requires the KUDO controller to be installed:
+      kubectl kudo init
+    Example usage:
+      Install kafka:
+        kubectl kudo install kafka
+      List installed operator instances:
+        kubectl kudo get instances
+    See the documentation for more information: https://kudo.dev/docs/
+
+  platforms:
+  - selector:
+      matchLabels:
+        os: "linux"
+        arch: "amd64"
+    uri: https://github.com/kudobuilder/kudo/releases/download/v0.8.0/kudo_0.8.0_linux_x86_64.tar.gz
+    sha256: "a6c1d0ce516d7436a3dc7968720b21b9fc17a2f5e566f434777b79c65b39aa22"
+    bin: "./kubectl-kudo"
+    files:
+    - from: "*"
+      to: "."
+  - selector:
+      matchLabels:
+        os: "linux"
+        arch: "386"
+    uri: https://github.com/kudobuilder/kudo/releases/download/v0.8.0/kudo_0.8.0_linux_i386.tar.gz
+    sha256: "918ed5111c2f28e81fe76ed743a6f2dc13a332946e77ea453190cbad8ab7e7fc"
+    bin: "./kubectl-kudo"
+    files:
+    - from: "*"
+      to: "."
+  - selector:
+      matchLabels:
+        os: "darwin"
+        arch: "amd64"
+    uri: https://github.com/kudobuilder/kudo/releases/download/v0.8.0/kudo_0.8.0_darwin_x86_64.tar.gz
+    sha256: "5e757125cc655fd39de6dbca8082c2bcc8e537031860ceb811c975a319378c59"
+    bin: "./kubectl-kudo"
+    files:
+    - from: "*"
+      to: "."
+  - selector:
+      matchLabels:
+        os: "darwin"
+        arch: "386"
+    uri: https://github.com/kudobuilder/kudo/releases/download/v0.8.0/kudo_0.8.0_darwin_i386.tar.gz
+    sha256: "16fe14a2a03e0d7fc7a6ebbddc467519bb6dfbed427ca07e8ec9d03a909a27a2"
+    bin: "./kubectl-kudo"
+    files:
+    - from: "*"
+      to: "."
