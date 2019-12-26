@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+for path in /opt/Paperspace/Paperspace.sh $HOME/Paperspace/Paperspace.sh ; do
+	echo $path
+	if [ -x "$path" ] ; then
+		$path
+	fi
+done
+
