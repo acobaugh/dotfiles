@@ -13,7 +13,7 @@ fi
 #------------------------------------------------------------
 if [ -d "$TPDEV" ]; then
     echo "Configuring Trackpoint"
-    echo -n 60 | sudo tee $TPDEV/speed # def 97 on t450s
+    echo -n 85 | sudo tee $TPDEV/speed # def 97 on t450s
     echo -n 6   | sudo tee $TPDEV/drift_time # def 5 on t450s
     echo -n 130 | sudo tee $TPDEV/sensitivity # def 200 on t450s
     echo -n 255 | sudo tee $TPDEV/rate # def 100 on t450s
