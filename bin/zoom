@@ -1,2 +1,0 @@
-date > $HOME/.zoom.log
-LD_LIBRARY_PATH=/opt/zoom/ /opt/zoom/zoom >> $HOME/.zoom.log 2>&1
