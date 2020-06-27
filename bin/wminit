@@ -80,7 +80,7 @@ case "$(hostname)" in
 		test -x "`which unburden-home-dir`" && unburden-home-dir
 		test -x "`which synclient`" && synclient TouchpadOff=1
 		test -x "`which nm-applet`" && nm-applet &
-		test -x "`which volumeicon`" && volumeicon &
+		#test -x "`which volumeicon`" && volumeicon &
 		test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
 		;;
 esac

@@ -11,6 +11,7 @@ dotfiles="
 	gitconfig
 	bash_profile
 	bashrc
+	m2/settings.xml
 	screenrc
 	ssh/config.example
 	fluxbox/backgrounds

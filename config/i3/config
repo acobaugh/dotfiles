@@ -199,11 +199,11 @@ bar {
 			datetime:date \
 		-t solarized-powerline \
 		-p \
-			date.format="%Y/%m/%d" \
+			date.format="%a %Y/%m/%d" \
 			dt_utc.format="%H:%M UTC" \
 			dt_utc.timezone="UTC" \
 			datetime.format="%H:%M:%S Local" \
-			dt_local.timezone="PST8PDT" \
+			dt_local.timezone="EST5EDT" \
 			traffic.exclude="lo,virbr,docker,vboxnet,veth,br" \
 			weather.unit=imperial
 }

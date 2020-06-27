@@ -1,6 +1,8 @@
 [user]
 	email = andrew.cobaugh@gmail.com
 	name = Andy Cobaugh
+[pull]
+	rebase = true
 [push]
 	default = current
 [fetch]
