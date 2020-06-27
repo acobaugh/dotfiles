@@ -126,6 +126,8 @@ alias az="docker run --rm -it -v ${HOME}/.azure:/root/.azure mcr.microsoft.com/a
 case "$(hostname)" in
 	zirzla|xaxis)
 		export WINIT_HIDPI_FACTOR=1.0
+		# this was renamed at some point, and people don't care about backwards compatibility
+		export WINIT_X11_SCALE_FACTOR=$WINIT_HIDPI_FACTOR
 		;;
 esac
 
