@@ -107,7 +107,7 @@ export GPG_TTY=$(tty)
 export PASSWORD_STORE_X_SELECTION="primary"
 
 ## system-local settings
-test -f $HOME/.localrc && source .localrc
+test -f $HOME/.localrc && source $HOME/.localrc
 
 ## vscode
 if [ ! -x "$(which code >/dev/null 2>/dev/null)" ] && [ -x "$(which code-oss 2>/dev/null)" ] ; then
