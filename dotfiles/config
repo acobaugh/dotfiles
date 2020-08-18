@@ -6,6 +6,7 @@ dotfiles="
 	config/i3
 	commonrc
 	krew
+	kube/kubie.yaml
 	vim
 	vimrc
 	gitconfig
