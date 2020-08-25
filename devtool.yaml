@@ -1,0 +1,5 @@
+k8s:
+  provider: kind
+kind:
+  k8s:
+    version: "v1.16.9"
