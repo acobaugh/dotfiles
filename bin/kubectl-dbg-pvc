@@ -7,8 +7,9 @@ fi
 
 pvcs="$@"
 podname="pvc-dbg-${USER}-$(date +'%s')"
-image=busybox
+image=psuswe/ktoolbox
 path=/data
+cmd="/bin/bash"
 
 volumeMounts=""
 volumes=""
@@ -37,7 +38,7 @@ overrides=$(cat << EOF
       {
         "name": "debugger",
         "image": "$image",
-	"args": ["/bin/sh"],
+	"args": ["$cmd"],
         "stdin": true,
         "stdinOnce": true,
         "tty": true,
@@ -53,6 +54,6 @@ echo $podname
 for pvc in $pvcs ; do
 	echo "$path/$pvc"
 done
-kubectl run $podname -it --rm --image $image --restart="Never" --overrides="$overrides" -- /bin/sh
+kubectl run $podname -it --rm --image $image --restart="Never" --overrides="$overrides" -- $cmd
 
 
