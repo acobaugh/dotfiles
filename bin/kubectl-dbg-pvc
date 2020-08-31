@@ -1,14 +1,28 @@
 #!/usr/bin/env bash
 
 if [ -z "$1" ] ; then
-	echo "Usage: $0 <pvc>"
+	echo "Usage: $0 <pvc1>...<pvcN>"
 	exit 1
 fi
 
-pvc="$1"
+pvcs="$@"
 podname="pvc-dbg-${USER}-$(date +'%s')"
 image=busybox
 path=/data
+
+volumeMounts=""
+volumes=""
+
+let i=1
+for pvc in $pvcs ; do
+	if [ $i -gt 1 ]; then
+		volumeMounts+=","
+		volumes+=","
+	fi
+	volumeMounts+="{\"mountPath\":\"$path/$pvc\",\"name\":\"$pvc\"}"
+	volumes+="{\"name\":\"$pvc\",\"persistentVolumeClaim\":{\"claimName\":\"$pvc\"}}"
+	let i=$i+1
+done
 
 overrides=$(cat << EOF
 {
@@ -27,29 +41,18 @@ overrides=$(cat << EOF
         "stdin": true,
         "stdinOnce": true,
         "tty": true,
-        "volumeMounts": [
-          {
-            "mountPath": "$path",
-            "name": "volume-to-debug"
-          }
-        ]
+        "volumeMounts": [$volumeMounts]
       }
     ],
-    "volumes":[
-      {
-        "name":"volume-to-debug",
-        "persistentVolumeClaim":{
-          "claimName":"$pvc"
-        }
-      }
-    ]
+    "volumes":[$volumes]
   }
 }
 EOF
 )
-
 echo $podname
-echo "$pvc will be mounted at $path"
+for pvc in $pvcs ; do
+	echo "$path/$pvc"
+done
 kubectl run $podname -it --rm --image $image --restart="Never" --overrides="$overrides" -- /bin/sh
 
 
