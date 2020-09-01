@@ -36,6 +36,7 @@ alias pssh="pssh -o StrictHostKeyChecking=no"
 alias psudo="pssh --extra-args '-t -t'"
 alias imgrename="exiv2 rename -F -r '%Y%m%d-%H%M%S'"
 alias gitlog="git log --pretty=format:'%C(yellow)%h %Cred%aI %Cblue%an%Cgreen%d %Creset%s%n%b' --date=short --stat"
+alias kunhealthy="kgpwide -A | egrep -v 'Completed|1/1|2/2|3/3'  | tee >&2 | wc -l"
 ## k8s aliases
 #[ -f ~/.kubectl-aliases/.kubectl-aliases ] && source ~/.kubectl-aliases/.kubectl-aliases
 #function kubectl() { test $0 != kubectl && echo "+ kubectl $@" ; command kubectl $@; }
