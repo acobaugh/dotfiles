@@ -47,7 +47,7 @@ fi
 source $ZSH/oh-my-zsh.sh
 
 KUBE_PS1_COLOR_SYMBOL="%F{cyan}"
-KUBE_PS1_ENABLED=false
+KUBE_PS1_ENABLED=off
 
 ## theme configuration
 NEWLINE=$'\n'
