@@ -1,0 +1,1 @@
+kubectl run ktoolbox-linkerd-${USER}-$(date +"%s") -l app=ktoolbox --rm -i --tty --image psuswe/ktoolbox --restart=Never --overrides='{ "apiVersion": "v1", "metadata": {"annotations": { "linkerd.io/inject":"enabled" } } }' -- /bin/bash
