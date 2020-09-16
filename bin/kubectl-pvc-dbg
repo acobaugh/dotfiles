@@ -20,8 +20,9 @@ for pvc in $pvcs ; do
 		volumeMounts+=","
 		volumes+=","
 	fi
-	volumeMounts+="{\"mountPath\":\"$path/$pvc\",\"name\":\"$pvc\"}"
-	volumes+="{\"name\":\"$pvc\",\"persistentVolumeClaim\":{\"claimName\":\"$pvc\"}}"
+	name="$i" # volume names have a 63 char limit, whereas pvcs do not
+	volumeMounts+="{\"mountPath\":\"$path/$pvc\",\"name\":\"$name\"}"
+	volumes+="{\"name\":\"$name\",\"persistentVolumeClaim\":{\"claimName\":\"$pvc\"}}"
 	let i=$i+1
 done
 
