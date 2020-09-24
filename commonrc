@@ -40,7 +40,10 @@ alias kunhealthy="kgpwide -A | egrep -v 'Completed|1/1|2/2|3/3|4/4|5/5|6/6|7/7' 
 ## k8s aliases
 #[ -f ~/.kubectl-aliases/.kubectl-aliases ] && source ~/.kubectl-aliases/.kubectl-aliases
 #function kubectl() { test $0 != kubectl && echo "+ kubectl $@" ; command kubectl $@; }
-alias ktoolbox='kubectl run ktoolbox-${USER}-$(date +"%s") -l app=ktoolbox --rm -i --tty --image psuswe/ktoolbox --restart=Never -- /bin/bash'
+alias ktoolbox='kubectl run ktoolbox-${USER}-$(date +"%s") -l app=ktoolbox-acobaugh --rm -i --tty --image psuswe/ktoolbox --restart=Never -- /bin/bash'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+alias kgoyaml='kubectl get -oyaml'
 
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
