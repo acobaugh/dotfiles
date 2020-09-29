@@ -37,7 +37,7 @@ unsetopt share_history
 setopt no_share_history
 HIST_STAMPS="yyyy-mm-dd" # omz history wrapper
 
-plugins=( pass terraform kubectl docker golang screen history ssh-agent kube-ps1 aws )
+plugins=( pass terraform kubectl docker golang screen history ssh-agent kube-ps1 aws gcloud )
 if ! [[ "$HOME" =~ "^/pass" ]] ; then
 	plugins+=(git git-prompt)
 fi
