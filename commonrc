@@ -20,6 +20,8 @@ esac
 
 ## aliases
 alias ..="cd ../"
+alias back='cd $OLDPWD'
+alias b=back
 alias c="clear"
 alias e="exit"
 alias ls="ls $LS_OPTIONS"
