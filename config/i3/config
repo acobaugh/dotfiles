@@ -192,7 +192,6 @@ bar {
 			cpu \
 			load \
 			memory \
-			weather \
 			battery \
 			xrandr \
 			datetimetz:dt_utc \
