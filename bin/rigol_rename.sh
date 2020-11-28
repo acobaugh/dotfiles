@@ -10,15 +10,10 @@ if [ -n "$1" ] ; then
 	dto="$1"
 fi
 
-echo "=== Converting png to jpg"
-for f in *.png ; do 
-	convert $f $f.jpg
-done
-
-echo "=== Setting original datetime to $dto if unset"
-for f in *.jpg ; do
-	if [ -z "$(exiftool -DateTimeOriginal $f)" ] ; then
-		exiftool -datetimeoriginal="$dto" $f
+for f in DS1Z*.png ; do 
+	convert $f $f.jpg && rm $f
+	if [ -z "$(exiftool -DateTimeOriginal $f.jpg)" ] ; then
+		exiftool -datetimeoriginal="$dto" $f.jpg
 	else
 		echo "... nothing to do, DateTimeOriginal already set"
 	fi
