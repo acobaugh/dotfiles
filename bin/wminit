@@ -82,6 +82,7 @@ case "$(hostname)" in
 		test -x "`which nm-applet`" && nm-applet &
 		#test -x "`which volumeicon`" && volumeicon &
 		test -x "$HOME/bin/brightd" && $HOME/bin/brightd -w 120 -b 1 -f -f -d
+		syndaemon -i 1.0 -K &
 		;;
 esac
 
