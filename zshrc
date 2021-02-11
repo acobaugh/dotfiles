@@ -26,6 +26,7 @@ function git_repo_name_prompt() {
 ## oh-my-zsh
 export ZSH=$HOME/.oh-my-zsh
 DISABLE_AUTO_UPDATE="true"
+DISABLE_MAGIC_FUNCTIONS=true
 ZSH_THEME=""
 
 ## history
