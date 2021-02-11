@@ -204,8 +204,7 @@ bar {
 			dt_utc.timezone="UTC" \
 			datetime.format="%H:%M:%S Local" \
 			dt_local.timezone="EST5EDT" \
-			traffic.exclude="lo,virbr,docker,vboxnet,veth,br" \
-			weather.unit=imperial
+			traffic.exclude="lo,virbr,docker,vboxnet,veth,br"
 }
 
 # i3-gaps configuration
