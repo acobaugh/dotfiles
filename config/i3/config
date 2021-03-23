@@ -101,7 +101,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+# bindsym $mod+a focus parent ## CONFLICTS WITH ZOOM MUTE ##
 
 # move current workspace to the next output
 bindsym $mod+x move workspace to output right
@@ -204,7 +204,8 @@ bar {
 			dt_utc.timezone="UTC" \
 			datetime.format="%H:%M:%S Local" \
 			dt_local.timezone="EST5EDT" \
-			traffic.exclude="lo,virbr,docker,vboxnet,veth,br"
+			traffic.exclude="lo,virbr,docker,vboxnet,veth,br,tun" \
+			weather.unit=imperial
 }
 
 # i3-gaps configuration
