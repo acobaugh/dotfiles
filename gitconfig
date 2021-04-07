@@ -33,3 +33,5 @@
 [url "git@github.com:PennState"]
   insteadOf = https://github.com/PennState
 
+[init]
+	defaultBranch = master
