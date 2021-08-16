@@ -6,7 +6,6 @@ dotfiles="
 	config/i3
 	commonrc
 	devtool.yaml
-	krew
 	kube/kubie.yaml
 	vim
 	vimrc
