@@ -446,7 +446,7 @@ global-address-book=
 last-time-prune-questioned=130.11
 
 # Set by Alpine; controls display of "new version" message.
-last-version-used=6.21.9999
+last-version-used=6.24
 
 # This names the path to an alternative program, and any necessary arguments,
 # to be used in posting mail messages.  Example:
@@ -725,3 +725,34 @@ wp-columns=
 # to a smaller value than tcp-query-timeout will close the connection
 # automatically, and you will never be asked if you want to wait.
 close-connection-timeout=
+
+# Sets the path for the system ssl certificates issued by a trusted
+# certificate authority. Note that this could be a list of paths, if the same
+# pinerc is used in different systems. Alpine always chooses the first one that
+# it finds. Value must be an absolute path.
+system-certs-path=
+
+# Sets the path for the system ssl file container of certificates issued by a
+# certificate authority. Note that this could be a list of container files,
+# if the same pinerc is used in different systems. Alpine always chooses the,
+# first one that it finds. Value must be an absolute path.
+system-certs-file=
+
+# Sets the path for a file that contains certificates that a user trusts.
+Note that this could be a list of container files,
+# if the same pinerc is used in different systems. Alpine always chooses the,
+# first one that it finds. Value must be an absolute path.
+user-certs-path=
+
+# Sets the path for a file that contains certificates that a user trusts.
+Note that this could be a list of container files,
+# if the same pinerc is used in different systems. Alpine always chooses the,
+# first one that it finds. Value must be an absolute path.
+user-certs-file=
+
+# A range in the form min,max that sets the minimum amd maximum versions of the
+# SSL protocol that Alpine will use when connecting to a secure server.
+encryption-protocol-range=
+
+# Your client-id and client-secret information to authenticate using XOAUTH2
+xoauth2-info=
