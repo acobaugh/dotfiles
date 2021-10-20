@@ -214,8 +214,6 @@ mouse:
   # To disable this completely, set `faux_scrollback_lines` to 0.
   faux_scrolling_lines: 1
   hide_when_typing: false
-  url:
-    launcher: 
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
