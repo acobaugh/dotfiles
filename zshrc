@@ -1,5 +1,8 @@
 ## .zshrc
 
+test $ZSHRC_LOADED && return
+ZSHRC_LOADED=1
+
 export shell="zsh"
 
 ## settings common to all shells
