@@ -52,11 +52,16 @@ if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 fi
 
+## AWS
+alias aws-login-live='aws --profile live sso login && export AWS_PROFILE="live"'
+alias aws-login-construct='aws --profile construction sso login && export AWS_PROFILE="construction"'
+
 # news server
 export NNTPSERVER='news.psu.edu'
 
+export ARCHBIN="${HOME}/bin/$(uname -s 2>/dev/null)-$(uname -m 2>/dev/null)"
 ## PATH
-export PATH=$HOME/bin:$HOME/.npm-global/bin:$HOME/.local/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
+export PATH=$HOME/bin:$ARCHBIN:$HOME/.npm-global/bin:$HOME/.local/bin:/usr/heimdal/bin:/usr/heimdal/sbin:/usr/sbin:/sbin:$PATH
 
 ## add Go workspace bin dir
 if [ -x "$(which go 2>&1)" ] ; then
