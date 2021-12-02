@@ -3,6 +3,8 @@ These are my $HOME dot files.
 Usage
 -----
 ```
+git submodule init
+git submodule update
 git lfs fetch
 git lfs checkout
 sh dotfiles/install
