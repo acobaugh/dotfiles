@@ -1,7 +1,8 @@
 #!/bin/sh
 
-BASE=$(readlink -f "$(dirname "$0")"/..)
+BASE="$(dirname "$0")"/..
 . $BASE/dotfiles/lib
+echo BASE="$BASE"
 
 umask 0007
 
@@ -20,10 +21,6 @@ force=0
 if [ "$1" = "-f" ] ; then
 	force=1
 fi
-
-BASE=$(readlink -f "$(dirname "$0")"/..)
-
-echo BASE="$BASE"
 
 for f in $dotfiles ; do
 	printf "[%s] " $f

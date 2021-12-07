@@ -2,7 +2,7 @@
 
 ## WIP!
 
-BASE=$(readlink -f "$(dirname "$0")"/..)
+BASE="$(dirname "$0")"/..
 . $BASE/dotfiles/lib
 umask 0007
 

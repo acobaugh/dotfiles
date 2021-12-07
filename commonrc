@@ -93,8 +93,10 @@ fi
 export NPM_CONFIG_PREFIX=~/.npm-global
 
 ## Java
-export JAVA_HOME=$(readlink -f /usr/bin/java | sed -e "s|bin/java||;s|jre/$||")
-export CLASSPATH="$JAVA_HOME/lib"
+if [ "$(uname -s)" = "Linux" ] ; then
+	export JAVA_HOME=$(readlink -f /usr/bin/java | sed -e "s|bin/java||;s|jre/$||")
+	export CLASSPATH="$JAVA_HOME/lib"
+fi
 
 ## GPG stuff
 #export PINENTRY="$HOME/bin/my-pinentry" # wrapper

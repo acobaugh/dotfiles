@@ -10,7 +10,7 @@ link() {
 		echo "   mkdir $(dirname "$linkname")"
 		mkdir -p "$(dirname "$linkname")"
 	fi
-	if [ "$(readlink -f "$linkname")" = "$(readlink -f "$target")" ] ; then
+	if [ "$(p_readlink "$linkname")" = "$(p_readlink "$target")" ] ; then
 		echo "  Already up to date"
 	else
 		out=$(ln -sf "$target" "$linkname" 2>&1)
@@ -18,4 +18,5 @@ link() {
 	fi
 }
 
+p_readlink() { readlink -f "$1" || echo "$1" }
 
