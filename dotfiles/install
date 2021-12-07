@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE="$(dirname "$0")"/..
+BASE=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd )
 . $BASE/dotfiles/lib
 echo BASE="$BASE"
 

@@ -2,7 +2,7 @@ dotfiles=""
 plainfiles=""
 test -f "$BASE/dotfiles/config" && . "$BASE/dotfiles/config"
 
-p_readlink() { readlink -f "$1" || echo "$1"; }
+p_readlink() { readlink -f "$1" 2>&1 || echo "$1"; }
 
 link() {
 	target=$1
