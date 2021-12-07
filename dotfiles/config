@@ -22,7 +22,6 @@ dotfiles="
 	fluxbox/styles
 	Xresources
 	Xresources.host
-	gkrellm2/theme_config
 	gkrellm2/themes
 	gkrellm2/plugins/gkrellm-wifi.so
 	tmux.conf
