@@ -37,3 +37,6 @@ prompt:
     # When using zsh, show context and namespace on the right side using RPS1.
     # Default: false
     zsh_use_rps1: false
+
+behavior:
+    validate_namespaces: false
