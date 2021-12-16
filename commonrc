@@ -42,7 +42,7 @@ alias kunhealthy="kgpwide -A | egrep -v 'Completed|1/1|2/2|3/3|4/4|5/5|6/6|7/7' 
 ## k8s aliases
 #[ -f ~/.kubectl-aliases/.kubectl-aliases ] && source ~/.kubectl-aliases/.kubectl-aliases
 #function kubectl() { test $0 != kubectl && echo "+ kubectl $@" ; command kubectl $@; }
-alias ktoolbox='kubectl run ktoolbox-${USER}-$(date +"%s") -l app=ktoolbox-${USER} --rm -i --tty --image psuswe/ktoolbox --restart=Never -- /bin/bash'
+alias ktoolbox='kubectl run ktoolbox-$(echo $USER | tr . -)-$(date +"%s") -l app=ktoolbox-${USER} --rm -i --tty --image psuswe/ktoolbox --restart=Never -- /bin/bash'
 alias ksiege='kubectl run ksiege-${USER}-$(date +"%s") -l app=ksiege-${USER} --rm -i --tty --image jcabillot/siege --restart=Never --command=true -- /bin/bash'
 alias kg='kubectl get'
 alias kd='kubectl describe'
