@@ -11,4 +11,4 @@ do
   git add "$i"
 done
 
-git commit -m 'Updated submodules'
+git commit -m 'chore: update submodules'
