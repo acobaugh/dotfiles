@@ -34,4 +34,4 @@
   insteadOf = https://github.com/PennState
 
 [init]
-	defaultBranch = master
+	defaultBranch = main
