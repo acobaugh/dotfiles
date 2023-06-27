@@ -24,6 +24,7 @@ dotfiles="
 	Xresources.host
 	gkrellm2/themes
 	gkrellm2/plugins/gkrellm-wifi.so
+	Library/KeyBindings/DefaultKeyBinding.dict
 	tmux.conf
 	fonts
 	pinerc

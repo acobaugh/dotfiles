@@ -1,0 +1,11 @@
+{
+/* Remap Home / End keys to be correct */
+"" = "moveToBeginningOfLine:"; /* Home */
+"" = "moveToEndOfLine:"; /* End */
+"$" = "moveToBeginningOfLineAndModifySelection:"; /* Shift + Home */
+"$" = "moveToEndOfLineAndModifySelection:"; /* Shift + End */
+"^" = "moveToBeginningOfDocument:"; /* Ctrl + Home */
+"^" = "moveToEndOfDocument:"; /* Ctrl + End */
+"$^" = "moveToBeginningOfDocumentAndModifySelection:"; /* Shift + Ctrl + Home */
+"$^" = "moveToEndOfDocumentAndModifySelection:"; /* Shift + Ctrl + End */
+}
