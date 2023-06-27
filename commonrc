@@ -49,6 +49,7 @@ alias kd='kubectl describe'
 alias kgoyaml='kubectl get -oyaml'
 alias kgpv='kubectl get persistentvolume'
 alias kdpv='kubectl describe persistentvolume'
+alias updater-sso-login='aws sso login --profile login-updater'
 
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
