@@ -16,7 +16,6 @@ env:
   #WINIT_HIDPI_FACTOR: "1.0"
 
 window:
-  opacity: 0.8
   # Window dimensions in character columns and lines
   # Falls back to size specified by window manager if set to 0x0.
   # (changes require restart)
