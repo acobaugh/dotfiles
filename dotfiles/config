@@ -2,6 +2,7 @@
 
 dotfiles="
 	config/alacritty/alacritty.yml
+	config/alacritty/alacritty.toml
 	config/dunst/dunstrc
 	config/i3
 	commonrc
