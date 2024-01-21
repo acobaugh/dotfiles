@@ -35,6 +35,10 @@ dotfiles="
 	kubectl-aliases
 	compton.conf
 "
+dotfiles_private="
+	aws/config
+	kube/config
+"
 
 plainfiles="bin"
 templatedotfiles="gnupg/gpg-agent.conf"
