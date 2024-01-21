@@ -61,3 +61,6 @@
 [submodule "bin/testssl.sh"]
 	path = bin/testssl.sh
 	url = https://github.com/drwetter/testssl.sh.git
+[submodule "private"]
+	path = private
+	url = git@github.com:acobaugh/dotfiles-private.git
