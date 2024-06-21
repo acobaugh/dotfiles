@@ -27,7 +27,12 @@ alias e="exit"
 alias ls="ls $LS_OPTIONS"
 alias tmux='tmux -2' # enable 256-color support
 alias pasteit="curl -F 'sprunge=<-' http://sprunge.us"
-alias tf=terraform
+
+if [ -n "$(which tofu 2>/dev/null)" ]; then
+	alias tf=tofu
+else
+	alias tf=terraform
+fi
 alias tg=terragrunt
 alias travis-docker='docker run -it -v $(pwd):/project --rm skandyla/travis-cli'
 alias ap="ansible-playbook"
@@ -42,15 +47,15 @@ alias kunhealthy="kgpwide -A | egrep -v 'Completed|1/1|2/2|3/3|4/4|5/5|6/6|7/7' 
 ## k8s aliases
 #[ -f ~/.kubectl-aliases/.kubectl-aliases ] && source ~/.kubectl-aliases/.kubectl-aliases
 #function kubectl() { test $0 != kubectl && echo "+ kubectl $@" ; command kubectl $@; }
-alias ktoolbox='kubectl run ktoolbox-$(echo $USER | tr . -)-$(date +"%s") -l app=ktoolbox-${USER} --rm -i --tty --image psuswe/ktoolbox --restart=Never -- /bin/bash'
+alias ktoolbox='kubectl run ktoolbox-acobaugh-$(date +"%s") -l app=ktoolbox-acobaugh --rm -i --tty --image nicolaka/netshoot --restart=Never -- /bin/bash'
 alias ksiege='kubectl run ksiege-${USER}-$(date +"%s") -l app=ksiege-${USER} --rm -i --tty --image jcabillot/siege --restart=Never --command=true -- /bin/bash'
 alias kg='kubectl get'
 alias kd='kubectl describe'
 alias kgoyaml='kubectl get -oyaml'
 alias kgpv='kubectl get persistentvolume'
 alias kdpv='kubectl describe persistentvolume'
-alias updater-sso-login='aws sso login --profile login-updater'
-
+alias login-updater='aws sso login --profile login-updater'
+alias login-movehhq-govcloud='aws sso login --profile login-movehq-govcloud'
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 fi
