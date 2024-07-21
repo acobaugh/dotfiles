@@ -201,8 +201,7 @@ bar {
 			date.format="%a %Y/%m/%d" \
 			datetime.format="%H:%M:%S Local" \
 			dt_local.timezone="EST5EDT" \
-			traffic.exclude="lo,virbr,docker,vboxnet,veth,br,tun" \
-			weather.unit=imperial
+			traffic.exclude="lo,virbr,docker,vboxnet,veth,br,tun"
 }
 
 # i3-gaps configuration
