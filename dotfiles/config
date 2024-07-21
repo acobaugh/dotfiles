@@ -1,6 +1,7 @@
 # files/directories to symlink
 
 dotfiles="
+	config/PrusaSlicer
 	config/alacritty/alacritty.yml
 	config/alacritty/alacritty.toml
 	config/dunst/dunstrc
