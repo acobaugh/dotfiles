@@ -22,6 +22,7 @@ if [ "$1" = "-f" ] ; then
 	force=1
 fi
 
+echo "= dotfiles"
 for f in $dotfiles ; do
 	printf "[%s] " $f
 	if [ ! -e "$BASE/$f" ] ; then
@@ -41,7 +42,8 @@ for f in $dotfiles ; do
 		echo "  Already exists and is not a symlink. Skipping."
 	fi
 done
-
+echo
+echo "= plainfiles"
 for f in $plainfiles ; do
 	printf "[%s] " $f
 	if [ ! -e "$BASE/$f" ] ; then
@@ -61,6 +63,7 @@ for f in $plainfiles ; do
 		echo "  Already exists and is not a symlink. Skipping."
 	fi
 done
+echo
 
 ## dotfiles-private
 for f in $dotfiles_private ; do

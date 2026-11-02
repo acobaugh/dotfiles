@@ -22,6 +22,7 @@ esac
 alias ..="cd ../"
 alias back='cd $OLDPWD'
 alias b=back
+alias brew="umask 022 && brew" # workaround for umask 077 with workbrew
 alias c="clear"
 alias e="exit"
 alias ls="ls $LS_OPTIONS"
@@ -56,6 +57,7 @@ alias kgpv='kubectl get persistentvolume'
 alias kdpv='kubectl describe persistentvolume'
 alias login-updater='aws sso login --profile login-updater'
 alias login-movehhq-govcloud='aws sso login --profile login-movehq-govcloud'
+alias login-movehq='aws sso login --profile login-movehq'
 if [[ "$HOME" == *"/afs/"* ]] ; then
 	alias keybase="keybase --socket-file /tmp/${USER}_keybase.socket" # no sockets in AFS
 fi

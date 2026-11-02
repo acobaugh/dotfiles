@@ -75,3 +75,5 @@ fi
 
 ## direnv
 test -e "$(which direnv 2>/dev/null)" && eval "$(direnv hook zsh)"
+
+test -e /opt/workbrew/bin/brew && eval $(/opt/workbrew/bin/brew shellenv)
